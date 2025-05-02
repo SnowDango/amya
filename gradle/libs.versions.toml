@@ -1,10 +1,15 @@
 [versions]
+app-version = "1.0.0"
+
 androidx-lifecycle = "2.8.4"
 compose-multiplatform = "1.7.3"
 junit = "4.13.2"
 kotlin = "2.1.20"
+ksp = "2.1.20-2.0.0"
 kotlinx-coroutines = "1.10.2"
 materialKolor = "2.1.1"
+androidx-room = "2.7.1"
+sqlite-bundled = "2.5.0"
 
 [libraries]
 
@@ -18,6 +23,12 @@ kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-co
 # material-kolor
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 
+# Room
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidx-room" }
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidx-room" }
+androidx-sqlite-bundled = { group = "androidx.sqlite", name = "sqlite-bundled", version.ref = "sqlite-bundled" }
+androidx-sqlite-bundled-jvm = { group = "androidx.sqlite", name = "sqlite-bundled-jvm", version.ref = "sqlite-bundled" }
+
 # test
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
@@ -27,3 +38,8 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+room = { id = "androidx.room", version.ref = "androidx-room" }
+
+[bundles]
+room = ["androidx-room-runtime", "androidx-sqlite-bundled", "androidx-sqlite-bundled-jvm"]
