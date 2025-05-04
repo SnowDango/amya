@@ -12,7 +12,7 @@ class JVMPlatform {
 fun getPlatform() = JVMPlatform()
 
 fun getDatabaseBuilder(): AppsDatabase{
-    val dbFile = File(System.getProperty("java.io.tmpdir"), "my_room.db")
+    val dbFile = File(System.getProperty("java.io.tmpdir"), "amya_apps.db")
     return Room.databaseBuilder<AppsDatabase>(
         name = dbFile.absolutePath
     ).getRoomDatabaseBuild()

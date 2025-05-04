@@ -1,9 +1,9 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeMultiplatform)
+    alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
@@ -28,12 +28,22 @@ kotlin {
                 implementation(libs.androidx.lifecycle.viewmodel)
                 implementation(libs.androidx.lifecycle.runtime.compose)
                 implementation(libs.materialKolor)
+                implementation(libs.composeIcons.tablerIcons)
                 implementation(libs.bundles.room)
+                implementation(libs.bundles.koin)
+                implementation(compose.components.uiToolingPreview)
+                implementation(libs.bundles.paging)
+                api(libs.bundles.logging)
             }
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
+            implementation(compose.components.uiToolingPreview)
             implementation(libs.kotlinx.coroutines.swing)
+            implementation(libs.composeIcons.tablerIcons)
+            implementation(libs.bundles.koin)
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.bundles.paging)
         }
     }
 

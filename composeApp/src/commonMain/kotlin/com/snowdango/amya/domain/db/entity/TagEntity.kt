@@ -10,10 +10,12 @@ import com.snowdango.amya.domain.db.entity.AppsEntity.Companion.COLUMN_ID
 data class TagEntity(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = COLUMN_ID) val id: Long = 0,
     @ColumnInfo(name = COLUMN_NAME) val name: String,
+    @ColumnInfo(name = COLUMN_ICON) val icon: String,
 ) {
     companion object {
         const val TABLE_NAME = "tags"
         const val COLUMN_ID = "id"
         const val COLUMN_NAME = "name"
+        const val COLUMN_ICON = "icon"
     }
 }
