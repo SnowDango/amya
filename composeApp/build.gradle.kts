@@ -34,6 +34,8 @@ kotlin {
                 implementation(compose.components.uiToolingPreview)
                 implementation(libs.bundles.paging)
                 api(libs.bundles.logging)
+                implementation(libs.bundles.coil)
+                implementation(libs.ktor.client.core)
             }
         }
         desktopMain.dependencies {
@@ -44,6 +46,8 @@ kotlin {
             implementation(libs.bundles.koin)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.bundles.paging)
+            implementation(libs.bundles.coil)
+            implementation(libs.ktor.client.java)
         }
     }
 

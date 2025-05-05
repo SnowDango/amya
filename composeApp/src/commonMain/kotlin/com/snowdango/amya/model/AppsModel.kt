@@ -29,7 +29,7 @@ class AppsModel: KoinComponent {
         )
     }
 
-    suspend fun getAll(): Flow<List<AppData>> {
+    fun getAll(): Flow<List<AppData>> {
         return repository.getAll().map { apps ->
             apps.map { app ->
                 AppData(
@@ -42,7 +42,7 @@ class AppsModel: KoinComponent {
         }
     }
 
-    suspend fun getAppsByTagId(tagId: Long): Flow<List<AppData>> {
+    fun getAppsByTagId(tagId: Long): Flow<List<AppData>> {
         return repository.getAppsByTagId(tagId).map { apps ->
             apps.map { app ->
                 AppData(
@@ -55,7 +55,7 @@ class AppsModel: KoinComponent {
         }
     }
 
-    suspend fun getAppsBySubTagId(tagId: Long, subTagId: Long): Flow<List<AppData>> {
+    fun getAppsBySubTagId(tagId: Long, subTagId: Long): Flow<List<AppData>> {
         return repository.getAppsBySubTagId(tagId, subTagId).map { apps ->
             apps.map { app ->
                 AppData(

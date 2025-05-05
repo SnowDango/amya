@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -28,6 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snowdango.amya.Log
+import com.snowdango.amya.component.button.PrimaryTextButton
+import com.snowdango.amya.component.button.SecondaryTextButton
 import org.koin.compose.viewmodel.koinViewModel
 
 
@@ -123,17 +126,16 @@ fun AddTagViewScreen(
                            .fillMaxWidth(),
                        horizontalAlignment = Alignment.CenterHorizontally
                    ) {
-                       TextButton(
-                           modifier = Modifier
-                               .padding(bottom = 8.dp),
+                       SecondaryTextButton(
                            onClick = {
-                               isShowIconSelectDialog = true
-                           },
+                                 isShowIconSelectDialog = true
+                            },
+                            modifier = Modifier
+                                 .padding(bottom = 8.dp)
                        ) {
                            Text(
                                text = "Choose Icon",
                                fontSize = 16.sp
-
                            )
                        }
                        if(icon != null) {
@@ -154,7 +156,7 @@ fun AddTagViewScreen(
                 }
             }
 
-            TextButton(
+            PrimaryTextButton(
                 onClick = {
                     Log.d("CreateTag: tagName: $tagName parentId: $parentId icon: ${icon?.name}")
                     viewModel.checkAndCreateTag(parentId, tagName, icon)

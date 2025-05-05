@@ -11,15 +11,15 @@ class AppsRepository(
         return appsDataStore.insert(appsEntity)
     }
 
-    suspend fun getAll(): Flow<List<AppsEntity>> {
+    fun getAll(): Flow<List<AppsEntity>> {
         return appsDataStore.getAll()
     }
 
-    suspend fun getAppsByTagId(tagId: Long): Flow<List<AppsEntity>> {
+    fun getAppsByTagId(tagId: Long): Flow<List<AppsEntity>> {
         return appsDataStore.getAppsByTagId(tagId)
     }
 
-    suspend fun getAppsBySubTagId(tagId: Long, subTagId: Long): Flow<List<AppsEntity>> {
+    fun getAppsBySubTagId(tagId: Long, subTagId: Long): Flow<List<AppsEntity>> {
         return appsDataStore.getAppsBySubTagId(tagId, subTagId)
     }
 }

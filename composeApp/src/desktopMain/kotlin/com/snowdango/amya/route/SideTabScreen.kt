@@ -1,9 +1,6 @@
 package com.snowdango.amya.route
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -13,10 +10,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.snowdango.amya.Log
-import com.snowdango.amya.component.AddTagNavigateItem
-import com.snowdango.amya.component.ChildNavigateItem
-import com.snowdango.amya.component.ParentNavigateItem
-import com.snowdango.amya.component.SideNavigation
+import com.snowdango.amya.component.navigation.AddTagNavigateItem
+import com.snowdango.amya.component.navigation.ChildNavigateItem
+import com.snowdango.amya.component.navigation.ParentNavigateItem
+import com.snowdango.amya.component.navigation.SideNavigation
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Home
 import org.koin.compose.viewmodel.koinViewModel

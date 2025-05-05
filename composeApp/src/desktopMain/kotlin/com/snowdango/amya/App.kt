@@ -10,20 +10,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.serialization.RouteEncoder
 import androidx.navigation.toRoute
-import com.snowdango.amya.component.ChildNavigateItem
-import com.snowdango.amya.component.ParentNavigateItem
-import com.snowdango.amya.component.SideNavigation
 import com.snowdango.amya.feature.addtag.AddTagViewScreen
 import com.snowdango.amya.feature.all.AllViewScreen
 import com.snowdango.amya.feature.setting.SettingViewScreen
@@ -55,7 +48,7 @@ fun App() {
                         .padding(all = 16.dp)
                         .fillMaxSize()
                         .background(
-                            color = MaterialTheme.colorScheme.surfaceContainer,
+                            color = MaterialTheme.colorScheme.surfaceContainerLow,
                             shape = RoundedCornerShape(16.dp),
                         ),
                 ) {

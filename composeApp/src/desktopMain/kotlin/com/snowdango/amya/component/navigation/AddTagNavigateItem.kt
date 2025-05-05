@@ -1,4 +1,4 @@
-package com.snowdango.amya.component
+package com.snowdango.amya.component.navigation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

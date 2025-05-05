@@ -11,15 +11,15 @@ class AppsDataStore(private val database: AppsDatabase) {
         return database.appsDao().insert(appsEntity)
     }
 
-    suspend fun getAll(): Flow<List<AppsEntity>> {
+    fun getAll(): Flow<List<AppsEntity>> {
         return database.appsDao().getAll()
     }
 
-    suspend fun getAppsByTagId(tagId: Long): Flow<List<AppsEntity>> {
+    fun getAppsByTagId(tagId: Long): Flow<List<AppsEntity>> {
         return database.appsDao().getAppsByTagId(tagId)
     }
 
-    suspend fun getAppsBySubTagId(tagId: Long, subTagId: Long): Flow<List<AppsEntity>> {
+    fun getAppsBySubTagId(tagId: Long, subTagId: Long): Flow<List<AppsEntity>> {
         return database.appsDao().getAppsBySubTagId(tagId, subTagId)
     }
 

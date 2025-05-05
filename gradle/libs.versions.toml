@@ -18,6 +18,8 @@ sqlite-bundled = "2.5.0"
 koin = "4.0.4"
 kotlin-logging = "7.0.3"
 slf4j = "2.0.17"
+coil = "3.1.0"
+ktor = "3.1.2"
 
 [libraries]
 
@@ -43,6 +45,14 @@ kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 # paging
 androidx-paging-runtime = { group = "androidx.paging", name = "paging-common", version.ref = "androidx-paging" }
 cashapp-paging-compose = { group = "app.cash.paging", name = "paging-compose-common", version.ref = "paging-compose" }
+
+# coil
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coil-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
+
+# ktor
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-java = { module = "io.ktor:ktor-client-java", version.ref = "ktor" }
 
 # Room
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidx-room" }
@@ -79,3 +89,4 @@ room = ["androidx-room-runtime", "androidx-room-paging", "androidx-sqlite-bundle
 koin = ["koin-core", "koin-compose-core", "koin-compose-viewmodel", "koin-compose-navigation"]
 paging = ["androidx-paging-runtime", "cashapp-paging-compose"]
 logging = ["kotlin-logging", "slf4j"]
+coil = ["coil-compose", "coil-ktor"]
