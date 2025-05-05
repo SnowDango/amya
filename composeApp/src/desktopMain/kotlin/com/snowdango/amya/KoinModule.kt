@@ -1,12 +1,13 @@
 package com.snowdango.amya
 
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.snowdango.amya.domain.db.AppsDatabase
 import com.snowdango.amya.feature.addapp.AddAppViewModel
 import com.snowdango.amya.feature.addtag.AddTagViewModel
+import com.snowdango.amya.feature.all.AllViewModel
 import com.snowdango.amya.feature.tag.TagViewModel
 import com.snowdango.amya.model.AppsModel
 import com.snowdango.amya.model.TagModel
+import com.snowdango.amya.platform.getDatabaseBuilder
 import com.snowdango.amya.repository.apps.AppsDataStore
 import com.snowdango.amya.repository.apps.AppsRepository
 import com.snowdango.amya.repository.tag.TagDataStore
@@ -18,7 +19,7 @@ import org.koin.dsl.module
 
 val module = module {
     // domain
-    single<AppsDatabase> { getDatabaseBuilder() }
+    single<AppsDatabase> { getDatabaseBuilder().build() }
 
     // repository
     factory<AppsDataStore> { AppsDataStore(get()) }
@@ -41,6 +42,8 @@ val module = module {
     viewModel<TagViewModel> { (parentId: Long, childId: Long?) -> TagViewModel(parentId, childId) }
 
     // addapp
-    viewModel<AddAppViewModel> { param -> AddAppViewModel() }
+    viewModel<AddAppViewModel> { AddAppViewModel() }
+    // all
+    viewModel<AllViewModel> { AllViewModel() }
 
 }

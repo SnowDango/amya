@@ -3,7 +3,7 @@ package com.snowdango.amya.route
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.toRoute
-import com.snowdango.amya.Log
+import com.snowdango.amya.platform.Log
 import com.snowdango.amya.feature.all.AllViewScreen
 import kotlinx.serialization.Serializable
 

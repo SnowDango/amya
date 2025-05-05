@@ -1,3 +1,4 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
@@ -7,11 +8,12 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
+    alias(libs.plugins.buildKonfig)
 }
 
 kotlin {
     jvm("desktop")
-    
+
     sourceSets {
         val desktopMain by getting
 
@@ -62,11 +64,26 @@ room {
 }
 
 dependencies {
-
     add("kspDesktop", libs.androidx.room.compiler)
-
 }
+buildkonfig {
+    packageName = "com.snowdango.amya"
 
+    defaultConfigs {
+        buildConfigField(FieldSpec.Type.STRING, "osName", "MaxOS")
+    }
+    targetConfigs {
+        create("macos") {
+            buildConfigField(FieldSpec.Type.STRING, "osName", "MacOS")
+        }
+        create("mingw") {
+            buildConfigField(FieldSpec.Type.STRING, "osName", "Windows")
+        }
+        create("linux") {
+            buildConfigField(FieldSpec.Type.STRING, "osName", "Linux")
+        }
+    }
+}
 
 compose.desktop {
     application {

@@ -2,7 +2,7 @@ package com.snowdango.amya.feature.tag
 
 import androidx.lifecycle.ViewModel
 import com.snowdango.amya.model.AppsModel
-import com.snowdango.amya.Log
+import com.snowdango.amya.platform.Log
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject

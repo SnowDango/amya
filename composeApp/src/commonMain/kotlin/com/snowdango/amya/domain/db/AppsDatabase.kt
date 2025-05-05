@@ -29,11 +29,10 @@ expect object AppsDatabaseConstructor : RoomDatabaseConstructor<AppsDatabase> {
     override fun initialize(): AppsDatabase
 }
 
-fun RoomDatabase.Builder<AppsDatabase>.getRoomDatabaseBuild(): AppsDatabase {
+fun RoomDatabase.Builder<AppsDatabase>.addCommonOptions(): RoomDatabase.Builder<AppsDatabase> {
     return this
         .addMigrations()
         .fallbackToDestructiveMigrationOnDowngrade(true)
         .setDriver(BundledSQLiteDriver())
         .setQueryCoroutineContext(Dispatchers.IO)
-        .build()
 }

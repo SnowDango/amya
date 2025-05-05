@@ -1,4 +1,4 @@
-package com.snowdango.amya
+package com.snowdango.amya.platform
 
 expect object Log {
 

@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.snowdango.amya.Log
+import com.snowdango.amya.platform.Log
 import com.snowdango.amya.component.navigation.AddTagNavigateItem
 import com.snowdango.amya.component.navigation.ChildNavigateItem
 import com.snowdango.amya.component.navigation.ParentNavigateItem

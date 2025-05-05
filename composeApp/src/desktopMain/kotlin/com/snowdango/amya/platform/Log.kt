@@ -1,4 +1,4 @@
-package com.snowdango.amya
+package com.snowdango.amya.platform
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import java.io.File
