@@ -10,10 +10,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snowdango.amya.Log
+import com.snowdango.amya.component.dialog.CreateErrorDialog
 import com.snowdango.amya.component.button.PrimaryTextButton
 import com.snowdango.amya.component.button.SecondaryTextButton
 import org.koin.compose.viewmodel.koinViewModel
@@ -45,7 +44,7 @@ fun AddTagViewScreen(
     var icon: ImageVector? by remember { mutableStateOf(null) }
     var isShowIconSelectDialog by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf("") }
-    var isShowCreateTagErrorDialog by remember { mutableStateOf(false) }
+    var isShowCreateErrorDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(resultState.value) {
         if(resultState.value is AddTagViewModel.CreateTagState.Success) {
@@ -54,10 +53,10 @@ fun AddTagViewScreen(
         }else if (resultState.value is AddTagViewModel.CreateTagState.ValidationError) {
             val result = resultState.value as AddTagViewModel.CreateTagState.ValidationError
             errorMessage = result.error
-            isShowCreateTagErrorDialog = true
+            isShowCreateErrorDialog = true
         }else if (resultState.value is AddTagViewModel.CreateTagState.Failure) {
             errorMessage = "Failed for whatever reason"
-            isShowCreateTagErrorDialog = true
+            isShowCreateErrorDialog = true
         }
     }
 
@@ -181,13 +180,13 @@ fun AddTagViewScreen(
         )
     }
 
-    if (isShowCreateTagErrorDialog){
-        CreateTagErrorDialog(
+    if (isShowCreateErrorDialog){
+        CreateErrorDialog(
             error = errorMessage,
             onDismissRequest = {
                 errorMessage = ""
                 viewModel.resetResult()
-                isShowCreateTagErrorDialog = false
+                isShowCreateErrorDialog = false
             },
         )
     }

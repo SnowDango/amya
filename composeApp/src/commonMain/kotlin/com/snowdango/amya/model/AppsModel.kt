@@ -15,7 +15,7 @@ class AppsModel: KoinComponent {
         name: String,
         imageUrl: String,
         tagId: Long,
-        subTagId: Long,
+        subTagId: Long?,
         path: String,
     ) {
         repository.insert(

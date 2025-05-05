@@ -36,6 +36,7 @@ kotlin {
                 api(libs.bundles.logging)
                 implementation(libs.bundles.coil)
                 implementation(libs.ktor.client.core)
+                implementation(libs.bundles.filekit)
             }
         }
         desktopMain.dependencies {
@@ -75,6 +76,9 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "com.snowdango.amya"
             packageVersion = libs.versions.app.version.get()
+            linux {
+                modules("jdk.security.auth")
+            }
         }
     }
 }

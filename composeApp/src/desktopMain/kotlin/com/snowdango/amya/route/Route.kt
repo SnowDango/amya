@@ -16,6 +16,8 @@ sealed class Route {
     data object SettingView: Route()
     @Serializable
     data class AddTagView(val tagId: Long?): Route()
+    @Serializable
+    data class AddAppView(val tagId: Long, val subTagId: Long?): Route()
 
     companion object {
         @Composable
@@ -34,6 +36,10 @@ sealed class Route {
                 }
                 AddTagView.serializer().descriptor.serialName in route -> {
                     navBackStackEntry.toRoute<AddTagView>()
+                }
+
+                AddAppView.serializer().descriptor.serialName in route -> {
+                    navBackStackEntry.toRoute<AddAppView>()
                 }
                 else -> null
             }

@@ -2,6 +2,7 @@ package com.snowdango.amya
 
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.snowdango.amya.domain.db.AppsDatabase
+import com.snowdango.amya.feature.addapp.AddAppViewModel
 import com.snowdango.amya.feature.addtag.AddTagViewModel
 import com.snowdango.amya.feature.tag.TagViewModel
 import com.snowdango.amya.model.AppsModel
@@ -37,6 +38,9 @@ val module = module {
     viewModel<AddTagViewModel> { AddTagViewModel() }
 
     // tag
-    viewModel<TagViewModel> { param -> TagViewModel(param.get(), param.get()) }
+    viewModel<TagViewModel> { (parentId: Long, childId: Long?) -> TagViewModel(parentId, childId) }
+
+    // addapp
+    viewModel<AddAppViewModel> { param -> AddAppViewModel() }
 
 }

@@ -17,6 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.snowdango.amya.feature.addapp.AddAppViewScreen
 import com.snowdango.amya.feature.addtag.AddTagViewScreen
 import com.snowdango.amya.feature.all.AllViewScreen
 import com.snowdango.amya.feature.setting.SettingViewScreen
@@ -65,6 +66,14 @@ fun App() {
                             TagViewScreen(
                                 tagId = route.tagId,
                                 subTagId = route.subTagId,
+                                navigateAddApp = { parentId, subTagId ->
+                                    navController.navigate(
+                                        Route.AddAppView(
+                                            tagId = parentId,
+                                            subTagId = subTagId,
+                                        )
+                                    )
+                                }
                             )
                         }
                         composable<Route.AddTagView> { backStackEntry ->
@@ -83,6 +92,17 @@ fun App() {
                         }
                         composable<Route.SettingView> {
                             SettingViewScreen()
+                        }
+
+                        composable<Route.AddAppView> {
+                            val route = it.toRoute<Route.AddAppView>()
+                            AddAppViewScreen(
+                                parentId = route.tagId,
+                                childId = route.subTagId,
+                                navigateBackTag = {
+                                    navController.popBackStack()
+                                }
+                            )
                         }
                     }
                 }

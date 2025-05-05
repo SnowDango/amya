@@ -19,10 +19,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -40,10 +42,11 @@ import org.koin.core.parameter.parametersOf
 fun TagViewScreen(
     tagId: Long,
     subTagId: Long?,
+    navigateAddApp: (tagId: Long, subTagId: Long?) -> Unit,
     viewModel: TagViewModel = koinViewModel { parametersOf(tagId, subTagId) },
 ) {
 
-    val appsData = viewModel.appsData.collectAsStateWithLifecycle()
+    val appsData = viewModel.appsData.collectAsState(initial = emptyList())
 
     Box(
         modifier = Modifier
@@ -60,7 +63,9 @@ fun TagViewScreen(
                 contentAlignment = Alignment.CenterEnd,
             ) {
                 PrimaryTextButton(
-                    onClick = {},
+                    onClick = {
+                        navigateAddApp.invoke(tagId, subTagId)
+                    },
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -78,18 +83,15 @@ fun TagViewScreen(
                 }
             }
             LazyVerticalGrid(
-                columns = GridCells.Adaptive(minSize = 270.dp),
+                columns = GridCells.Adaptive(minSize = 183.dp),
                 modifier = Modifier.fillMaxSize()
                     .weight(1f),
             ) {
                 items(appsData.value) {
                     Box(
                         modifier = Modifier
-                            .padding(all = 10.dp)
-                            .width(250.dp)
-                            .height(350.dp)
-                            .clip(RoundedCornerShape(16.dp))
-                            .background(color = MaterialTheme.colorScheme.surfaceContainerHigh)
+                            .padding(all = 4.dp),
+                        contentAlignment = Alignment.Center,
                     ) {
                         AsyncImage(
                             model = ImageRequest.Builder(LocalPlatformContext.current)
@@ -98,7 +100,12 @@ fun TagViewScreen(
                                 .networkCachePolicy(CachePolicy.ENABLED)
                                 .build(),
                             contentDescription = null,
-                            modifier = Modifier.fillMaxSize()
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .width(175.dp)
+                                .height(265.dp)
+                                .clip(RoundedCornerShape(16.dp))
+                                .background(color = MaterialTheme.colorScheme.surfaceContainerHigh),
                         )
                     }
                 }

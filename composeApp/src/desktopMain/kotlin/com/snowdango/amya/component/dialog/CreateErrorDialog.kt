@@ -1,4 +1,4 @@
-package com.snowdango.amya.feature.addtag
+package com.snowdango.amya.component.dialog
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,7 +22,7 @@ import compose.icons.tablericons.AlertCircle
 
 
 @Composable
-fun CreateTagErrorDialog(
+fun CreateErrorDialog(
     error: String,
     onDismissRequest: () -> Unit
 ) {

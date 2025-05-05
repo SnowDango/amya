@@ -1,10 +1,9 @@
 package com.snowdango.amya.feature.tag
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.snowdango.amya.model.AppsModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
+import com.snowdango.amya.Log
+import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -15,16 +14,12 @@ class TagViewModel(
 
     val appsModel: AppsModel by inject()
 
-    val appsData = if (childTagId != null) {
+    val appsData: Flow<List<AppsModel.AppData>> = if (childTagId != null) {
+        Log.d("parentTagId: $parentTagId, childTagId: $childTagId")
         appsModel.getAppsBySubTagId(parentTagId, childTagId)
     } else {
+        Log.d("parentTagId: $parentTagId, childTagId: $childTagId")
         appsModel.getAppsByTagId(parentTagId)
-    }.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(5_000),
-        emptyList(),
-    )
-
-
+    }
 
 }

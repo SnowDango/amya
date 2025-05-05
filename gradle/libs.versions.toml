@@ -20,6 +20,7 @@ kotlin-logging = "7.0.3"
 slf4j = "2.0.17"
 coil = "3.1.0"
 ktor = "3.1.2"
+filekit = "0.10.0-beta03"
 
 [libraries]
 
@@ -49,6 +50,10 @@ cashapp-paging-compose = { group = "app.cash.paging", name = "paging-compose-com
 # coil
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
+
+# file
+filekit-dialogs = { module = "io.github.vinceglb:filekit-dialogs", version.ref = "filekit" }
+filekit-dialogs-compose = { module = "io.github.vinceglb:filekit-dialogs-compose", version.ref = "filekit" }
 
 # ktor
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
@@ -90,3 +95,4 @@ koin = ["koin-core", "koin-compose-core", "koin-compose-viewmodel", "koin-compos
 paging = ["androidx-paging-runtime", "cashapp-paging-compose"]
 logging = ["kotlin-logging", "slf4j"]
 coil = ["coil-compose", "coil-ktor"]
+filekit = ["filekit-dialogs", "filekit-dialogs-compose"]

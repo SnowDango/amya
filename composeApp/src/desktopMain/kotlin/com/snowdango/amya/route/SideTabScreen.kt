@@ -64,6 +64,10 @@ fun SideTabScreen(
                         currentRoute.tagId == group.id
                     }
 
+                    is Route.AddAppView -> {
+                        currentRoute.tagId == group.id
+                    }
+
                     else -> {
                         false
                     }
@@ -81,10 +85,16 @@ fun SideTabScreen(
                     ChildNavigateItem(
                         title = child.name,
                         icon = child.icon,
-                        selected = if (currentRoute is Route.TagView) {
-                            currentRoute.subTagId == child.id
-                        } else {
-                            false
+                        selected = when (currentRoute) {
+                            is Route.TagView -> {
+                                currentRoute.subTagId == child.id
+                            }
+                            is Route.AddAppView -> {
+                                currentRoute.subTagId == child.id
+                            }
+                            else -> {
+                                false
+                            }
                         },
                         onClick = {
                             navController.navigate(

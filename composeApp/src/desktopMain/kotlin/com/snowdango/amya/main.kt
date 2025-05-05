@@ -7,6 +7,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import io.github.vinceglb.filekit.FileKit
 import org.koin.core.context.startKoin
 import java.awt.Dimension
 
@@ -15,6 +16,7 @@ fun main() {
         val minimumDpSize = DpSize(800.dp, 600.dp)
         val windowState = rememberWindowState(size = minimumDpSize * 2)
         startKoin { modules(module) }
+        FileKit.init(appId = "Amya")
         Window(
             onCloseRequest = ::exitApplication,
             state = windowState,
