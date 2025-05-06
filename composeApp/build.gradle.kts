@@ -95,6 +95,13 @@ compose.desktop {
             packageVersion = libs.versions.app.version.get()
             linux {
                 modules("jdk.security.auth")
+                iconFile.set(project.file("icons/icon.png"))
+            }
+            windows {
+                iconFile.set(project.file("icons/icon.ico"))
+            }
+            macOS {
+                iconFile.set(project.file("icons/icon.icns"))
             }
         }
     }
