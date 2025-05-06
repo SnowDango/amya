@@ -90,6 +90,7 @@ compose.desktop {
         mainClass = "com.snowdango.amya.MainKt"
 
         nativeDistributions {
+            outputBaseDir.set(project.layout.buildDirectory.dir("customOutputDir"))
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "com.snowdango.amya"
             packageVersion = libs.versions.app.version.get()
