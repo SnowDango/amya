@@ -22,6 +22,7 @@ coil = "3.1.0"
 ktor = "3.1.2"
 filekit = "0.10.0-beta03"
 buildKonfig = "0.17.1"
+kmp-process = "0.2.0"
 
 [libraries]
 
@@ -76,6 +77,9 @@ koin-compose-navigation = { module = "io.insert-koin:koin-compose-viewmodel-navi
 # kotlin-logging
 kotlin-logging = { module = "io.github.oshai:kotlin-logging", version.ref = "kotlin-logging" }
 slf4j = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+
+# kmp-process
+kmp-process = { module = "io.matthewnelson.kmp-process:process", version.ref = "kmp-process" }
 
 # test
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }

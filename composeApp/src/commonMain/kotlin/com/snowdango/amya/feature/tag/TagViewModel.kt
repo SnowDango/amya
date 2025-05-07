@@ -3,6 +3,7 @@ package com.snowdango.amya.feature.tag
 import androidx.lifecycle.ViewModel
 import com.snowdango.amya.model.AppsModel
 import com.snowdango.amya.platform.Log
+import com.snowdango.amya.platform.SubProcessBuilder
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -20,6 +21,12 @@ class TagViewModel(
     } else {
         Log.d("parentTagId: $parentTagId, childTagId: $childTagId")
         appsModel.getAppsByTagId(parentTagId)
+    }
+
+    fun exec(path: String) {
+        SubProcessBuilder.execBuilder(
+            path = path
+        ).spawn()
     }
 
 }

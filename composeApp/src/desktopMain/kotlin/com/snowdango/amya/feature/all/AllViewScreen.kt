@@ -36,6 +36,7 @@ import coil3.compose.LocalPlatformContext
 import coil3.request.CachePolicy
 import coil3.request.ImageRequest
 import com.snowdango.amya.component.app.AppCard
+import com.snowdango.amya.platform.SubProcessBuilder
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class)
@@ -57,7 +58,7 @@ fun AllViewScreen(
                 AppCard(
                     appData = it,
                     onClick = {
-
+                        viewModel.exec(it.path)
                     },
                     modifier = Modifier
                         .padding(all = 8.dp),

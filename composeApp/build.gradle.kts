@@ -39,6 +39,7 @@ kotlin {
                 implementation(libs.bundles.coil)
                 implementation(libs.ktor.client.core)
                 implementation(libs.bundles.filekit)
+                implementation(libs.kmp.process)
             }
         }
         desktopMain.dependencies {
@@ -51,6 +52,7 @@ kotlin {
             implementation(libs.bundles.paging)
             implementation(libs.bundles.coil)
             implementation(libs.ktor.client.java)
+            implementation(libs.kmp.process)
         }
     }
 
