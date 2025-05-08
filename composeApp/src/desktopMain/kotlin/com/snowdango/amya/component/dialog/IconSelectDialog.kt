@@ -1,6 +1,5 @@
-package com.snowdango.amya.feature.addtag
+package com.snowdango.amya.component.dialog
 
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.snowdango.amya.component.button.PrimaryTextButton
 import com.snowdango.amya.component.button.SecondaryTextButton
-import com.snowdango.amya.feature.addtag.IconSelectDialog
+import com.snowdango.amya.component.dialog.IconSelectDialog
 
 
 @Composable
