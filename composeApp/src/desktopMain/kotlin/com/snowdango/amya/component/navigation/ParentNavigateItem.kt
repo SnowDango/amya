@@ -49,6 +49,7 @@ fun ParentNavigateItem(
     selected: Boolean,
     onClick: () -> Unit,
     onDeleteClick: () -> Unit,
+    onEditClick: () -> Unit,
     childContent: @Composable ColumnScope.() -> Unit,
 ) {
     var menuExpanded by remember { mutableStateOf(false) }
@@ -129,7 +130,7 @@ fun ParentNavigateItem(
                     DropdownMenuItem(
                         text = { Text(text = "Edit") },
                         onClick = {
-                            // Handle edit action
+                            onEditClick.invoke()
                             menuExpanded = false
                         }
                     )

@@ -9,7 +9,7 @@ import com.snowdango.amya.component.button.PrimaryTextButton
 
 
 @Composable
-fun ParentDeleteTagDialog(
+fun DeleteParentTagDialog(
     id: Long,
     tagName: String,
     onDelete: (id: Long) -> Unit,
@@ -17,6 +17,7 @@ fun ParentDeleteTagDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismissRequest,
+        backgroundColor = MaterialTheme.colorScheme.background,
         confirmButton = {
             PrimaryTextButton(
                 onClick = {
@@ -47,12 +48,14 @@ fun ParentDeleteTagDialog(
         title = {
             Text(
                 text = "Delete $tagName?",
+                color = MaterialTheme.colorScheme.onBackground,
             )
         },
         text = {
             Text(
                 text = "If the parent tag is deleted, \nthe associated application will also be deleted.",
                 fontSize = 14.sp,
+                color = MaterialTheme.colorScheme.onBackground,
             )
         },
     )
