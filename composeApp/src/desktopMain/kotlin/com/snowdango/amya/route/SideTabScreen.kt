@@ -8,7 +8,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.snowdango.amya.platform.Log
 import com.snowdango.amya.component.navigation.AddTagNavigateItem
 import com.snowdango.amya.component.navigation.ChildNavigateItem
@@ -17,14 +16,18 @@ import com.snowdango.amya.component.navigation.SideNavigation
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Home
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun SideTabScreen(
     navController: NavController,
-    viewModel: RouteViewModel = koinViewModel()
+    viewModel: RouteViewModel = koinViewModel(
+        parameters = { parametersOf(navController) },
+    )
 ) {
-    val backStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = Route.fromNavBackStackEntry(backStackEntry)
+    val currentRoute by viewModel.currentRoute.collectAsStateWithLifecycle(
+        initialValue = Route.fromNavBackStackEntry(navController.currentBackStackEntry),
+    )
     val tagGroups = viewModel.tagGroup.collectAsStateWithLifecycle()
 
     LaunchedEffect(currentRoute) {
@@ -56,16 +59,16 @@ fun SideTabScreen(
                 icon = group.icon,
                 selected = when (currentRoute) {
                     is Route.TagView -> {
-                        Log.d("${currentRoute.tagId} == ${group.id}")
-                        currentRoute.tagId == group.id
+                        Log.d("${(currentRoute as Route.TagView).tagId} == ${group.id}")
+                        (currentRoute as Route.TagView).tagId == group.id
                     }
 
                     is Route.AddTagView -> {
-                        currentRoute.tagId == group.id
+                        (currentRoute as Route.AddTagView).tagId == group.id
                     }
 
                     is Route.AddAppView -> {
-                        currentRoute.tagId == group.id
+                        (currentRoute as Route.AddAppView).tagId == group.id
                     }
 
                     else -> {
@@ -87,10 +90,10 @@ fun SideTabScreen(
                         icon = child.icon,
                         selected = when (currentRoute) {
                             is Route.TagView -> {
-                                currentRoute.subTagId == child.id
+                                (currentRoute as Route.TagView).subTagId == child.id
                             }
                             is Route.AddAppView -> {
-                                currentRoute.subTagId == child.id
+                                (currentRoute as Route.AddAppView).subTagId == child.id
                             }
                             else -> {
                                 false
@@ -109,7 +112,7 @@ fun SideTabScreen(
                 AddTagNavigateItem(
                     isParent = false,
                     selected = if (currentRoute is Route.AddTagView) {
-                        currentRoute.tagId == group.id
+                        (currentRoute as Route.AddTagView).tagId == group.id
                     } else {
                         false
                     },
@@ -126,7 +129,7 @@ fun SideTabScreen(
         AddTagNavigateItem(
             isParent = true,
             selected = if (currentRoute is Route.AddTagView) {
-                currentRoute.tagId == null
+                (currentRoute as Route.AddTagView).tagId == null
             } else {
                 false
             },

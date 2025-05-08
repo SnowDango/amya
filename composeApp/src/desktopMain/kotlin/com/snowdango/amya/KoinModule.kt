@@ -1,5 +1,6 @@
 package com.snowdango.amya
 
+import androidx.navigation.NavController
 import com.snowdango.amya.domain.db.AppsDatabase
 import com.snowdango.amya.feature.addapp.AddAppViewModel
 import com.snowdango.amya.feature.addtag.AddTagViewModel
@@ -33,7 +34,7 @@ val module = module {
 
 
     // route
-    viewModel<RouteViewModel> { RouteViewModel() }
+    viewModel<RouteViewModel> { (navController: NavController) -> RouteViewModel(navController) }
 
     // addtag
     viewModel<AddTagViewModel> { AddTagViewModel() }

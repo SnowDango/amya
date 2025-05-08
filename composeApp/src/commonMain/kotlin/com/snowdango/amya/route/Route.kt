@@ -3,8 +3,6 @@ package com.snowdango.amya.route
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.toRoute
-import com.snowdango.amya.platform.Log
-import com.snowdango.amya.feature.all.AllViewScreen
 import kotlinx.serialization.Serializable
 
 sealed class Route {
@@ -20,7 +18,7 @@ sealed class Route {
     data class AddAppView(val tagId: Long, val subTagId: Long?): Route()
 
     companion object {
-        @Composable
+
         fun fromNavBackStackEntry(navBackStackEntry: NavBackStackEntry?): Route? {
             if (navBackStackEntry?.destination?.route == null) return null
             val route = navBackStackEntry.destination.route!!
