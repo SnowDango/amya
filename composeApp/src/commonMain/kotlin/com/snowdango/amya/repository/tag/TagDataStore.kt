@@ -22,4 +22,12 @@ class TagDataStore(private val database: AppsDatabase) {
         return database.tagDao().getAllGroup()
     }
 
+    suspend fun deleteParentTag(id: Long) {
+        database.tagDao().delete(id)
+    }
+
+    suspend fun deleteChildTag(id: Long) {
+        database.subTagDao().delete(id)
+    }
+
 }

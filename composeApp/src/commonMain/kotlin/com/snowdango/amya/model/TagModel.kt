@@ -65,6 +65,14 @@ class TagModel: KoinComponent{
         }
     }
 
+    suspend fun deleteParentTag(id: Long) {
+        repository.deleteParentTag(id)
+    }
+
+    suspend fun deleteChildTag(id: Long) {
+        repository.deleteChildTag(id)
+    }
+
 
     data class ParentTag(
         val id: Long,

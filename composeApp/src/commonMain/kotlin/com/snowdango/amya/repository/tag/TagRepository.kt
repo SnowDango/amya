@@ -22,4 +22,12 @@ class TagRepository(
         return tagDataStore.getAllGroup()
     }
 
+    suspend fun deleteParentTag(id: Long) {
+        tagDataStore.deleteParentTag(id)
+    }
+
+    suspend fun deleteChildTag(id: Long) {
+        tagDataStore.deleteChildTag(id)
+    }
+
 }

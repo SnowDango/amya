@@ -5,14 +5,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.snowdango.amya.component.dialog.ChildDeleteTagDialog
+import com.snowdango.amya.component.dialog.ParentDeleteTagDialog
 import com.snowdango.amya.platform.Log
 import com.snowdango.amya.component.navigation.AddTagNavigateItem
 import com.snowdango.amya.component.navigation.ChildNavigateItem
 import com.snowdango.amya.component.navigation.ParentNavigateItem
 import com.snowdango.amya.component.navigation.SideNavigation
+import com.snowdango.amya.model.TagModel
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Home
 import org.koin.compose.viewmodel.koinViewModel
@@ -29,6 +35,8 @@ fun SideTabScreen(
         initialValue = Route.fromNavBackStackEntry(navController.currentBackStackEntry),
     )
     val tagGroups = viewModel.tagGroup.collectAsStateWithLifecycle()
+    var wantDeleteParentTag: TagModel.ParentTag? by remember { mutableStateOf(null) }
+    var wantDeleteChildTag: TagModel.ParentTag.ChildTag? by remember { mutableStateOf(null) }
 
     LaunchedEffect(currentRoute) {
         Log.d(currentRoute.toString())
@@ -52,6 +60,7 @@ fun SideTabScreen(
                     Route.AllView
                 )
             },
+            onDeleteClick = {}
         ) {}
         tagGroups.value.forEach { group ->
             ParentNavigateItem(
@@ -83,6 +92,9 @@ fun SideTabScreen(
                         )
                     )
                 },
+                onDeleteClick = {
+                    wantDeleteParentTag = group
+                }
             ) {
                 group.childTag.forEach { child ->
                     ChildNavigateItem(
@@ -107,6 +119,9 @@ fun SideTabScreen(
                                 )
                             )
                         },
+                        onDeleteClick = {
+                            wantDeleteChildTag = child
+                        }
                     )
                 }
                 AddTagNavigateItem(
@@ -140,6 +155,32 @@ fun SideTabScreen(
                     )
                 )
             },
+        )
+    }
+
+    if (wantDeleteParentTag != null) {
+        ParentDeleteTagDialog(
+            id = wantDeleteParentTag!!.id,
+            tagName = wantDeleteParentTag!!.name,
+            onDismissRequest = {
+                wantDeleteParentTag = null
+            },
+            onDelete = {
+                viewModel.deleteParentTag(it)
+            }
+        )
+    }
+
+    if (wantDeleteChildTag != null) {
+        ChildDeleteTagDialog(
+            id = wantDeleteChildTag!!.id,
+            tagName = wantDeleteChildTag!!.name,
+            onDismissRequest = {
+                wantDeleteChildTag = null
+            },
+            onDelete = {
+                viewModel.deleteChildTag(it)
+            }
         )
     }
 }

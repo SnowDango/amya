@@ -22,4 +22,7 @@ interface AppsDao {
     @Query("select * from ${AppsEntity.TABLE_NAME} where ${AppsEntity.COLUMN_TAG_ID} = :tagId and ${AppsEntity.COLUMN_SUB_TAG_ID} = :subTagId")
     fun getAppsBySubTagId(tagId: Long, subTagId: Long): Flow<List<AppsEntity>>
 
+    @Query("delete from ${AppsEntity.TABLE_NAME} where ${AppsEntity.COLUMN_ID} = :id")
+    suspend fun delete(id: Long)
+
 }

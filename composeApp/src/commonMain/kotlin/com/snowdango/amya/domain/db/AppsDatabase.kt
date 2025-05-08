@@ -14,7 +14,7 @@ import com.snowdango.amya.domain.db.entity.TagEntity
 import kotlinx.coroutines.Dispatchers
 
 
-@Database(entities = [AppsEntity::class, TagEntity::class, SubTagEntity::class], version = 1, exportSchema = false)
+@Database(entities = [AppsEntity::class, TagEntity::class, SubTagEntity::class], version = 2, exportSchema = false)
 @ConstructedBy(AppsDatabaseConstructor::class)
 abstract class AppsDatabase: RoomDatabase() {
 

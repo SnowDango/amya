@@ -2,11 +2,31 @@ package com.snowdango.amya.domain.db.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
 
-@Entity(tableName = AppsEntity.TABLE_NAME, indices = [Index(value = [AppsEntity.COLUMN_TAG_ID, AppsEntity.COLUMN_SUB_TAG_ID])])
+@Entity(
+    tableName = AppsEntity.TABLE_NAME,
+    indices = [
+        Index(value = [AppsEntity.COLUMN_TAG_ID, AppsEntity.COLUMN_SUB_TAG_ID])
+    ],
+    foreignKeys = [
+        ForeignKey(
+            entity = TagEntity::class,
+            parentColumns = arrayOf(TagEntity.COLUMN_ID),
+            childColumns = arrayOf(AppsEntity.COLUMN_TAG_ID),
+            onDelete = ForeignKey.CASCADE,
+        ),
+        ForeignKey(
+            entity = SubTagEntity::class,
+            parentColumns = arrayOf(TagEntity.COLUMN_ID),
+            childColumns = arrayOf(AppsEntity.COLUMN_SUB_TAG_ID),
+            onDelete = ForeignKey.SET_NULL,
+        )
+    ]
+)
 data class AppsEntity(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = COLUMN_ID) val id: Long = 0,
     @ColumnInfo(name = COLUMN_NAME) val name: String,

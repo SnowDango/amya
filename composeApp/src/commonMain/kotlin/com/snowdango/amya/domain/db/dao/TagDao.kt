@@ -20,6 +20,8 @@ interface TagDao {
     @Query("select * from ${TagEntity.TABLE_NAME}")
     fun getAllGroup(): Flow<List<TagGroupEntity>>
 
+    @Query("delete from ${TagEntity.TABLE_NAME} where id = :id")
+    suspend fun delete(id: Long)
 
 
 }

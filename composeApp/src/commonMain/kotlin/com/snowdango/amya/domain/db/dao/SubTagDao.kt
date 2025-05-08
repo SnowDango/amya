@@ -2,6 +2,7 @@ package com.snowdango.amya.domain.db.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.Query
 import com.snowdango.amya.domain.db.entity.SubTagEntity
 
 
@@ -10,5 +11,8 @@ interface SubTagDao {
 
     @Insert
     suspend fun insert(subTagEntity: SubTagEntity): Long
+
+    @Query("delete from ${SubTagEntity.TABLE_NAME} where id = :id")
+    suspend fun delete(id: Long): Int
 
 }
