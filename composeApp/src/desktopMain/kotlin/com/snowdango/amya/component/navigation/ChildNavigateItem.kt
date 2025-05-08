@@ -3,6 +3,7 @@ package com.snowdango.amya.component.navigation
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,7 +16,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -37,16 +40,21 @@ fun ChildNavigateItem(
         modifier = modifier
             .padding(vertical = 4.dp)
             .fillMaxWidth()
+            .clip(RoundedCornerShape(4.dp))
             .clickable(
                 onClick = onClick,
                 enabled = true,
+                indication = ripple(
+                    color = MaterialTheme.colorScheme.primary,
+                ),
+                interactionSource = remember { MutableInteractionSource() },
             )
     ){
         Row(
             modifier = Modifier
+                .padding(vertical = 4.dp)
                 .fillMaxWidth()
                 .height(28.dp)
-                .clip(RoundedCornerShape(4.dp))
                 .alpha(0.7f),
             verticalAlignment = Alignment.CenterVertically,
         ){

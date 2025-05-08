@@ -3,7 +3,9 @@ package com.snowdango.amya.component.navigation
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,8 +17,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
+import androidx.compose.material.ripple
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
@@ -62,15 +67,26 @@ fun SideNavigation(
             horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.CenterVertically,
         ){
-            Image(
-                imageVector = TablerIcons.Menu2,
-                contentDescription = null,
-                colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onBackground),
+            Box(
                 modifier = Modifier
-                    .padding(start = 4.dp, end = 4.dp)
-                    .size(24.dp)
-                    .clickable { isExpanded = !isExpanded }
-            )
+                    .clip(RoundedCornerShape(4.dp))
+                    .clickable(
+                        onClick = { isExpanded = !isExpanded },
+                        indication = ripple(
+                            color = MaterialTheme.colorScheme.primary,
+                        ),
+                        interactionSource = remember { MutableInteractionSource() }
+                    )
+            ) {
+                Image(
+                    imageVector = TablerIcons.Menu2,
+                    contentDescription = null,
+                    colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onBackground),
+                    modifier = Modifier
+                        .padding(start = 4.dp, end = 4.dp)
+                        .size(24.dp),
+                )
+            }
         }
         Column(
             modifier = Modifier
@@ -80,42 +96,55 @@ fun SideNavigation(
         ){
             content()
         }
-        Row(
+        Box(
             modifier = Modifier
-                .padding(top = 12.dp, bottom = 12.dp)
+                .padding(vertical = 12.dp)
                 .fillMaxWidth()
-                .height(28.dp),
-            horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.CenterVertically,
+                .clip(RoundedCornerShape(4.dp))
+                .clickable(
+                    onClick = { onClickSetting.invoke() },
+                    indication = ripple(
+                        color = MaterialTheme.colorScheme.primary,
+                    ),
+                    interactionSource = remember { MutableInteractionSource() }
+                )
         ){
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-            )
             Row(
                 modifier = Modifier
-                    .clickable { onClickSetting.invoke() }
-                    .padding(top = 4.dp, bottom = 4.dp)
+                    .padding(vertical = 4.dp)
+                    .fillMaxWidth()
+                    .height(28.dp),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
             ){
-                Text(
-                    text = "Settings",
-                    color = MaterialTheme.colorScheme.onBackground,
-                    textAlign = TextAlign.End,
-                    fontSize = 13.sp,
+                Spacer(
                     modifier = Modifier
-                        .padding(start = 8.dp)
                         .fillMaxWidth()
-                        .weight(2f)
+                        .weight(1f),
                 )
-                Image(
-                    imageVector = TablerIcons.Settings,
-                    contentDescription = null,
-                    colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onBackground),
+                Row(
                     modifier = Modifier
-                        .padding(start = 20.dp, end = 8.dp)
-                        .size(20.dp)
-                )
+                        .padding(top = 4.dp, bottom = 4.dp)
+                ){
+                    Text(
+                        text = "Settings",
+                        color = MaterialTheme.colorScheme.onBackground,
+                        textAlign = TextAlign.End,
+                        fontSize = 13.sp,
+                        modifier = Modifier
+                            .padding(start = 8.dp)
+                            .fillMaxWidth()
+                            .weight(2f)
+                    )
+                    Image(
+                        imageVector = TablerIcons.Settings,
+                        contentDescription = null,
+                        colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onBackground),
+                        modifier = Modifier
+                            .padding(start = 20.dp, end = 8.dp)
+                            .size(20.dp)
+                    )
+                }
             }
         }
     }
