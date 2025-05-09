@@ -42,7 +42,7 @@ fun SideTabScreen(
     var wantDeleteChildTag: TagModel.ParentTag.ChildTag? by remember { mutableStateOf(null) }
 
     var wantEditParentTag: TagModel.ParentTag? by remember { mutableStateOf(null) }
-    var wantEditChildTag: TagModel.ParentTag.ChildTag? by remember { mutableStateOf(null) }
+    var wantEditChildTag: Pair<TagModel.ParentTag.ChildTag, Long>? by remember { mutableStateOf(null) }
 
     LaunchedEffect(currentRoute) {
         Log.d(currentRoute.toString())
@@ -61,6 +61,7 @@ fun SideTabScreen(
             title = "All View",
             icon = TablerIcons.Home,
             selected = currentRoute is Route.AllView,
+            isMenuEnable = false,
             onClick = {
                 navController.navigate(
                     Route.AllView
@@ -131,6 +132,9 @@ fun SideTabScreen(
                         },
                         onDeleteClick = {
                             wantDeleteChildTag = child
+                        },
+                        onEditClick = {
+                            wantEditChildTag = child to group.id
                         }
                     )
                 }
@@ -202,20 +206,21 @@ fun SideTabScreen(
                 wantEditParentTag = null
             },
             onSaveClick = { id, name, icon ->
+                viewModel.updateParentTag(id, name, icon)
             }
         )
     }
 
     if (wantEditChildTag != null) {
         EditChildTagDialog(
-            tagId = wantEditChildTag!!.id,
-            tagName = wantEditChildTag!!.name,
-            icon = wantEditChildTag!!.icon,
+            tagId = wantEditChildTag!!.first.id,
+            tagName = wantEditChildTag!!.first.name,
+            icon = wantEditChildTag!!.first.icon,
             onDismissRequest = {
                 wantEditChildTag = null
             },
             onSaveClick = { id, name, icon ->
-
+                viewModel.updateChildTag(id, name, wantEditChildTag!!.second, icon)
             }
         )
     }

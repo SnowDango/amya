@@ -46,6 +46,7 @@ fun ChildNavigateItem(
     selected: Boolean,
     onClick: () -> Unit,
     onDeleteClick: () -> Unit,
+    onEditClick: () -> Unit,
 ) {
     var menuExpanded by remember { mutableStateOf(false) }
 
@@ -122,7 +123,7 @@ fun ChildNavigateItem(
             DropdownMenuItem(
                 text = { Text(text = "Edit") },
                 onClick = {
-                    // Handle edit action
+                    onEditClick.invoke()
                     menuExpanded = false
                 }
             )

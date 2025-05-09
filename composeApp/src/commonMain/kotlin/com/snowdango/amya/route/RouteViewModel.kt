@@ -1,6 +1,7 @@
 package com.snowdango.amya.route
 
 
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -35,6 +36,39 @@ class RouteViewModel(
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = Route.fromNavBackStackEntry(navController.currentBackStackEntry),
     )
+
+    fun updateParentTag(
+        tagId: Long,
+        name: String,
+        icon: ImageVector,
+    ) {
+        viewModelScope.launch {
+            try {
+                tagModel.updateParentTag(tagId, name, icon)
+            }catch (ce: CancellationException){
+                throw ce
+            }catch (th: Throwable) {
+                Log.e(th.message.toString())
+            }
+        }
+    }
+
+    fun updateChildTag(
+        tagId: Long,
+        name: String,
+        parentTagId: Long,
+        icon: ImageVector,
+    ) {
+        viewModelScope.launch {
+            try {
+                tagModel.updateChildTag(tagId, name, parentTagId, icon)
+            }catch (ce: CancellationException){
+                throw ce
+            }catch (th: Throwable) {
+                Log.e(th.message.toString())
+            }
+        }
+    }
 
     fun deleteParentTag(tagId: Long) {
         viewModelScope.launch {

@@ -65,6 +65,36 @@ class TagModel: KoinComponent{
         }
     }
 
+    suspend fun updateParentTag(
+        id: Long,
+        tagName: String,
+        icon: ImageVector,
+    ) {
+        repository.update(
+            TagEntity(
+                id = id,
+                name = tagName,
+                icon = icon.name,
+            )
+        )
+    }
+
+    suspend fun updateChildTag(
+        id: Long,
+        tagName: String,
+        parentTagId: Long,
+        icon: ImageVector,
+    ) {
+        repository.update(
+            SubTagEntity(
+                id = id,
+                name = tagName,
+                tagId = parentTagId,
+                icon = icon.name,
+            )
+        )
+    }
+
     suspend fun deleteParentTag(id: Long) {
         repository.deleteParentTag(id)
     }

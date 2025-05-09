@@ -22,6 +22,14 @@ class TagRepository(
         return tagDataStore.getAllGroup()
     }
 
+    suspend fun update(tagEntity: TagEntity) {
+        tagDataStore.update(tagEntity)
+    }
+
+    suspend fun update(subTagEntity: SubTagEntity) {
+        tagDataStore.update(subTagEntity)
+    }
+
     suspend fun deleteParentTag(id: Long) {
         tagDataStore.deleteParentTag(id)
     }

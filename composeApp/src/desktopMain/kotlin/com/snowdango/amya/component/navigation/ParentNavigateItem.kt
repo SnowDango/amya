@@ -47,6 +47,7 @@ fun ParentNavigateItem(
     title: String,
     icon: ImageVector,
     selected: Boolean,
+    isMenuEnable: Boolean = true,
     onClick: () -> Unit,
     onDeleteClick: () -> Unit,
     onEditClick: () -> Unit,
@@ -71,6 +72,7 @@ fun ParentNavigateItem(
                     interactionSource = remember { MutableInteractionSource() },
                 )
                 .onClick(
+                    enabled = isMenuEnable,
                     matcher = PointerMatcher.mouse(PointerButton.Secondary),
                     onClick = {
                         menuExpanded = true
