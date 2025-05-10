@@ -76,6 +76,7 @@ buildkonfig {
 
     defaultConfigs {
         buildConfigField(FieldSpec.Type.STRING, "osName", "MaxOS")
+        buildConfigField(FieldSpec.Type.STRING, "appVersion", libs.versions.app.version.get())
     }
     targetConfigs {
         create("macos") {
