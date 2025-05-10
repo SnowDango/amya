@@ -23,6 +23,9 @@ ktor = "3.1.2"
 filekit = "0.10.0-beta03"
 buildKonfig = "0.17.1"
 kmp-process = "0.2.0"
+compose-settings = "2.10.0"
+androidx-datastore = "1.1.6"
+appDir = "1.2.0"
 
 [libraries]
 
@@ -81,6 +84,16 @@ slf4j = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 # kmp-process
 kmp-process = { module = "io.matthewnelson.kmp-process:process", version.ref = "kmp-process" }
 
+# settings
+composeSettings-ui = { group = "com.github.alorma.compose-settings", name = "ui-tiles", version.ref = "compose-settings" }
+composeSettings-ui-extended = { group = "com.github.alorma.compose-settings", name = "ui-tiles-extended", version.ref = "compose-settings" }
+
+# dataStore
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "androidx-datastore" }
+
+# appDir
+appDirs = { module = "ca.gosyer:kotlin-multiplatform-appdirs", version.ref = "appDir" }
+
 # test
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
@@ -105,3 +118,4 @@ paging = ["androidx-paging-runtime", "cashapp-paging-compose"]
 logging = ["kotlin-logging", "slf4j"]
 coil = ["coil-compose", "coil-ktor"]
 filekit = ["filekit-dialogs", "filekit-dialogs-compose"]
+settings = ["composeSettings-ui", "composeSettings-ui-extended"]

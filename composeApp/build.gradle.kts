@@ -40,6 +40,7 @@ kotlin {
                 implementation(libs.ktor.client.core)
                 implementation(libs.bundles.filekit)
                 implementation(libs.kmp.process)
+                api(libs.datastore.preferences)
             }
         }
         desktopMain.dependencies {
@@ -53,6 +54,8 @@ kotlin {
             implementation(libs.bundles.coil)
             implementation(libs.ktor.client.java)
             implementation(libs.kmp.process)
+            implementation(libs.bundles.settings)
+            implementation(libs.appDirs)
         }
     }
 
