@@ -39,15 +39,22 @@ class SettingViewModel: ViewModel(), KoinComponent {
     }
 
     fun onChangeClosedMinimize(value: Boolean) {
+        Log.d("onChangeClosedMinimize: $value")
         viewModelScope.launch {
-            settingsModel.setIsClosedMinimize(value)
+            try {
+                settingsModel.setIsClosedMinimize(value)
+            }catch (ce: CancellationException){
+                throw ce
+            }catch (th: Throwable) {
+                Log.e(th.message.toString())
+            }
         }
     }
 
     fun onChangeAutoLaunch(value: Boolean) {
+        Log.d("onChangeAutoLaunch: $value")
         viewModelScope.launch {
             try {
-
                 if (value) {
                     AutoLaunchExtension.enable()
                 } else {
