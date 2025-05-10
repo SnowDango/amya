@@ -92,7 +92,11 @@ fun App() {
                             )
                         }
                         composable<Route.SettingView> {
-                            SettingViewScreen()
+                            SettingViewScreen(
+                                navigateLicense = {
+                                    navController.navigate(Route.LicenseView)
+                                }
+                            )
                         }
 
                         composable<Route.AddAppView> {

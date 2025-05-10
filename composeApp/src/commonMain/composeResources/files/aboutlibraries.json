@@ -1542,98 +1542,6 @@
             ]
         },
         {
-            "uniqueId": "com.mikepenz:aboutlibraries-compose",
-            "funding": [
-                
-            ],
-            "developers": [
-                {
-                    "name": "Mike Penz"
-                }
-            ],
-            "artifactVersion": "12.1.2",
-            "description": "AboutLibraries automatically detects all dependencies of a project and collects their information including the license. Optionally visualising it via the provided ui components.",
-            "scm": {
-                "connection": "scm:git@github.com:mikepenz/AboutLibraries.git",
-                "url": "https://github.com/mikepenz/AboutLibraries",
-                "developerConnection": "scm:git@github.com:mikepenz/AboutLibraries.git"
-            },
-            "name": "AboutLibraries Compose Material 2 Library",
-            "website": "https://github.com/mikepenz/AboutLibraries",
-            "licenses": [
-                "Apache-2.0"
-            ]
-        },
-        {
-            "uniqueId": "com.mikepenz:aboutlibraries-compose-core",
-            "funding": [
-                
-            ],
-            "developers": [
-                {
-                    "name": "Mike Penz"
-                }
-            ],
-            "artifactVersion": "12.1.2",
-            "description": "AboutLibraries automatically detects all dependencies of a project and collects their information including the license. Optionally visualising it via the provided ui components.",
-            "scm": {
-                "connection": "scm:git@github.com:mikepenz/AboutLibraries.git",
-                "url": "https://github.com/mikepenz/AboutLibraries",
-                "developerConnection": "scm:git@github.com:mikepenz/AboutLibraries.git"
-            },
-            "name": "AboutLibraries Compose UI Library",
-            "website": "https://github.com/mikepenz/AboutLibraries",
-            "licenses": [
-                "Apache-2.0"
-            ]
-        },
-        {
-            "uniqueId": "com.mikepenz:aboutlibraries-compose-core-jvm",
-            "funding": [
-                
-            ],
-            "developers": [
-                {
-                    "name": "Mike Penz"
-                }
-            ],
-            "artifactVersion": "12.1.2",
-            "description": "AboutLibraries automatically detects all dependencies of a project and collects their information including the license. Optionally visualising it via the provided ui components.",
-            "scm": {
-                "connection": "scm:git@github.com:mikepenz/AboutLibraries.git",
-                "url": "https://github.com/mikepenz/AboutLibraries",
-                "developerConnection": "scm:git@github.com:mikepenz/AboutLibraries.git"
-            },
-            "name": "AboutLibraries Compose UI Library",
-            "website": "https://github.com/mikepenz/AboutLibraries",
-            "licenses": [
-                "Apache-2.0"
-            ]
-        },
-        {
-            "uniqueId": "com.mikepenz:aboutlibraries-compose-jvm",
-            "funding": [
-                
-            ],
-            "developers": [
-                {
-                    "name": "Mike Penz"
-                }
-            ],
-            "artifactVersion": "12.1.2",
-            "description": "AboutLibraries automatically detects all dependencies of a project and collects their information including the license. Optionally visualising it via the provided ui components.",
-            "scm": {
-                "connection": "scm:git@github.com:mikepenz/AboutLibraries.git",
-                "url": "https://github.com/mikepenz/AboutLibraries",
-                "developerConnection": "scm:git@github.com:mikepenz/AboutLibraries.git"
-            },
-            "name": "AboutLibraries Compose Material 2 Library",
-            "website": "https://github.com/mikepenz/AboutLibraries",
-            "licenses": [
-                "Apache-2.0"
-            ]
-        },
-        {
             "uniqueId": "com.mikepenz:aboutlibraries-core",
             "funding": [
                 
@@ -4350,54 +4258,6 @@
             ]
         },
         {
-            "uniqueId": "org.jetbrains.compose.ui:ui-backhandler",
-            "funding": [
-                
-            ],
-            "developers": [
-                {
-                    "organisationUrl": "https://www.jetbrains.com",
-                    "name": "Compose Multiplatform Team"
-                }
-            ],
-            "artifactVersion": "1.8.0",
-            "description": "Provides BackHandler in Compose Multiplatform projects",
-            "scm": {
-                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
-                "url": "https://github.com/JetBrains/compose-jb",
-                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
-            },
-            "name": "Compose Multiplatform BackHandler",
-            "website": "https://github.com/JetBrains/compose-jb",
-            "licenses": [
-                "Apache-2.0"
-            ]
-        },
-        {
-            "uniqueId": "org.jetbrains.compose.ui:ui-backhandler-desktop",
-            "funding": [
-                
-            ],
-            "developers": [
-                {
-                    "organisationUrl": "https://www.jetbrains.com",
-                    "name": "Compose Multiplatform Team"
-                }
-            ],
-            "artifactVersion": "1.8.0",
-            "description": "Provides BackHandler in Compose Multiplatform projects",
-            "scm": {
-                "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
-                "url": "https://github.com/JetBrains/compose-jb",
-                "developerConnection": "scm:git:https://github.com/JetBrains/compose-jb.git"
-            },
-            "name": "Compose Multiplatform BackHandler",
-            "website": "https://github.com/JetBrains/compose-jb",
-            "licenses": [
-                "Apache-2.0"
-            ]
-        },
-        {
             "uniqueId": "org.jetbrains.compose.ui:ui-desktop",
             "funding": [
                 
@@ -4792,7 +4652,7 @@
                     "name": "Kotlin Team"
                 }
             ],
-            "artifactVersion": "2.1.10",
+            "artifactVersion": "1.9.24",
             "description": "Kotlin Standard Library JDK 7 extension",
             "scm": {
                 "connection": "scm:git:https://github.com/JetBrains/kotlin.git",
@@ -4816,7 +4676,7 @@
                     "name": "Kotlin Team"
                 }
             ],
-            "artifactVersion": "2.1.10",
+            "artifactVersion": "1.9.24",
             "description": "Kotlin Standard Library JDK 8 extension",
             "scm": {
                 "connection": "scm:git:https://github.com/JetBrains/kotlin.git",

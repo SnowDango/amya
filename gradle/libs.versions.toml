@@ -98,9 +98,6 @@ appDirs = { module = "ca.gosyer:kotlin-multiplatform-appdirs", version.ref = "ap
 
 # aboutLibraries
 aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "aboutLibraries" }
-aboutlibraries-compose-core = { module = "com.mikepenz:aboutlibraries-compose-core", version.ref = "aboutLibraries" }
-aboutlibraries-compose-m2 = { module = "com.mikepenz:aboutlibraries-compose", version.ref = "aboutLibraries" }
-aboutlibraries-compose-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutLibraries" }
 
 # test
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -130,4 +127,3 @@ logging = ["kotlin-logging", "slf4j"]
 coil = ["coil-compose", "coil-ktor"]
 filekit = ["filekit-dialogs", "filekit-dialogs-compose"]
 settings = ["composeSettings-ui", "composeSettings-ui-extended"]
-aboutLibraries = ["aboutlibraries-core", "aboutlibraries-compose-core", "aboutlibraries-compose-m3"]

@@ -1,6 +1,7 @@
 package com.snowdango.amya.feature.setting
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,8 +37,13 @@ fun LicensesViewScreen(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            items(libraries.value) {
-
+            items(libraries.value.distinctBy { it.uniqueId }) {
+                LibraryCard(
+                    modifier = Modifier
+                        .padding(all = 8.dp)
+                        .fillMaxWidth(),
+                    library = it,
+                )
             }
         }
     }
@@ -48,17 +54,19 @@ fun LibraryCard(
     modifier: Modifier = Modifier,
     library: Library,
 ) {
-    Box(
+    Column(
         modifier = modifier
             .padding(all = 8.dp)
     ) {
         Row(
             modifier = Modifier
+                .padding(bottom = 4.dp)
                 .fillMaxWidth()
         ) {
             Text(
                 text = library.name,
-                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.onBackground,
+                fontSize = 20.sp,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
                     .padding(end = 8.dp)
@@ -67,15 +75,18 @@ fun LibraryCard(
             )
             Text(
                 text = library.artifactVersion.orEmpty(),
-                fontSize = 12.sp,
+                color = MaterialTheme.colorScheme.onBackground,
+                fontSize = 14.sp,
                 modifier = Modifier
                     .wrapContentWidth()
             )
         }
         Text(
             text = library.developers.firstOrNull()?.name.orEmpty(),
-            fontSize = 14.sp,
+            color = MaterialTheme.colorScheme.onBackground,
+            fontSize = 16.sp,
             modifier = Modifier
+                .padding(bottom = 4.dp)
                 .fillMaxWidth()
         )
         Row(
@@ -92,6 +103,8 @@ fun LibraryCard(
                     Text(
                         text = it.name,
                         fontSize = 12.sp,
+                        modifier = Modifier
+                            .padding(all = 2.dp)
                     )
                 }
             }

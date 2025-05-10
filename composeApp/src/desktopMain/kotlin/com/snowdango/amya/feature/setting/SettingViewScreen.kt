@@ -2,7 +2,6 @@ package com.snowdango.amya.feature.setting
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,18 +10,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alorma.compose.settings.ui.SettingsGroup
+import com.alorma.compose.settings.ui.SettingsMenuLink
 import com.alorma.compose.settings.ui.SettingsSwitch
 import com.snowdango.amya.BuildKonfig
 import org.koin.compose.viewmodel.koinViewModel
@@ -30,6 +26,7 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun SettingViewScreen(
+    navigateLicense: () -> Unit,
     viewModel: SettingViewModel = koinViewModel()
 ) {
     Box(
@@ -50,6 +47,7 @@ fun SettingViewScreen(
                 val isClosedMinimize by viewModel.isClosedMinimize.collectAsStateWithLifecycle()
                 Box(
                     modifier = Modifier
+                        .padding(bottom = 8.dp)
                         .clip(RoundedCornerShape(12.dp))
                 ) {
                     SettingsSwitch(
@@ -58,6 +56,17 @@ fun SettingViewScreen(
                         onCheckedChange = {
                             viewModel.onChangeClosedMinimize(it)
                         }
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(12.dp))
+                ) {
+                    SettingsMenuLink(
+                        title = { Text(text = "Show Licenses") },
+                        onClick = {
+                            navigateLicense.invoke()
+                        },
                     )
                 }
                 Text(

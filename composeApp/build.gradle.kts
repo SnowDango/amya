@@ -85,17 +85,6 @@ buildkonfig {
         buildConfigField(FieldSpec.Type.STRING, "osName", "MaxOS")
         buildConfigField(FieldSpec.Type.STRING, "appVersion", libs.versions.app.version.get())
     }
-    targetConfigs {
-        create("macos") {
-            buildConfigField(FieldSpec.Type.STRING, "osName", "MacOS")
-        }
-        create("mingw") {
-            buildConfigField(FieldSpec.Type.STRING, "osName", "Windows")
-        }
-        create("linux") {
-            buildConfigField(FieldSpec.Type.STRING, "osName", "Linux")
-        }
-    }
 }
 
 aboutLibraries {
