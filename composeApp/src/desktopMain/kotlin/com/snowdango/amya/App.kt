@@ -20,6 +20,7 @@ import androidx.navigation.toRoute
 import com.snowdango.amya.feature.addapp.AddAppViewScreen
 import com.snowdango.amya.feature.addtag.AddTagViewScreen
 import com.snowdango.amya.feature.all.AllViewScreen
+import com.snowdango.amya.feature.setting.LicensesViewScreen
 import com.snowdango.amya.feature.setting.SettingViewScreen
 import com.snowdango.amya.feature.tag.TagViewScreen
 import com.snowdango.amya.route.Route
@@ -105,10 +106,7 @@ fun App() {
                             )
                         }
                         composable<Route.LicenseView> {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                            )
+                            LicensesViewScreen()
                         }
                     }
                 }

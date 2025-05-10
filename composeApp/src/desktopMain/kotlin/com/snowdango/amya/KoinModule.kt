@@ -6,6 +6,7 @@ import com.snowdango.amya.domain.db.SettingsPreferences
 import com.snowdango.amya.feature.addapp.AddAppViewModel
 import com.snowdango.amya.feature.addtag.AddTagViewModel
 import com.snowdango.amya.feature.all.AllViewModel
+import com.snowdango.amya.feature.setting.LicensesViewModel
 import com.snowdango.amya.feature.setting.SettingViewModel
 import com.snowdango.amya.feature.tag.TagViewModel
 import com.snowdango.amya.model.AppsModel
@@ -57,6 +58,8 @@ val module = module {
     viewModel<AllViewModel> { AllViewModel() }
     // setting
     viewModel<SettingViewModel> { SettingViewModel() }
+    // license
+    viewModel<LicensesViewModel> { LicensesViewModel() }
 
 
     // main

@@ -42,12 +42,17 @@ kotlin {
                 implementation(libs.bundles.filekit)
                 implementation(libs.kmp.process)
                 api(libs.datastore.preferences)
+                api(libs.aboutlibraries.core)
             }
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
+            implementation(compose.foundation)
+            implementation(compose.material)
+            implementation(compose.material3)
+            implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation(libs.kotlinx.coroutines.swing)
+            implementation(libs.bundles.coroutines)
             implementation(libs.composeIcons.tablerIcons)
             implementation(libs.bundles.koin)
             implementation(libs.kotlinx.serialization.json)
@@ -95,8 +100,12 @@ buildkonfig {
 
 aboutLibraries {
     offlineMode = false
+    android {
+        registerAndroidTasks = false
+    }
     export {
         outputFile = file("src/commonMain/composeResources/files/aboutlibraries.json")
+        prettyPrint = true
     }
 }
 

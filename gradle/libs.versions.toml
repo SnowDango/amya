@@ -38,6 +38,7 @@ androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", nam
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 
 # coroutine
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 
 # material-kolor
@@ -98,6 +99,7 @@ appDirs = { module = "ca.gosyer:kotlin-multiplatform-appdirs", version.ref = "ap
 # aboutLibraries
 aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "aboutLibraries" }
 aboutlibraries-compose-core = { module = "com.mikepenz:aboutlibraries-compose-core", version.ref = "aboutLibraries" }
+aboutlibraries-compose-m2 = { module = "com.mikepenz:aboutlibraries-compose", version.ref = "aboutLibraries" }
 aboutlibraries-compose-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutLibraries" }
 
 # test
@@ -120,6 +122,7 @@ aboutLibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "abo
 
 
 [bundles]
+coroutines = ["kotlinx-coroutines-core", "kotlinx-coroutines-swing"]
 room = ["androidx-room-runtime", "androidx-room-paging", "androidx-sqlite-bundled", "androidx-sqlite-bundled-jvm"]
 koin = ["koin-core", "koin-compose-core", "koin-compose-viewmodel", "koin-compose-navigation"]
 paging = ["androidx-paging-runtime", "cashapp-paging-compose"]
