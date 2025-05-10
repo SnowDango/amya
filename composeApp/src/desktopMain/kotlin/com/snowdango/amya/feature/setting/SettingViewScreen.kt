@@ -2,8 +2,11 @@ package com.snowdango.amya.feature.setting
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -39,16 +42,20 @@ fun SettingViewScreen(
                     .fillMaxWidth(),
                 title = { Text(text = "AppSettings") },
             ) {
+                Spacer(modifier = Modifier.height(32.dp))
                 val isClosedMinimize by viewModel.isClosedMinimize.collectAsStateWithLifecycle()
-                SettingsSwitch(
-                    state = isClosedMinimize,
-                    title = { Text(text = "Minimize with Close Window") },
+                Box(
                     modifier = Modifier
-                        .clip(RoundedCornerShape(12.dp)),
-                    onCheckedChange = {
-                        viewModel.onChangeClosedMinimize(it)
-                    }
-                )
+                        .clip(RoundedCornerShape(12.dp))
+                ) {
+                    SettingsSwitch(
+                        state = isClosedMinimize,
+                        title = { Text(text = "Minimize with Close Window") },
+                        onCheckedChange = {
+                            viewModel.onChangeClosedMinimize(it)
+                        }
+                    )
+                }
             }
 
         }
