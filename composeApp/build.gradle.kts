@@ -105,7 +105,7 @@ compose.desktop {
         nativeDistributions {
             outputBaseDir.set(project.layout.buildDirectory.dir("customOutputDir"))
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.snowdango.amya"
+            packageName = "Amya"
             packageVersion = libs.versions.app.version.get()
             linux {
                 modules("jdk.security.auth")
