@@ -21,6 +21,7 @@ import com.alorma.compose.settings.ui.SettingsGroup
 import com.alorma.compose.settings.ui.SettingsMenuLink
 import com.alorma.compose.settings.ui.SettingsSwitch
 import com.snowdango.amya.BuildKonfig
+import com.snowdango.amya.feature.setting.SettingViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 
@@ -55,6 +56,20 @@ fun SettingViewScreen(
                         title = { Text(text = "Minimize with Close Window") },
                         onCheckedChange = {
                             viewModel.onChangeClosedMinimize(it)
+                        }
+                    )
+                }
+                val isAutoLaunch by viewModel.isEnableAutoLaunch.collectAsStateWithLifecycle()
+                Box(
+                    modifier = Modifier
+                        .padding(bottom = 8.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                ) {
+                    SettingsSwitch(
+                        state = isAutoLaunch,
+                        title = { Text(text = "Application launch on startup") },
+                        onCheckedChange = {
+                            viewModel.onChangeAutoLaunch(it)
                         }
                     )
                 }

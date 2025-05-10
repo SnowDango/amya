@@ -62,6 +62,7 @@ kotlin {
             implementation(libs.kmp.process)
             implementation(libs.bundles.settings)
             implementation(libs.appDirs)
+            implementation(libs.autoLaunch)
         }
     }
 

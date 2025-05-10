@@ -3,6 +3,10 @@ package com.snowdango.amya.feature.setting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.snowdango.amya.model.SettingsModel
+import com.snowdango.amya.platform.AutoLaunchExtension
+import com.snowdango.amya.platform.Log
+import io.ktor.utils.io.CancellationException
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -21,11 +25,42 @@ class SettingViewModel: ViewModel(), KoinComponent {
         initialValue = true,
     )
 
+    private val _isEnableAutoLaunch: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isEnableAutoLaunch = _isEnableAutoLaunch.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(5_000),
+        initialValue = false,
+    )
+
+    init {
+        viewModelScope.launch {
+            _isEnableAutoLaunch.emit(AutoLaunchExtension.isEnabled())
+        }
+    }
+
     fun onChangeClosedMinimize(value: Boolean) {
         viewModelScope.launch {
             settingsModel.setIsClosedMinimize(value)
         }
     }
 
+    fun onChangeAutoLaunch(value: Boolean) {
+        viewModelScope.launch {
+            try {
+
+                if (value) {
+                    AutoLaunchExtension.enable()
+                } else {
+                    AutoLaunchExtension.disable()
+                }
+            }catch (ce: CancellationException) {
+                throw ce
+            }catch (th: Throwable){
+                Log.e(th.message.toString())
+            }finally {
+                _isEnableAutoLaunch.emit(AutoLaunchExtension.isEnabled())
+            }
+        }
+    }
 
 }

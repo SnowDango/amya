@@ -27,6 +27,7 @@ compose-settings = "2.10.0"
 androidx-datastore = "1.1.6"
 appDir = "1.2.0"
 aboutLibraries = "12.1.2"
+autoLaunch = "0.6.0"
 
 [libraries]
 
@@ -98,6 +99,9 @@ appDirs = { module = "ca.gosyer:kotlin-multiplatform-appdirs", version.ref = "ap
 
 # aboutLibraries
 aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "aboutLibraries" }
+
+# autoLaunch
+autoLaunch = { module = "io.github.vinceglb:auto-launch", version.ref = "autoLaunch" }
 
 # test
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
