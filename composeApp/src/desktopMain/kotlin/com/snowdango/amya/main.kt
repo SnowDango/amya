@@ -11,14 +11,18 @@ import androidx.compose.ui.res.loadSvgPainter
 import androidx.compose.ui.res.useResource
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.ApplicationScope
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snowdango.amya.platform.Log
 import com.snowdango.amya.platform.getPlatform
 import io.github.vinceglb.filekit.FileKit
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.context.startKoin
+import org.koin.java.KoinJavaComponent.inject
 import java.awt.Dimension
 
 fun main() {
@@ -26,10 +30,17 @@ fun main() {
     application {
         val minimumDpSize = DpSize(800.dp, 600.dp)
         val windowState = rememberWindowState(size = minimumDpSize * 2)
-        startKoin { modules(module) }
-        FileKit.init(appId = "Amya")
+        init()
+        val viewModel: MainViewModel = koinViewModel()
+        val isClosedMinimized = viewModel.isClosedMinimize().collectAsStateWithLifecycle(initialValue = true)
         Window(
-            onCloseRequest = ::exitApplication,
+            onCloseRequest = {
+                if (isClosedMinimized.value) {
+                    windowState.isMinimized = true
+                } else {
+                    exitApplication()
+                }
+            },
             state = windowState,
             title = "Amya",
             icon = painterResource(Res.drawable.icon)
@@ -38,6 +49,11 @@ fun main() {
             App()
         }
     }
+}
+
+fun init() {
+    startKoin { modules(module) }
+    FileKit.init(appId = "Amya")
 }
 
 @Composable
