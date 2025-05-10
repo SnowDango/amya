@@ -19,6 +19,9 @@ import com.snowdango.amya.repository.settings.SettingsRepository
 import com.snowdango.amya.repository.tag.TagDataStore
 import com.snowdango.amya.repository.tag.TagRepository
 import com.snowdango.amya.route.RouteViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -54,6 +57,7 @@ val module = module {
 
 
     // main
-    viewModel<MainViewModel> { MainViewModel() }
+    single<MainViewModel> { MainViewModel() }
+    single<CoroutineScope> { CoroutineScope(Dispatchers.Default + Job()) }
 
 }
