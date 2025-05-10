@@ -102,10 +102,11 @@ aboutLibraries {
 compose.desktop {
     application {
         mainClass = "com.snowdango.amya.MainKt"
-
         nativeDistributions {
             outputBaseDir.set(project.layout.buildDirectory.dir("customOutputDir"))
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            modules("jdk.unsupported")
+            modules("jdk.unsupported.desktop")
             packageName = "Amya"
             packageVersion = libs.versions.app.version.get()
             linux {
