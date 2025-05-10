@@ -104,6 +104,12 @@ fun App() {
                                 }
                             )
                         }
+                        composable<Route.LicenseView> {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                            )
+                        }
                     }
                 }
             }

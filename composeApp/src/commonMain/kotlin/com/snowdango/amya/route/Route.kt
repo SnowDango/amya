@@ -16,6 +16,8 @@ sealed class Route {
     data class AddTagView(val tagId: Long?): Route()
     @Serializable
     data class AddAppView(val tagId: Long, val subTagId: Long?): Route()
+    @Serializable
+    data object LicenseView: Route()
 
     companion object {
 
@@ -38,6 +40,9 @@ sealed class Route {
 
                 AddAppView.serializer().descriptor.serialName in route -> {
                     navBackStackEntry.toRoute<AddAppView>()
+                }
+                LicenseView.serializer().descriptor.serialName in route -> {
+                    navBackStackEntry.toRoute<LicenseView>()
                 }
                 else -> null
             }
