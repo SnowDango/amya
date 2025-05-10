@@ -26,6 +26,7 @@ kmp-process = "0.2.0"
 compose-settings = "2.10.0"
 androidx-datastore = "1.1.6"
 appDir = "1.2.0"
+aboutLibraries = "12.1.2"
 
 [libraries]
 
@@ -94,6 +95,11 @@ datastore-preferences = { module = "androidx.datastore:datastore-preferences", v
 # appDir
 appDirs = { module = "ca.gosyer:kotlin-multiplatform-appdirs", version.ref = "appDir" }
 
+# aboutLibraries
+aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "aboutLibraries" }
+aboutlibraries-compose-core = { module = "com.mikepenz:aboutlibraries-compose-core", version.ref = "aboutLibraries" }
+aboutlibraries-compose-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutLibraries" }
+
 # test
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
@@ -110,6 +116,8 @@ kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", versio
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 room = { id = "androidx.room", version.ref = "androidx-room" }
 buildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildKonfig" }
+aboutLibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutLibraries" }
+
 
 [bundles]
 room = ["androidx-room-runtime", "androidx-room-paging", "androidx-sqlite-bundled", "androidx-sqlite-bundled-jvm"]
@@ -119,3 +127,4 @@ logging = ["kotlin-logging", "slf4j"]
 coil = ["coil-compose", "coil-ktor"]
 filekit = ["filekit-dialogs", "filekit-dialogs-compose"]
 settings = ["composeSettings-ui", "composeSettings-ui-extended"]
+aboutLibraries = ["aboutlibraries-core", "aboutlibraries-compose-core", "aboutlibraries-compose-m3"]

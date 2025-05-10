@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
     alias(libs.plugins.buildKonfig)
+    alias(libs.plugins.aboutLibraries)
 }
 
 kotlin {
@@ -71,6 +72,7 @@ room {
 dependencies {
     add("kspDesktop", libs.androidx.room.compiler)
 }
+
 buildkonfig {
     packageName = "com.snowdango.amya"
 
@@ -88,6 +90,13 @@ buildkonfig {
         create("linux") {
             buildConfigField(FieldSpec.Type.STRING, "osName", "Linux")
         }
+    }
+}
+
+aboutLibraries {
+    offlineMode = false
+    export {
+        outputFile = file("src/commonMain/composeResources/files/aboutlibraries.json")
     }
 }
 
