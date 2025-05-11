@@ -20,6 +20,7 @@ import androidx.navigation.toRoute
 import com.snowdango.amya.feature.addapp.AddAppViewScreen
 import com.snowdango.amya.feature.addtag.AddTagViewScreen
 import com.snowdango.amya.feature.all.AllViewScreen
+import com.snowdango.amya.feature.setting.LicensesViewScreen
 import com.snowdango.amya.feature.setting.SettingViewScreen
 import com.snowdango.amya.feature.tag.TagViewScreen
 import com.snowdango.amya.route.Route
@@ -91,7 +92,11 @@ fun App() {
                             )
                         }
                         composable<Route.SettingView> {
-                            SettingViewScreen()
+                            SettingViewScreen(
+                                navigateLicense = {
+                                    navController.navigate(Route.LicenseView)
+                                }
+                            )
                         }
 
                         composable<Route.AddAppView> {
@@ -103,6 +108,9 @@ fun App() {
                                     navController.popBackStack()
                                 }
                             )
+                        }
+                        composable<Route.LicenseView> {
+                            LicensesViewScreen()
                         }
                     }
                 }

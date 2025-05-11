@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
     alias(libs.plugins.buildKonfig)
+    alias(libs.plugins.aboutLibraries)
 }
 
 kotlin {
@@ -40,12 +41,18 @@ kotlin {
                 implementation(libs.ktor.client.core)
                 implementation(libs.bundles.filekit)
                 implementation(libs.kmp.process)
+                api(libs.datastore.preferences)
+                api(libs.aboutlibraries.core)
             }
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
+            implementation(compose.foundation)
+            implementation(compose.material)
+            implementation(compose.material3)
+            implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation(libs.kotlinx.coroutines.swing)
+            implementation(libs.bundles.coroutines)
             implementation(libs.composeIcons.tablerIcons)
             implementation(libs.bundles.koin)
             implementation(libs.kotlinx.serialization.json)
@@ -53,6 +60,9 @@ kotlin {
             implementation(libs.bundles.coil)
             implementation(libs.ktor.client.java)
             implementation(libs.kmp.process)
+            implementation(libs.bundles.settings)
+            implementation(libs.appDirs)
+            implementation(libs.autoLaunch)
         }
     }
 
@@ -68,33 +78,36 @@ room {
 dependencies {
     add("kspDesktop", libs.androidx.room.compiler)
 }
+
 buildkonfig {
     packageName = "com.snowdango.amya"
 
     defaultConfigs {
         buildConfigField(FieldSpec.Type.STRING, "osName", "MaxOS")
+        buildConfigField(FieldSpec.Type.STRING, "appVersion", libs.versions.app.version.get())
     }
-    targetConfigs {
-        create("macos") {
-            buildConfigField(FieldSpec.Type.STRING, "osName", "MacOS")
-        }
-        create("mingw") {
-            buildConfigField(FieldSpec.Type.STRING, "osName", "Windows")
-        }
-        create("linux") {
-            buildConfigField(FieldSpec.Type.STRING, "osName", "Linux")
-        }
+}
+
+aboutLibraries {
+    offlineMode = false
+    android {
+        registerAndroidTasks = false
+    }
+    export {
+        outputFile = file("src/commonMain/composeResources/files/aboutlibraries.json")
+        prettyPrint = true
     }
 }
 
 compose.desktop {
     application {
         mainClass = "com.snowdango.amya.MainKt"
-
         nativeDistributions {
             outputBaseDir.set(project.layout.buildDirectory.dir("customOutputDir"))
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.snowdango.amya"
+            modules("jdk.unsupported")
+            modules("jdk.unsupported.desktop")
+            packageName = "Amya"
             packageVersion = libs.versions.app.version.get()
             linux {
                 modules("jdk.security.auth")

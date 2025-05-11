@@ -1,5 +1,7 @@
 package com.snowdango.amya.platform
 
+import ca.gosyer.appdirs.AppDirs
+
 actual class Platform {
     actual val javaVersion: String = System.getProperty("java.version")
     actual val osName: String = System.getProperty("os.name")
@@ -15,3 +17,10 @@ actual class Platform {
 }
 
 actual fun getPlatform() = Platform()
+
+fun getAppDirs(): AppDirs {
+    return AppDirs(
+        appName = "Amya",
+        appAuthor = "SnowDango",
+    )
+}

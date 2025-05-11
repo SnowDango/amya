@@ -23,6 +23,11 @@ ktor = "3.1.2"
 filekit = "0.10.0-beta03"
 buildKonfig = "0.17.1"
 kmp-process = "0.2.0"
+compose-settings = "2.10.0"
+androidx-datastore = "1.1.6"
+appDir = "1.2.0"
+aboutLibraries = "12.1.2"
+autoLaunch = "0.6.0"
 
 [libraries]
 
@@ -34,6 +39,7 @@ androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", nam
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 
 # coroutine
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 
 # material-kolor
@@ -81,6 +87,22 @@ slf4j = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 # kmp-process
 kmp-process = { module = "io.matthewnelson.kmp-process:process", version.ref = "kmp-process" }
 
+# settings
+composeSettings-ui = { group = "com.github.alorma.compose-settings", name = "ui-tiles", version.ref = "compose-settings" }
+composeSettings-ui-extended = { group = "com.github.alorma.compose-settings", name = "ui-tiles-extended", version.ref = "compose-settings" }
+
+# dataStore
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "androidx-datastore" }
+
+# appDir
+appDirs = { module = "ca.gosyer:kotlin-multiplatform-appdirs", version.ref = "appDir" }
+
+# aboutLibraries
+aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "aboutLibraries" }
+
+# autoLaunch
+autoLaunch = { module = "io.github.vinceglb:auto-launch", version.ref = "autoLaunch" }
+
 # test
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
@@ -97,11 +119,15 @@ kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", versio
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 room = { id = "androidx.room", version.ref = "androidx-room" }
 buildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildKonfig" }
+aboutLibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutLibraries" }
+
 
 [bundles]
+coroutines = ["kotlinx-coroutines-core", "kotlinx-coroutines-swing"]
 room = ["androidx-room-runtime", "androidx-room-paging", "androidx-sqlite-bundled", "androidx-sqlite-bundled-jvm"]
 koin = ["koin-core", "koin-compose-core", "koin-compose-viewmodel", "koin-compose-navigation"]
 paging = ["androidx-paging-runtime", "cashapp-paging-compose"]
 logging = ["kotlin-logging", "slf4j"]
 coil = ["coil-compose", "coil-ktor"]
 filekit = ["filekit-dialogs", "filekit-dialogs-compose"]
+settings = ["composeSettings-ui", "composeSettings-ui-extended"]
