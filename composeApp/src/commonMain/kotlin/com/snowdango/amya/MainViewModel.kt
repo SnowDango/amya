@@ -20,4 +20,11 @@ class MainViewModel: KoinComponent {
         initialValue = true,
     )
 
+    private val _isShowTray = settingsModel.getIsShowTray()
+    val isShowTray = _isShowTray.stateIn(
+        appScope,
+        SharingStarted.WhileSubscribed(5_000),
+        initialValue = false,
+    )
+
 }

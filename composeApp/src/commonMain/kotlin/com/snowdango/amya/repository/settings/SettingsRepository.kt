@@ -11,8 +11,16 @@ class SettingsRepository(
         settingsDataStore.setIsClosedMinimize(value)
     }
 
+    suspend fun setIsShowTray(value: Boolean) {
+        settingsDataStore.setIsShowTray(value)
+    }
+
     fun getIsClosedMinimize(): Flow<Boolean> {
         return settingsDataStore.getIsClosedMinimize()
+    }
+
+    fun getIsShowTray(): Flow<Boolean> {
+        return settingsDataStore.getIsShowTray()
     }
 
 }
