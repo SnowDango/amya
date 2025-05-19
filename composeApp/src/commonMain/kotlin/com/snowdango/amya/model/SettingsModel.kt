@@ -13,8 +13,16 @@ class SettingsModel: KoinComponent {
         settingsRepository.setIsClosedMinimize(value)
     }
 
+    suspend fun setIsShowTray(value: Boolean) {
+        settingsRepository.setIsShowTray(value)
+    }
+
     fun getIsClosedMinimize(): Flow<Boolean> {
         return settingsRepository.getIsClosedMinimize()
+    }
+
+    fun getIsShowTray(): Flow<Boolean> {
+        return settingsRepository.getIsShowTray()
     }
 
 }

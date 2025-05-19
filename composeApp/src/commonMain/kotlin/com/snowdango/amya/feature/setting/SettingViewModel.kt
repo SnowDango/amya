@@ -25,6 +25,13 @@ class SettingViewModel: ViewModel(), KoinComponent {
         initialValue = true,
     )
 
+    private val _isShowTray = settingsModel.getIsShowTray()
+    val isShowTray = _isShowTray.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(5_000),
+        initialValue = false,
+    )
+
     private val _isEnableAutoLaunch: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isEnableAutoLaunch = _isEnableAutoLaunch.stateIn(
         viewModelScope,
@@ -43,6 +50,19 @@ class SettingViewModel: ViewModel(), KoinComponent {
         viewModelScope.launch {
             try {
                 settingsModel.setIsClosedMinimize(value)
+            }catch (ce: CancellationException){
+                throw ce
+            }catch (th: Throwable) {
+                Log.e(th.message.toString())
+            }
+        }
+    }
+
+    fun onChangeShowTray(value: Boolean) {
+        Log.d("onChangeShowTray: $value")
+        viewModelScope.launch {
+            try {
+                settingsModel.setIsShowTray(value)
             }catch (ce: CancellationException){
                 throw ce
             }catch (th: Throwable) {

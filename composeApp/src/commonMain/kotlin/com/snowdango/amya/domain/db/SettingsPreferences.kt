@@ -12,6 +12,7 @@ class SettingsPreferences(
     private val dataStore: DataStore<Preferences>,
 ) {
     val IS_CLOSED_MINIMIZE = booleanPreferencesKey("is_closed_minimize")
+    val IS_SHOW_TRAY = booleanPreferencesKey("is_show_tray")
 
     fun getIsClosedMinimize(): Flow<Boolean> {
         return dataStore.data.map {
@@ -19,9 +20,21 @@ class SettingsPreferences(
         }
     }
 
+    fun getIsShowTray(): Flow<Boolean> {
+        return dataStore.data.map {
+            it[IS_SHOW_TRAY] ?: false
+        }
+    }
+
     suspend fun setIsClosedMinimize(value: Boolean) {
         dataStore.edit {
             it[IS_CLOSED_MINIMIZE] = value
+        }
+    }
+
+    suspend fun setIsShowTray(value: Boolean) {
+        dataStore.edit {
+            it[IS_SHOW_TRAY] = value
         }
     }
 

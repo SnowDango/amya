@@ -106,8 +106,7 @@ compose.desktop {
         nativeDistributions {
             outputBaseDir.set(project.layout.buildDirectory.dir("customOutputDir"))
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            modules("jdk.unsupported")
-            modules("jdk.unsupported.desktop")
+            modules("java.instrument", "java.management", "jdk.security.auth", "jdk.unsupported", "jdk.unsupported.desktop")
             packageName = "Amya"
             packageVersion = libs.versions.app.version.get()
             linux {

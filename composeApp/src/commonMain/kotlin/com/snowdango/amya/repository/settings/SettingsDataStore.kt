@@ -10,6 +10,12 @@ class SettingsDataStore(
         settingsPreferences.setIsClosedMinimize(value)
     }
 
+    suspend fun setIsShowTray(value: Boolean) {
+        settingsPreferences.setIsShowTray(value)
+    }
+
     fun getIsClosedMinimize() = settingsPreferences.getIsClosedMinimize()
+
+    fun getIsShowTray() = settingsPreferences.getIsShowTray()
 
 }

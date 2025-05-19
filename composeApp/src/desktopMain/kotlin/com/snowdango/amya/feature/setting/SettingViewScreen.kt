@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -56,6 +57,20 @@ fun SettingViewScreen(
                         title = { Text(text = "Minimize with Close Window") },
                         onCheckedChange = {
                             viewModel.onChangeClosedMinimize(it)
+                        }
+                    )
+                }
+                val isShowTray by viewModel.isShowTray.collectAsStateWithLifecycle()
+                Box(
+                    modifier = Modifier
+                        .padding(bottom = 8.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                ) {
+                    SettingsSwitch(
+                        state = isShowTray,
+                        title = { Text(text = "Display in system tray") },
+                        onCheckedChange = {
+                            viewModel.onChangeShowTray(it)
                         }
                     )
                 }
