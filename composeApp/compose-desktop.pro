@@ -3,8 +3,9 @@
 -ignorewarnings
 
 -keep class androidx.datastore.preferences.** { *; }
--keep class io.ktor.* { *; }
--keep class coil3.* { *; }
+-keep class io.ktor.** { *; }
+-keep class coil3.** { *; }
+-keep class okio.** { *; }
 -keep class ui.navigation.* { *; }
 -keep class com.github.oshi.** { *; }
 
