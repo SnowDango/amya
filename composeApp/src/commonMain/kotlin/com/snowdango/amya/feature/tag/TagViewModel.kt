@@ -1,10 +1,12 @@
 package com.snowdango.amya.feature.tag
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.snowdango.amya.model.AppsModel
 import com.snowdango.amya.platform.Log
 import com.snowdango.amya.platform.SubProcessBuilder
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -27,6 +29,12 @@ class TagViewModel(
         SubProcessBuilder.execBuilder(
             path = path
         ).spawn()
+    }
+
+    fun deleteApp(id: Long) {
+        viewModelScope.launch {
+            appsModel.delete(id)
+        }
     }
 
 }

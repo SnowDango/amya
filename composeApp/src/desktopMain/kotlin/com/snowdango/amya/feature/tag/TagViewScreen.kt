@@ -47,6 +47,8 @@ import coil3.request.CachePolicy
 import coil3.request.ImageRequest
 import com.snowdango.amya.component.app.AppCard
 import com.snowdango.amya.component.button.PrimaryTextButton
+import com.snowdango.amya.component.dialog.DeleteAppDialog
+import com.snowdango.amya.model.AppsModel
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Plus
 import org.koin.compose.viewmodel.koinViewModel
@@ -62,6 +64,7 @@ fun TagViewScreen(
 ) {
 
     val appsData = viewModel.appsData.collectAsState(initial = emptyList())
+    var wantDeleteApp: AppsModel.AppData? by remember { mutableStateOf(null) }
 
     Box(
         modifier = Modifier
@@ -110,9 +113,23 @@ fun TagViewScreen(
                         },
                         modifier = Modifier
                             .padding(all = 8.dp),
+                        onDeleteClick = {
+                            wantDeleteApp = it
+                        }
                     )
                 }
              }
+        }
+        if (wantDeleteApp != null) {
+            DeleteAppDialog(
+                appName = wantDeleteApp!!.name,
+                onDelete = {
+                    viewModel.deleteApp(wantDeleteApp!!.id)
+                },
+                onDismissRequest = {
+                    wantDeleteApp = null
+                }
+            )
         }
     }
 }

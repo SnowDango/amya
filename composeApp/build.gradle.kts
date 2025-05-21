@@ -48,7 +48,6 @@ kotlin {
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(compose.foundation)
-            implementation(compose.material)
             implementation(compose.material3)
             implementation(compose.materialIconsExtended)
             implementation(compose.components.resources)
@@ -103,6 +102,17 @@ aboutLibraries {
 compose.desktop {
     application {
         mainClass = "com.snowdango.amya.MainKt"
+
+        buildTypes {
+            release {
+                proguard {
+                    isEnabled = true
+                    version = "7.6.0"
+                    configurationFiles.from(files("compose-desktop.pro"))
+                }
+            }
+        }
+
         nativeDistributions {
             outputBaseDir.set(project.layout.buildDirectory.dir("customOutputDir"))
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)

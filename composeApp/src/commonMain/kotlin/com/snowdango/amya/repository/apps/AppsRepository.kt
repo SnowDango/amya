@@ -22,4 +22,8 @@ class AppsRepository(
     fun getAppsBySubTagId(tagId: Long, subTagId: Long): Flow<List<AppsEntity>> {
         return appsDataStore.getAppsBySubTagId(tagId, subTagId)
     }
+
+    suspend fun delete(id: Long) {
+        appsDataStore.delete(id)
+    }
 }

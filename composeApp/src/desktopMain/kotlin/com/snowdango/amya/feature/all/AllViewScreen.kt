@@ -36,6 +36,8 @@ import coil3.compose.LocalPlatformContext
 import coil3.request.CachePolicy
 import coil3.request.ImageRequest
 import com.snowdango.amya.component.app.AppCard
+import com.snowdango.amya.component.dialog.DeleteAppDialog
+import com.snowdango.amya.model.AppsModel
 import com.snowdango.amya.platform.SubProcessBuilder
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -45,6 +47,7 @@ fun AllViewScreen(
     viewModel: AllViewModel = koinViewModel()
 ) {
     val appsData = viewModel.appsData.collectAsState(initial = emptyList())
+    var wantDeleteApp: AppsModel.AppData? by remember { mutableStateOf(null) }
     Box(
         modifier = Modifier
             .padding(all = 16.dp)
@@ -60,10 +63,24 @@ fun AllViewScreen(
                     onClick = {
                         viewModel.exec(it.path)
                     },
+                    onDeleteClick = {
+                        wantDeleteApp = it
+                    },
                     modifier = Modifier
                         .padding(all = 8.dp),
                 )
             }
+        }
+        if (wantDeleteApp != null) {
+            DeleteAppDialog(
+                appName = wantDeleteApp!!.name,
+                onDelete = {
+                    viewModel.deleteApp(wantDeleteApp!!.id)
+                },
+                onDismissRequest = {
+                    wantDeleteApp = null
+                }
+            )
         }
     }
 }
