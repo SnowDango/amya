@@ -26,11 +26,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.snowdango.amya.platform.Log
 import com.snowdango.amya.component.dialog.CreateErrorDialog
 import com.snowdango.amya.component.button.PrimaryTextButton
 import com.snowdango.amya.component.button.SecondaryTextButton
 import com.snowdango.amya.component.dialog.IconSelectDialog
+import com.snowdango.amya.track.Log
 import org.koin.compose.viewmodel.koinViewModel
 
 
