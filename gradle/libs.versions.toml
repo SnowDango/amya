@@ -3,7 +3,7 @@ app-version = "1.0.0"
 
 androidx-navigation = "2.9.0-beta02"
 androidx-lifecycle = "2.8.4"
-compose-multiplatform = "1.8.0"
+compose-multiplatform = "1.8.1"
 junit = "4.13.2"
 kotlin = "2.1.21"
 ksp = "2.1.21-2.0.1"
