@@ -68,6 +68,10 @@ class AppsModel: KoinComponent {
         }
     }
 
+    suspend fun delete(id: Long) {
+        repository.delete(id)
+    }
+
 
     data class AppData(
         val id: Long,
