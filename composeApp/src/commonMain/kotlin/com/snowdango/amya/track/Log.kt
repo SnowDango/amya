@@ -4,6 +4,7 @@ import com.diamondedge.logging.KmLog
 import com.diamondedge.logging.KmLogging
 import com.diamondedge.logging.Logger
 import com.diamondedge.logging.logging
+import com.snowdango.amya.BuildKonfig
 import java.io.File
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -81,9 +82,9 @@ object Log {
             logFile.appendText(log)
         }
 
-        override fun isLoggingVerbose(): Boolean = false
+        override fun isLoggingVerbose(): Boolean = BuildKonfig.isDebug
 
-        override fun isLoggingDebug(): Boolean = false
+        override fun isLoggingDebug(): Boolean = BuildKonfig.isDebug
 
         override fun isLoggingInfo(): Boolean = true
 

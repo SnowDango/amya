@@ -97,8 +97,14 @@ buildkonfig {
     defaultConfigs {
         buildConfigField(FieldSpec.Type.STRING, "osName", nativeTarget)
         buildConfigField(FieldSpec.Type.STRING, "appVersion", libs.versions.app.version.get())
+        buildConfigField(FieldSpec.Type.BOOLEAN, "isDebug", "true")
     }
 
+    defaultConfigs("release") { // release build時の -Pbuildkonfig.flavor=release
+        buildConfigField(FieldSpec.Type.STRING, "osName", nativeTarget)
+        buildConfigField(FieldSpec.Type.STRING, "appVersion", libs.versions.app.version.get())
+        buildConfigField(FieldSpec.Type.BOOLEAN, "isDebug", "false")
+    }
 }
 
 aboutLibraries {
