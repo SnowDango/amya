@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.snowdango.amya.model.SettingsModel
 import com.snowdango.amya.platform.AutoLaunchExtension
-import com.snowdango.amya.platform.Log
+import com.snowdango.amya.track.Log
 import io.ktor.utils.io.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

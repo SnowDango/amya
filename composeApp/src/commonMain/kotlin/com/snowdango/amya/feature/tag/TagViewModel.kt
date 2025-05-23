@@ -4,8 +4,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.snowdango.amya.model.AppsModel
-import com.snowdango.amya.platform.Log
 import com.snowdango.amya.platform.SubProcessBuilder
+import com.snowdango.amya.track.Log
 import compose.icons.TablerIcons
 import compose.icons.tablericons.SortAscending
 import compose.icons.tablericons.SortAscending2

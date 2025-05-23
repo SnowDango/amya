@@ -36,13 +36,13 @@ kotlin {
                 implementation(libs.bundles.koin)
                 implementation(compose.components.uiToolingPreview)
                 implementation(libs.bundles.paging)
-                api(libs.bundles.logging)
                 implementation(libs.bundles.coil)
                 implementation(libs.ktor.client.core)
                 implementation(libs.bundles.filekit)
                 implementation(libs.kmp.process)
                 api(libs.datastore.preferences)
                 api(libs.aboutlibraries.core)
+                api(libs.km.logging)
             }
         }
         desktopMain.dependencies {
@@ -82,9 +82,28 @@ dependencies {
 buildkonfig {
     packageName = "com.snowdango.amya"
 
+    val hostOs = System.getProperty("os.name")
+    val isArm64 = System.getProperty("os.arch") == "aarch64"
+    val isMingwX64 = hostOs.startsWith("Windows")
+    val nativeTarget = when {
+        hostOs == "Mac OS X" && isArm64 -> "Mac OS X"
+        hostOs == "Mac OS X" && !isArm64 -> "Mac OS X"
+        hostOs == "Linux" && isArm64 -> "Linux"
+        hostOs == "Linux" && !isArm64 -> "Linux"
+        isMingwX64 -> "Windows"
+        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
+    }
+
     defaultConfigs {
-        buildConfigField(FieldSpec.Type.STRING, "osName", "MaxOS")
+        buildConfigField(FieldSpec.Type.STRING, "osName", nativeTarget)
         buildConfigField(FieldSpec.Type.STRING, "appVersion", libs.versions.app.version.get())
+        buildConfigField(FieldSpec.Type.BOOLEAN, "isDebug", "true")
+    }
+
+    defaultConfigs("release") { // release build時の -Pbuildkonfig.flavor=release
+        buildConfigField(FieldSpec.Type.STRING, "osName", nativeTarget)
+        buildConfigField(FieldSpec.Type.STRING, "appVersion", libs.versions.app.version.get())
+        buildConfigField(FieldSpec.Type.BOOLEAN, "isDebug", "false")
     }
 }
 
