@@ -28,6 +28,7 @@ androidx-datastore = "1.1.7"
 appDir = "1.2.0"
 aboutLibraries = "12.1.2"
 autoLaunch = "0.6.0"
+detekt = "1.23.8"
 
 [libraries]
 
@@ -76,7 +77,7 @@ androidx-sqlite-bundled-jvm = { group = "androidx.sqlite", name = "sqlite-bundle
 
 # koin
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
-koin-compose-core = { module = "io.insert-koin:koin-compose", version.ref = "koin"  }
+koin-compose-core = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
 koin-compose-navigation = { module = "io.insert-koin:koin-compose-viewmodel-navigation", version.ref = "koin" }
 
@@ -110,6 +111,9 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 # builcKonfig
 buildKonfig = { module = "com.codingfeline.buildkonfig:buildkonfig-gradle-plugin", version.ref = "buildKonfig" }
 
+# detekt
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+
 [plugins]
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
@@ -119,6 +123,7 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 room = { id = "androidx.room", version.ref = "androidx-room" }
 buildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildKonfig" }
 aboutLibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutLibraries" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 
 
 [bundles]

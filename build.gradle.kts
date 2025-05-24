@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.room) apply false
     alias(libs.plugins.buildKonfig) apply false
     alias(libs.plugins.aboutLibraries) apply false
+    alias(libs.plugins.detekt)
 }
 
 buildscript {
@@ -17,5 +18,22 @@ buildscript {
     }
     dependencies {
         classpath(libs.buildKonfig)
+    }
+}
+
+subprojects {
+    apply(plugin = "io.gitlab.arturbosch.detekt")
+
+    detekt {
+        autoCorrect = true
+        parallel = true
+        config = files("${rootProject.projectDir}/config/detekt/detekt.yml")
+        buildUponDefaultConfig = true
+        ignoreFailures = true
+        basePath = file("$rootDir/../").absolutePath
+    }
+
+    dependencies {
+        detektPlugins(rootProject.libs.detekt.formatting)
     }
 }
