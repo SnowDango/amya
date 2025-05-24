@@ -27,7 +27,6 @@ import kotlinx.coroutines.Job
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
-
 val module = module {
     // domain
     single<AppsDatabase> { getDatabaseBuilder().build() }
@@ -61,9 +60,7 @@ val module = module {
     // license
     viewModel<LicensesViewModel> { LicensesViewModel() }
 
-
     // main
     single<MainViewModel> { MainViewModel() }
     single<CoroutineScope> { CoroutineScope(Dispatchers.Default + Job()) }
-
 }

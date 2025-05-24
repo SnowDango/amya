@@ -39,7 +39,6 @@ import compose.icons.TablerIcons
 import compose.icons.tablericons.Menu2
 import compose.icons.tablericons.Settings
 
-
 @Composable
 fun SideNavigation(
     modifier: Modifier = Modifier,
@@ -66,7 +65,7 @@ fun SideNavigation(
                 .padding(bottom = 12.dp),
             horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.CenterVertically,
-        ){
+        ) {
             Box(
                 modifier = Modifier
                     .clip(RoundedCornerShape(4.dp))
@@ -93,7 +92,7 @@ fun SideNavigation(
                 .fillMaxSize()
                 .weight(1f)
                 .verticalScroll(rememberScrollState()),
-        ){
+        ) {
             content()
         }
         Box(
@@ -108,7 +107,7 @@ fun SideNavigation(
                     ),
                     interactionSource = remember { MutableInteractionSource() }
                 )
-        ){
+        ) {
             Row(
                 modifier = Modifier
                     .padding(vertical = 4.dp)
@@ -116,7 +115,7 @@ fun SideNavigation(
                     .height(28.dp),
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically,
-            ){
+            ) {
                 Spacer(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -125,7 +124,7 @@ fun SideNavigation(
                 Row(
                     modifier = Modifier
                         .padding(top = 4.dp, bottom = 4.dp)
-                ){
+                ) {
                     Text(
                         text = "Settings",
                         color = MaterialTheme.colorScheme.onBackground,

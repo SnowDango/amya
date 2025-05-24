@@ -43,7 +43,7 @@ object Log {
         logger(tag).v { msg }
     }
 
-    private class EventLogger: Logger {
+    private class EventLogger : Logger {
 
         val logFile = File(System.getProperty("java.io.tmpdir"), "amya.log")
         val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
@@ -92,5 +92,4 @@ object Log {
 
         override fun isLoggingError(): Boolean = true
     }
-
 }

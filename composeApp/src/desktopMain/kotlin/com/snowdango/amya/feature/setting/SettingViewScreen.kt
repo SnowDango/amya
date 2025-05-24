@@ -11,7 +11,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,9 +21,7 @@ import com.alorma.compose.settings.ui.SettingsGroup
 import com.alorma.compose.settings.ui.SettingsMenuLink
 import com.alorma.compose.settings.ui.SettingsSwitch
 import com.snowdango.amya.BuildKonfig
-import com.snowdango.amya.feature.setting.SettingViewModel
 import org.koin.compose.viewmodel.koinViewModel
-
 
 @Composable
 fun SettingViewScreen(
@@ -108,7 +105,6 @@ fun SettingViewScreen(
                         .fillMaxSize()
                 )
             }
-
         }
     }
 }

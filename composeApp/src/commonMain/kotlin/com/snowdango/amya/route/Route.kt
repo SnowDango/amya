@@ -1,23 +1,27 @@
 package com.snowdango.amya.route
 
-import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 
 sealed class Route {
     @Serializable
-    data object AllView:  Route()
+    data object AllView : Route()
+
     @Serializable
-    data class TagView(val tagId: Long, val subTagId: Long?): Route()
+    data class TagView(val tagId: Long, val subTagId: Long?) : Route()
+
     @Serializable
-    data object SettingView: Route()
+    data object SettingView : Route()
+
     @Serializable
-    data class AddTagView(val tagId: Long?): Route()
+    data class AddTagView(val tagId: Long?) : Route()
+
     @Serializable
-    data class AddAppView(val tagId: Long, val subTagId: Long?): Route()
+    data class AddAppView(val tagId: Long, val subTagId: Long?) : Route()
+
     @Serializable
-    data object LicenseView: Route()
+    data object LicenseView : Route()
 
     companion object {
 
@@ -48,5 +52,4 @@ sealed class Route {
             }
         }
     }
-
 }

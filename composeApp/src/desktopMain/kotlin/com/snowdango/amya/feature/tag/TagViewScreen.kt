@@ -20,12 +20,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -51,7 +49,6 @@ fun TagViewScreen(
     navigateAddApp: (tagId: Long, subTagId: Long?) -> Unit,
     viewModel: TagViewModel = koinViewModel { parametersOf(tagId, subTagId) },
 ) {
-
     val appsData = viewModel.sortedAppsData.collectAsStateWithLifecycle()
     val orderType = viewModel.orderType.collectAsStateWithLifecycle()
     var isOrderMenuExpanded by remember { mutableStateOf(false) }
@@ -70,13 +67,13 @@ fun TagViewScreen(
                     .padding(bottom = 16.dp)
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-            ){
-                Box{
-                    Box (
+            ) {
+                Box {
+                    Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(8.dp))
                             .clickable { isOrderMenuExpanded = true }
-                    ){
+                    ) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
@@ -99,7 +96,7 @@ fun TagViewScreen(
                     DropdownMenu(
                         expanded = isOrderMenuExpanded,
                         onDismissRequest = { isOrderMenuExpanded = false },
-                    ){
+                    ) {
                         TagViewModel.OrderType.entries.forEach {
                             DropdownMenuItem(
                                 text = {
@@ -140,7 +137,7 @@ fun TagViewScreen(
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                    ){
+                    ) {
                         Image(
                             imageVector = TablerIcons.Plus,
                             contentDescription = null,
@@ -171,7 +168,7 @@ fun TagViewScreen(
                         }
                     )
                 }
-             }
+            }
         }
         if (wantDeleteApp != null) {
             DeleteAppDialog(

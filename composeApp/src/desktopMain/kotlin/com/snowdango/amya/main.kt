@@ -14,13 +14,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.ApplicationScope
 import androidx.compose.ui.window.Tray
 import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import com.diamondedge.logging.KmLogging
-import com.diamondedge.logging.logging
-import com.snowdango.amya.exitApp
-import com.snowdango.amya.platform.getPlatform
 import com.snowdango.amya.track.Log
 import io.github.vinceglb.filekit.FileKit
 import org.jetbrains.compose.resources.painterResource
@@ -28,7 +24,6 @@ import org.koin.core.context.GlobalContext
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.inject
 import java.awt.Dimension
-
 
 fun init() {
     if (GlobalContext.getOrNull() == null) {
@@ -43,7 +38,6 @@ fun ApplicationScope.exitApp() {
     Log.i("------ Exit App ------")
     exitApplication()
 }
-
 
 fun main() {
     init()
@@ -75,7 +69,7 @@ fun main() {
 fun ApplicationScope.tray(
     isShowTray: Boolean,
     onVisibleWindow: () -> Unit,
-){
+) {
     if (isShowTray) {
         Tray(
             icon = painterResource(Res.drawable.icon),
@@ -101,7 +95,6 @@ fun ApplicationScope.tray(
         )
     }
 }
-
 
 @Composable
 fun ApplicationScope.window(
@@ -139,7 +132,7 @@ fun ApplicationScope.window(
 
 @Composable
 fun DpSize.toSize(): Dimension {
-    with (LocalDensity.current) {
+    with(LocalDensity.current) {
         return Dimension(width.toPx().toInt(), height.toPx().toInt())
     }
 }

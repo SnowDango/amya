@@ -29,7 +29,6 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-
 @Composable
 fun AddTagNavigateItem(
     modifier: Modifier = Modifier,
@@ -50,33 +49,37 @@ fun AddTagNavigateItem(
                 ),
                 interactionSource = remember { MutableInteractionSource() },
             )
-    ){
+    ) {
         Row(
             modifier = Modifier
                 .padding(vertical = 4.dp)
                 .fillMaxWidth()
                 .height(28.dp)
-                .then(if (isParent) {
-                    Modifier.alpha(1f)
-                } else {
-                    Modifier.alpha(0.7f)
-                }),
+                .then(
+                    if (isParent) {
+                        Modifier.alpha(1f)
+                    } else {
+                        Modifier.alpha(0.7f)
+                    }
+                ),
             verticalAlignment = Alignment.CenterVertically,
-        ){
+        ) {
             Spacer(
                 modifier = Modifier
                     .padding(end = 16.dp)
                     .fillMaxHeight()
                     .width(4.dp)
-                    .then(if (selected) {
-                        if(isParent) {
-                            Modifier.background(MaterialTheme.colorScheme.primary)
+                    .then(
+                        if (selected) {
+                            if (isParent) {
+                                Modifier.background(MaterialTheme.colorScheme.primary)
+                            } else {
+                                Modifier.background(MaterialTheme.colorScheme.secondary)
+                            }
                         } else {
-                            Modifier.background(MaterialTheme.colorScheme.secondary)
+                            Modifier.background(MaterialTheme.colorScheme.background)
                         }
-                    } else {
-                        Modifier.background(MaterialTheme.colorScheme.background)
-                    })
+                    )
             )
             Image(
                 imageVector = Icons.Default.Add,

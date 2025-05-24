@@ -69,7 +69,7 @@ fun ChildNavigateItem(
                     menuExpanded = true
                 },
             )
-    ){
+    ) {
         Row(
             modifier = Modifier
                 .padding(vertical = 4.dp)
@@ -77,17 +77,19 @@ fun ChildNavigateItem(
                 .height(28.dp)
                 .alpha(0.7f),
             verticalAlignment = Alignment.CenterVertically,
-        ){
+        ) {
             Spacer(
                 modifier = Modifier
                     .padding(end = 16.dp)
                     .fillMaxHeight()
                     .width(4.dp)
-                    .then(if (selected) {
-                        Modifier.background(MaterialTheme.colorScheme.secondary)
-                    } else {
-                        Modifier.background(MaterialTheme.colorScheme.background)
-                    })
+                    .then(
+                        if (selected) {
+                            Modifier.background(MaterialTheme.colorScheme.secondary)
+                        } else {
+                            Modifier.background(MaterialTheme.colorScheme.background)
+                        }
+                    )
             )
             Image(
                 imageVector = icon,

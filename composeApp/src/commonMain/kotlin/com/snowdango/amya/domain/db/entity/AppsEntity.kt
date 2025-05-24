@@ -6,7 +6,6 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
-
 @Entity(
     tableName = AppsEntity.TABLE_NAME,
     indices = [

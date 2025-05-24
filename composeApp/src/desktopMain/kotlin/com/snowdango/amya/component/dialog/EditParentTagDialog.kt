@@ -8,8 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.AlertDialog
-import androidx.compose.material3.Text
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,8 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.snowdango.amya.component.button.PrimaryTextButton
 import com.snowdango.amya.component.button.SecondaryTextButton
-import com.snowdango.amya.component.dialog.IconSelectDialog
-
 
 @Composable
 fun EditParentTagDialog(
@@ -54,7 +52,7 @@ fun EditParentTagDialog(
                     onSaveClick.invoke(tagId, tagName, icon)
                     onDismissRequest.invoke()
                 },
-            ){
+            ) {
                 Text(
                     text = "Save",
                     fontSize = 16.sp,
@@ -67,7 +65,7 @@ fun EditParentTagDialog(
                 onClick = {
                     onDismissRequest.invoke()
                 },
-            ){
+            ) {
                 Text(
                     text = "Cancel",
                     fontSize = 16.sp,
@@ -79,12 +77,12 @@ fun EditParentTagDialog(
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
-            ){
+            ) {
                 Column(
                     modifier = Modifier
                         .padding(bottom = 16.dp)
                         .fillMaxWidth(0.75f)
-                ){
+                ) {
                     Text(
                         "Tag Name",
                         fontSize = 16.sp,

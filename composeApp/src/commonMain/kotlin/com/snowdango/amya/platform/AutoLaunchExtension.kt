@@ -7,5 +7,4 @@ expect object AutoLaunchExtension {
     suspend fun enable()
 
     suspend fun disable()
-
 }

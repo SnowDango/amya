@@ -28,7 +28,6 @@ import androidx.compose.ui.window.Dialog
 import compose.icons.AllIcons
 import compose.icons.TablerIcons
 
-
 @Composable
 fun IconSelectDialog(
     onDismissRequest: () -> Unit,

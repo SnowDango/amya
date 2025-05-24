@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.materialkolor.rememberDynamicColorScheme
 
-
 @Composable
 fun AmyaTheme(
     seedColor: Color = Color(0xC5EDFF),
@@ -20,5 +19,4 @@ fun AmyaTheme(
     ) {
         content()
     }
-
 }

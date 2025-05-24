@@ -21,7 +21,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mikepenz.aboutlibraries.entity.Library
 import org.koin.compose.viewmodel.koinViewModel
 
-
 @Composable
 fun LicensesViewScreen(
     modifier: Modifier = Modifier,

@@ -6,7 +6,6 @@ import androidx.room.Query
 import com.snowdango.amya.domain.db.entity.AppsEntity
 import kotlinx.coroutines.flow.Flow
 
-
 @Dao
 interface AppsDao {
 
@@ -19,10 +18,11 @@ interface AppsDao {
     @Query("select * from ${AppsEntity.TABLE_NAME} where ${AppsEntity.COLUMN_TAG_ID} = :tagId")
     fun getAppsByTagId(tagId: Long): Flow<List<AppsEntity>>
 
-    @Query("select * from ${AppsEntity.TABLE_NAME} where ${AppsEntity.COLUMN_TAG_ID} = :tagId and ${AppsEntity.COLUMN_SUB_TAG_ID} = :subTagId")
+    @Query(
+        "select * from ${AppsEntity.TABLE_NAME} where ${AppsEntity.COLUMN_TAG_ID} = :tagId and ${AppsEntity.COLUMN_SUB_TAG_ID} = :subTagId"
+    )
     fun getAppsBySubTagId(tagId: Long, subTagId: Long): Flow<List<AppsEntity>>
 
     @Query("delete from ${AppsEntity.TABLE_NAME} where ${AppsEntity.COLUMN_ID} = :id")
     suspend fun delete(id: Long)
-
 }

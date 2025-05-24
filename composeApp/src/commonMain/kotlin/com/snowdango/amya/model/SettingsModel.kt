@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class SettingsModel: KoinComponent {
+class SettingsModel : KoinComponent {
 
     private val settingsRepository: SettingsRepository by inject()
 
@@ -24,5 +24,4 @@ class SettingsModel: KoinComponent {
     fun getIsShowTray(): Flow<Boolean> {
         return settingsRepository.getIsShowTray()
     }
-
 }

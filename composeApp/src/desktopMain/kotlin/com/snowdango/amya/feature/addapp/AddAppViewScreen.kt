@@ -86,8 +86,7 @@ fun AddAppViewScreen(
                 .padding(vertical = 32.dp)
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-        ){
-
+        ) {
             Text(
                 text = "Add App",
                 fontSize = 20.sp,
@@ -101,7 +100,6 @@ fun AddAppViewScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-
                 // appName
                 Column(
                     modifier = Modifier
@@ -250,7 +248,7 @@ fun AddAppViewScreen(
             }
         }
 
-        if (isShowCreateErrorDialog){
+        if (isShowCreateErrorDialog) {
             CreateErrorDialog(
                 error = errorMessage,
                 onDismissRequest = {

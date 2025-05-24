@@ -3,7 +3,6 @@ package com.snowdango.amya.feature.all
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.snowdango.amya.feature.tag.TagViewModel
 import com.snowdango.amya.model.AppsModel
 import com.snowdango.amya.platform.SubProcessBuilder
 import compose.icons.TablerIcons
@@ -21,23 +20,23 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class AllViewModel: ViewModel(), KoinComponent {
+class AllViewModel : ViewModel(), KoinComponent {
 
     val appsModel: AppsModel by inject()
 
     private val _appsData: Flow<List<AppsModel.AppData>> = appsModel.getAll()
-    private val _orderType: MutableStateFlow<TagViewModel.OrderType> = MutableStateFlow(TagViewModel.OrderType.ID_ASC)
-    val orderType: StateFlow<TagViewModel.OrderType> = _orderType.stateIn(
+    private val _orderType: MutableStateFlow<OrderType> = MutableStateFlow(OrderType.ID_ASC)
+    val orderType: StateFlow<OrderType> = _orderType.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5_000),
-        initialValue = TagViewModel.OrderType.ID_ASC
+        initialValue = OrderType.ID_ASC
     )
     private val _sortedAppsData: Flow<List<AppsModel.AppData>> = combine(_appsData, _orderType) { apps, type ->
-        when(type) {
-            TagViewModel.OrderType.ID_ASC -> apps.sortedByDescending { it.id }
-            TagViewModel.OrderType.ID_DESC -> apps.sortedBy { it.id }
-            TagViewModel.OrderType.NAME_ASC -> apps.sortedBy { it.name }
-            TagViewModel.OrderType.NAME_DESC -> apps.sortedByDescending { it.name }
+        when (type) {
+            OrderType.ID_ASC -> apps.sortedByDescending { it.id }
+            OrderType.ID_DESC -> apps.sortedBy { it.id }
+            OrderType.NAME_ASC -> apps.sortedBy { it.name }
+            OrderType.NAME_DESC -> apps.sortedByDescending { it.name }
         }
     }
     val sortedAppsData = _sortedAppsData.stateIn(
@@ -52,7 +51,7 @@ class AllViewModel: ViewModel(), KoinComponent {
         ).spawn()
     }
 
-    fun setOrderType(type: TagViewModel.OrderType) {
+    fun setOrderType(type: OrderType) {
         viewModelScope.launch {
             _orderType.emit(type)
         }
@@ -70,5 +69,4 @@ class AllViewModel: ViewModel(), KoinComponent {
         NAME_ASC("Name ascending", TablerIcons.SortDescending2),
         NAME_DESC("Name descending", TablerIcons.SortAscending2),
     }
-
 }

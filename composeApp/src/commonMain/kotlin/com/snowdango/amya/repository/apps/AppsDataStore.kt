@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 class AppsDataStore(private val database: AppsDatabase) {
 
-
     suspend fun insert(appsEntity: AppsEntity): Long {
         return database.appsDao().insert(appsEntity)
     }
@@ -26,5 +25,4 @@ class AppsDataStore(private val database: AppsDatabase) {
     suspend fun delete(id: Long) {
         database.appsDao().delete(id)
     }
-
 }

@@ -26,13 +26,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.snowdango.amya.component.dialog.CreateErrorDialog
 import com.snowdango.amya.component.button.PrimaryTextButton
 import com.snowdango.amya.component.button.SecondaryTextButton
+import com.snowdango.amya.component.dialog.CreateErrorDialog
 import com.snowdango.amya.component.dialog.IconSelectDialog
 import com.snowdango.amya.track.Log
 import org.koin.compose.viewmodel.koinViewModel
-
 
 @Composable
 fun AddTagViewScreen(
@@ -48,14 +47,14 @@ fun AddTagViewScreen(
     var isShowCreateErrorDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(resultState.value) {
-        if(resultState.value is AddTagViewModel.CreateTagState.Success) {
+        if (resultState.value is AddTagViewModel.CreateTagState.Success) {
             val result = resultState.value as AddTagViewModel.CreateTagState.Success
             navigateTag.invoke(result.parentId, result.childId)
-        }else if (resultState.value is AddTagViewModel.CreateTagState.ValidationError) {
+        } else if (resultState.value is AddTagViewModel.CreateTagState.ValidationError) {
             val result = resultState.value as AddTagViewModel.CreateTagState.ValidationError
             errorMessage = result.error
             isShowCreateErrorDialog = true
-        }else if (resultState.value is AddTagViewModel.CreateTagState.Failure) {
+        } else if (resultState.value is AddTagViewModel.CreateTagState.Failure) {
             errorMessage = "Failed for whatever reason"
             isShowCreateErrorDialog = true
         }
@@ -71,8 +70,7 @@ fun AddTagViewScreen(
                 .padding(vertical = 32.dp)
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-        ){
-
+        ) {
             Text(
                 text = if (parentId == null) "Add Parent Tag" else "Add Child Tag",
                 fontSize = 20.sp,
@@ -86,7 +84,6 @@ fun AddTagViewScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-
                 Column(
                     modifier = Modifier
                         .padding(bottom = 50.dp)
@@ -108,7 +105,7 @@ fun AddTagViewScreen(
                     )
                 }
 
-               Column(
+                Column(
                     modifier = Modifier
                         .padding(top = 50.dp)
                         .defaultMinSize(minWidth = 300.dp)
@@ -121,38 +118,38 @@ fun AddTagViewScreen(
                         modifier = Modifier
                             .padding(bottom = 8.dp)
                     )
-                   Column(
-                       modifier = Modifier
-                           .fillMaxWidth(),
-                       horizontalAlignment = Alignment.CenterHorizontally
-                   ) {
-                       SecondaryTextButton(
-                           onClick = {
-                                 isShowIconSelectDialog = true
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        SecondaryTextButton(
+                            onClick = {
+                                isShowIconSelectDialog = true
                             },
                             modifier = Modifier
-                                 .padding(bottom = 8.dp)
-                       ) {
-                           Text(
-                               text = "Choose Icon",
-                               fontSize = 16.sp
-                           )
-                       }
-                       if(icon != null) {
-                           Image(
-                               imageVector = icon!!,
-                               contentDescription = null,
-                               colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onBackground),
-                               modifier = Modifier
-                                   .size(50.dp)
-                           )
-                       }else {
-                           Spacer(
-                               modifier = Modifier
-                                   .size(50.dp)
-                           )
-                       }
-                   }
+                                .padding(bottom = 8.dp)
+                        ) {
+                            Text(
+                                text = "Choose Icon",
+                                fontSize = 16.sp
+                            )
+                        }
+                        if (icon != null) {
+                            Image(
+                                imageVector = icon!!,
+                                contentDescription = null,
+                                colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onBackground),
+                                modifier = Modifier
+                                    .size(50.dp)
+                            )
+                        } else {
+                            Spacer(
+                                modifier = Modifier
+                                    .size(50.dp)
+                            )
+                        }
+                    }
                 }
             }
 
@@ -170,7 +167,7 @@ fun AddTagViewScreen(
         }
     }
 
-    if(isShowIconSelectDialog) {
+    if (isShowIconSelectDialog) {
         IconSelectDialog(
             onDismissRequest = {
                 isShowIconSelectDialog = false
@@ -181,7 +178,7 @@ fun AddTagViewScreen(
         )
     }
 
-    if (isShowCreateErrorDialog){
+    if (isShowCreateErrorDialog) {
         CreateErrorDialog(
             error = errorMessage,
             onDismissRequest = {

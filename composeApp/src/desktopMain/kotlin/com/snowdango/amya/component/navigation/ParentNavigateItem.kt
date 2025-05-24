@@ -139,7 +139,7 @@ fun ParentNavigateItem(
                 }
             }
         }
-        if(selected) {
+        if (selected) {
             childContent()
         }
     }

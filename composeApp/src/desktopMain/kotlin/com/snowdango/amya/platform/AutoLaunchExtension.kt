@@ -17,5 +17,4 @@ actual object AutoLaunchExtension {
     actual suspend fun disable() {
         autoLaunch.disable()
     }
-
 }
