@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class AppsModel: KoinComponent {
+class AppsModel : KoinComponent {
 
     private val repository by inject<AppsRepository>()
 
@@ -72,12 +72,10 @@ class AppsModel: KoinComponent {
         repository.delete(id)
     }
 
-
     data class AppData(
         val id: Long,
         val name: String,
         val imageUrl: String,
         val path: String,
     )
-
 }

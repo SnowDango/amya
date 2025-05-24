@@ -9,7 +9,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.onClick
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -39,7 +38,6 @@ import coil3.request.CachePolicy
 import coil3.request.ImageRequest
 import com.snowdango.amya.model.AppsModel
 
-
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun AppCard(
@@ -67,7 +65,7 @@ fun AppCard(
                 .onPointerEvent(PointerEventType.Exit) {
                     isZoom = false
                 }
-                .clickable{ onClick.invoke() }
+                .clickable { onClick.invoke() }
                 .onClick(
                     matcher = PointerMatcher.mouse(PointerButton.Secondary),
                     onClick = {

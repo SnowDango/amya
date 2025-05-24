@@ -1,7 +1,6 @@
 package com.snowdango.amya.repository.settings
 
 import kotlinx.coroutines.flow.Flow
-import org.koin.core.component.KoinComponent
 
 class SettingsRepository(
     private val settingsDataStore: SettingsDataStore,
@@ -22,5 +21,4 @@ class SettingsRepository(
     fun getIsShowTray(): Flow<Boolean> {
         return settingsDataStore.getIsShowTray()
     }
-
 }

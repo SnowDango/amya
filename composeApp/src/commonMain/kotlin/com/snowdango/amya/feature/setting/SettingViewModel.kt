@@ -13,10 +13,9 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class SettingViewModel: ViewModel(), KoinComponent {
+class SettingViewModel : ViewModel(), KoinComponent {
 
     private val settingsModel: SettingsModel by inject()
-
 
     private val _isClosedMinimize = settingsModel.getIsClosedMinimize()
     val isClosedMinimize = _isClosedMinimize.stateIn(
@@ -50,9 +49,9 @@ class SettingViewModel: ViewModel(), KoinComponent {
         viewModelScope.launch {
             try {
                 settingsModel.setIsClosedMinimize(value)
-            }catch (ce: CancellationException){
+            } catch (ce: CancellationException) {
                 throw ce
-            }catch (th: Throwable) {
+            } catch (th: Throwable) {
                 Log.e(th.message.toString())
             }
         }
@@ -63,9 +62,9 @@ class SettingViewModel: ViewModel(), KoinComponent {
         viewModelScope.launch {
             try {
                 settingsModel.setIsShowTray(value)
-            }catch (ce: CancellationException){
+            } catch (ce: CancellationException) {
                 throw ce
-            }catch (th: Throwable) {
+            } catch (th: Throwable) {
                 Log.e(th.message.toString())
             }
         }
@@ -80,14 +79,13 @@ class SettingViewModel: ViewModel(), KoinComponent {
                 } else {
                     AutoLaunchExtension.disable()
                 }
-            }catch (ce: CancellationException) {
+            } catch (ce: CancellationException) {
                 throw ce
-            }catch (th: Throwable){
+            } catch (th: Throwable) {
                 Log.e(th.message.toString())
-            }finally {
+            } finally {
                 _isEnableAutoLaunch.emit(AutoLaunchExtension.isEnabled())
             }
         }
     }
-
 }

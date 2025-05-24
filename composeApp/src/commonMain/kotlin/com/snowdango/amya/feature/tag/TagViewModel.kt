@@ -24,7 +24,7 @@ import org.koin.core.component.inject
 class TagViewModel(
     private val parentTagId: Long,
     private val childTagId: Long?
-): ViewModel(), KoinComponent {
+) : ViewModel(), KoinComponent {
 
     val appsModel: AppsModel by inject()
 
@@ -42,7 +42,7 @@ class TagViewModel(
         initialValue = OrderType.ID_ASC
     )
     private val _sortedAppsData: Flow<List<AppsModel.AppData>> = combine(_appsData, _orderType) { apps, type ->
-        when(type) {
+        when (type) {
             OrderType.ID_ASC -> apps.sortedByDescending { it.id }
             OrderType.ID_DESC -> apps.sortedBy { it.id }
             OrderType.NAME_ASC -> apps.sortedBy { it.name }
@@ -79,5 +79,4 @@ class TagViewModel(
         NAME_ASC("Name ascending", TablerIcons.SortDescending2),
         NAME_DESC("Name descending", TablerIcons.SortAscending2),
     }
-
 }

@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class AllViewModel: ViewModel(), KoinComponent {
+class AllViewModel : ViewModel(), KoinComponent {
 
     val appsModel: AppsModel by inject()
 
@@ -26,5 +26,4 @@ class AllViewModel: ViewModel(), KoinComponent {
             appsModel.delete(id)
         }
     }
-
 }

@@ -12,9 +12,9 @@ import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class TagModel: KoinComponent{
+class TagModel : KoinComponent {
 
-    val repository : TagRepository by inject()
+    val repository: TagRepository by inject()
 
     suspend fun insertParentTag(
         tagName: String,
@@ -103,7 +103,6 @@ class TagModel: KoinComponent{
         repository.deleteChildTag(id)
     }
 
-
     data class ParentTag(
         val id: Long,
         val name: String,
@@ -116,5 +115,4 @@ class TagModel: KoinComponent{
             val icon: ImageVector,
         )
     }
-
 }

@@ -23,8 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.snowdango.amya.component.button.PrimaryTextButton
 import com.snowdango.amya.component.button.SecondaryTextButton
-import com.snowdango.amya.component.dialog.IconSelectDialog
-
 
 @Composable
 fun EditChildTagDialog(
@@ -53,7 +51,7 @@ fun EditChildTagDialog(
                     onSaveClick.invoke(tagId, tagName, icon)
                     onDismissRequest.invoke()
                 },
-            ){
+            ) {
                 Text(
                     text = "Save",
                     fontSize = 16.sp,
@@ -66,7 +64,7 @@ fun EditChildTagDialog(
                 onClick = {
                     onDismissRequest.invoke()
                 },
-            ){
+            ) {
                 Text(
                     text = "Cancel",
                     fontSize = 16.sp,
@@ -78,12 +76,12 @@ fun EditChildTagDialog(
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
-            ){
+            ) {
                 Column(
                     modifier = Modifier
                         .padding(bottom = 16.dp)
                         .fillMaxWidth(0.75f)
-                ){
+                ) {
                     Text(
                         "Tag Name",
                         fontSize = 16.sp,

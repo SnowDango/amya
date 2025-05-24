@@ -1,6 +1,5 @@
 package com.snowdango.amya.feature.setting
 
-
 import amya.composeapp.generated.resources.Res
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,8 +14,7 @@ import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 @OptIn(ExperimentalResourceApi::class)
-class LicensesViewModel: ViewModel() {
-
+class LicensesViewModel : ViewModel() {
 
     private val _libraries: MutableStateFlow<ImmutableList<Library>> = MutableStateFlow(persistentListOf())
     val libraries = _libraries.stateIn(
@@ -33,6 +31,4 @@ class LicensesViewModel: ViewModel() {
             _libraries.emit(libs.libraries)
         }
     }
-
-
 }

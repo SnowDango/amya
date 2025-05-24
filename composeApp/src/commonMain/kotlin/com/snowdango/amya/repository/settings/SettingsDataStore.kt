@@ -17,5 +17,4 @@ class SettingsDataStore(
     fun getIsClosedMinimize() = settingsPreferences.getIsClosedMinimize()
 
     fun getIsShowTray() = settingsPreferences.getIsShowTray()
-
 }

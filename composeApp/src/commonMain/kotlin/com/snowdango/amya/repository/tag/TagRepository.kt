@@ -1,6 +1,5 @@
 package com.snowdango.amya.repository.tag
 
-import com.snowdango.amya.domain.db.entity.AppsEntity
 import com.snowdango.amya.domain.db.entity.SubTagEntity
 import com.snowdango.amya.domain.db.entity.TagEntity
 import com.snowdango.amya.domain.db.entity.relation.TagGroupEntity
@@ -37,5 +36,4 @@ class TagRepository(
     suspend fun deleteChildTag(id: Long) {
         tagDataStore.deleteChildTag(id)
     }
-
 }

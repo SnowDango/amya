@@ -13,15 +13,13 @@ import com.snowdango.amya.domain.db.entity.SubTagEntity
 import com.snowdango.amya.domain.db.entity.TagEntity
 import kotlinx.coroutines.Dispatchers
 
-
 @Database(entities = [AppsEntity::class, TagEntity::class, SubTagEntity::class], version = 2, exportSchema = false)
 @ConstructedBy(AppsDatabaseConstructor::class)
-abstract class AppsDatabase: RoomDatabase() {
+abstract class AppsDatabase : RoomDatabase() {
 
     abstract fun appsDao(): AppsDao
     abstract fun tagDao(): TagDao
     abstract fun subTagDao(): SubTagDao
-
 }
 
 @Suppress("NO_ACTUAL_FOR_EXPECT")

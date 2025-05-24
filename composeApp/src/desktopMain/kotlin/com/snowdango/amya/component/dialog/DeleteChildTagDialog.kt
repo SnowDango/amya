@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.sp
 import com.snowdango.amya.component.button.PrimaryTextButton
 
-
 @Composable
 fun DeleteChildTagDialog(
     id: Long,
@@ -24,7 +23,7 @@ fun DeleteChildTagDialog(
                     onDelete.invoke(id)
                     onDismissRequest.invoke()
                 },
-            ){
+            ) {
                 Text(
                     text = "Delete",
                     fontSize = 16.sp,
@@ -37,7 +36,7 @@ fun DeleteChildTagDialog(
                 onClick = {
                     onDismissRequest.invoke()
                 },
-            ){
+            ) {
                 Text(
                     text = "Cancel",
                     fontSize = 16.sp,

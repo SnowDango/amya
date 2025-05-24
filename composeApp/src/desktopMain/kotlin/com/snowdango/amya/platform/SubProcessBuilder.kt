@@ -15,5 +15,4 @@ actual object SubProcessBuilder {
             .stdout(Stdio.Pipe)
             .stdin(Stdio.Pipe)
     }
-
 }

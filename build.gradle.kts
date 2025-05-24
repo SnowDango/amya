@@ -31,6 +31,7 @@ subprojects {
         buildUponDefaultConfig = true
         ignoreFailures = true
         basePath = file("$rootDir/../").absolutePath
+        source = files("src/commonMain/kotlin", "src/desktopMain/kotlin")
     }
 
     dependencies {
