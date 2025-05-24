@@ -32,7 +32,7 @@ class AllViewModel : ViewModel(), KoinComponent {
         initialValue = OrderType.ID_ASC
     )
     private val _sortedAppsData: Flow<List<AppsModel.AppData>> = combine(_appsData, _orderType) { apps, type ->
-        when(type) {
+        when (type) {
             OrderType.ID_ASC -> apps.sortedByDescending { it.id }
             OrderType.ID_DESC -> apps.sortedBy { it.id }
             OrderType.NAME_ASC -> apps.sortedBy { it.name }
