@@ -13,7 +13,6 @@ import androidx.compose.ui.unit.sp
 import com.snowdango.amya.component.button.PrimaryTextButton
 import com.snowdango.amya.model.TagModel
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TransferAppDialog(
@@ -26,7 +25,11 @@ fun TransferAppDialog(
 ) {
     var parentTag by remember { mutableStateOf(tagList.first { it.id == tagId }) }
     var isExpandedParentTag by remember { mutableStateOf(false) }
-    var childTag: TagModel.ParentTag.ChildTag? by remember { mutableStateOf(parentTag.childTag.firstOrNull { it.id == subTagId }) }
+    var childTag: TagModel.ParentTag.ChildTag? by remember {
+        mutableStateOf(
+            parentTag.childTag.firstOrNull { it.id == subTagId }
+        )
+    }
     var isExpandedSubTag by remember { mutableStateOf(false) }
 
     AlertDialog(
