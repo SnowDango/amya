@@ -4,18 +4,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.snowdango.amya.model.AppsModel
+import com.snowdango.amya.model.TagModel
 import com.snowdango.amya.platform.SubProcessBuilder
 import compose.icons.TablerIcons
 import compose.icons.tablericons.SortAscending
 import compose.icons.tablericons.SortAscending2
 import compose.icons.tablericons.SortDescending
 import compose.icons.tablericons.SortDescending2
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -23,6 +19,7 @@ import org.koin.core.component.inject
 class AllViewModel : ViewModel(), KoinComponent {
 
     val appsModel: AppsModel by inject()
+    val tagModel: TagModel by inject()
 
     private val _appsData: Flow<List<AppsModel.AppData>> = appsModel.getAll()
     private val _orderType: MutableStateFlow<OrderType> = MutableStateFlow(OrderType.ID_ASC)
@@ -44,6 +41,12 @@ class AllViewModel : ViewModel(), KoinComponent {
         SharingStarted.WhileSubscribed(5_000),
         initialValue = emptyList()
     )
+    private val _tagList = tagModel.getAllGroup()
+    val tagList = _tagList.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(5_000),
+        initialValue = emptyList()
+    )
 
     fun exec(path: String) {
         SubProcessBuilder.execBuilder(
@@ -54,6 +57,18 @@ class AllViewModel : ViewModel(), KoinComponent {
     fun setOrderType(type: OrderType) {
         viewModelScope.launch {
             _orderType.emit(type)
+        }
+    }
+
+    fun updateApp(id: Long, name: String, path: String, imageUrl: String) {
+        viewModelScope.launch {
+            appsModel.updateApp(id, name, path, imageUrl)
+        }
+    }
+
+    fun transferApp(id: Long, tagId: Long, subTagId: Long?) {
+        viewModelScope.launch {
+            appsModel.transferApp(id, tagId, subTagId)
         }
     }
 

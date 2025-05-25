@@ -25,6 +25,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snowdango.amya.component.app.AppCard
 import com.snowdango.amya.component.button.PrimaryTextButton
 import com.snowdango.amya.component.dialog.DeleteAppDialog
+import com.snowdango.amya.component.dialog.EditAppDialog
+import com.snowdango.amya.component.dialog.TransferAppDialog
 import com.snowdango.amya.model.AppsModel
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -35,8 +37,12 @@ fun AllViewScreen(
 ) {
     val appsData = viewModel.sortedAppsData.collectAsStateWithLifecycle()
     val orderType = viewModel.orderType.collectAsStateWithLifecycle()
+    val tagList = viewModel.tagList.collectAsStateWithLifecycle()
     var isOrderMenuExpanded by remember { mutableStateOf(false) }
     var wantDeleteApp: AppsModel.AppData? by remember { mutableStateOf(null) }
+    var wantEditApp: AppsModel.AppData? by remember { mutableStateOf(null) }
+    var wantTransferApp: AppsModel.AppData? by remember { mutableStateOf(null) }
+
     Column(
         modifier = Modifier
             .padding(all = 16.dp)
@@ -127,8 +133,12 @@ fun AllViewScreen(
                     onClick = {
                         viewModel.exec(it.path)
                     },
-                    onEditClick = {},
-                    onTransferClick = {},
+                    onEditClick = {
+                        wantEditApp = it
+                    },
+                    onTransferClick = {
+                        wantTransferApp = it
+                    },
                     onDeleteClick = {
                         wantDeleteApp = it
                     },
@@ -145,6 +155,33 @@ fun AllViewScreen(
                 },
                 onDismissRequest = {
                     wantDeleteApp = null
+                }
+            )
+        }
+        if (wantEditApp != null) {
+            EditAppDialog(
+                appName = wantEditApp!!.name,
+                filePath = wantEditApp!!.path,
+                imageUrl = wantEditApp!!.imageUrl,
+                onSaveApp = { editAppName, editFilePath, editImageUrl ->
+                    viewModel.updateApp(wantEditApp!!.id, editAppName, editFilePath, editImageUrl)
+                },
+                onDismissRequest = {
+                    wantEditApp = null
+                },
+            )
+        }
+        if (wantTransferApp != null) {
+            TransferAppDialog(
+                appName = wantTransferApp!!.name,
+                tagId = wantTransferApp!!.tagId,
+                subTagId = wantTransferApp!!.subTagId,
+                tagList = tagList.value,
+                onTransferApp = { newTagId, newSubTagId ->
+                    viewModel.transferApp(wantTransferApp!!.id, newTagId, newSubTagId)
+                },
+                onDismissRequest = {
+                    wantTransferApp = null
                 }
             )
         }
