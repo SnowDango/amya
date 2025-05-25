@@ -23,7 +23,6 @@ import compose.icons.tablericons.AlertCircle
 import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.path
 
-
 @Composable
 fun EditAppDialog(
     onDismissRequest: () -> Unit,

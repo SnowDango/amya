@@ -28,7 +28,6 @@ interface AppsDao {
     )
     suspend fun updateApp(id: Long, name: String, path: String, imageUrl: String)
 
-
     @Query("delete from ${AppsEntity.TABLE_NAME} where ${AppsEntity.COLUMN_ID} = :id")
     suspend fun delete(id: Long)
 }
