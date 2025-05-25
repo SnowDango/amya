@@ -1,6 +1,6 @@
 package com.snowdango.amya.component.dialog
 
-import androidx.compose.material.AlertDialog
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,7 +16,6 @@ fun DeleteChildTagDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismissRequest,
-        backgroundColor = MaterialTheme.colorScheme.background,
         confirmButton = {
             PrimaryTextButton(
                 onClick = {
