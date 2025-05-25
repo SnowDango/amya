@@ -68,6 +68,10 @@ class AppsModel : KoinComponent {
         }
     }
 
+    suspend fun updateApp(id: Long, name: String, path: String, imageUrl: String) {
+        repository.updateApp(id, name, path, imageUrl)
+    }
+
     suspend fun delete(id: Long) {
         repository.delete(id)
     }

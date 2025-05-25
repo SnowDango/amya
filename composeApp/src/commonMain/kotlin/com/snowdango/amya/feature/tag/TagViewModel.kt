@@ -11,12 +11,7 @@ import compose.icons.tablericons.SortAscending
 import compose.icons.tablericons.SortAscending2
 import compose.icons.tablericons.SortDescending
 import compose.icons.tablericons.SortDescending2
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -64,6 +59,12 @@ class TagViewModel(
     fun setOrderType(type: OrderType) {
         viewModelScope.launch {
             _orderType.emit(type)
+        }
+    }
+
+    fun updateApp(id: Long, name: String, path: String, imageUrl: String) {
+        viewModelScope.launch {
+            appsModel.updateApp(id, name, path, imageUrl)
         }
     }
 

@@ -23,6 +23,10 @@ class AppsRepository(
         return appsDataStore.getAppsBySubTagId(tagId, subTagId)
     }
 
+    suspend fun updateApp(id: Long, name: String, path: String, imageUrl: String) {
+        appsDataStore.updateApp(id, name, path, imageUrl)
+    }
+
     suspend fun delete(id: Long) {
         appsDataStore.delete(id)
     }

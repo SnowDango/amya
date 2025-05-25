@@ -22,6 +22,10 @@ class AppsDataStore(private val database: AppsDatabase) {
         return database.appsDao().getAppsBySubTagId(tagId, subTagId)
     }
 
+    suspend fun updateApp(id: Long, name: String, path: String, imageUrl: String) {
+        database.appsDao().updateApp(id, name, path, imageUrl)
+    }
+
     suspend fun delete(id: Long) {
         database.appsDao().delete(id)
     }

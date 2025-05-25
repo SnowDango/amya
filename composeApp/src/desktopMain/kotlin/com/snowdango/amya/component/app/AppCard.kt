@@ -1,26 +1,17 @@
 package com.snowdango.amya.component.app
 
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.PointerMatcher
-import androidx.compose.foundation.TooltipArea
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.onClick
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -44,6 +35,7 @@ fun AppCard(
     modifier: Modifier = Modifier,
     appData: AppsModel.AppData,
     onClick: () -> Unit,
+    onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
 ) {
     var menuExpanded by remember { mutableStateOf(false) }
@@ -106,6 +98,13 @@ fun AppCard(
                 modifier = Modifier
                     .background(MaterialTheme.colorScheme.surfaceContainerHigh)
             ) {
+                DropdownMenuItem(
+                    text = { Text(text = "Edit") },
+                    onClick = {
+                        onEditClick.invoke()
+                        menuExpanded = false
+                    }
+                )
                 DropdownMenuItem(
                     text = { Text(text = "Delete") },
                     onClick = {
