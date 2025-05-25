@@ -36,6 +36,7 @@ fun AppCard(
     appData: AppsModel.AppData,
     onClick: () -> Unit,
     onEditClick: () -> Unit,
+    onTransferClick: () -> Unit,
     onDeleteClick: () -> Unit,
 ) {
     var menuExpanded by remember { mutableStateOf(false) }
@@ -102,6 +103,13 @@ fun AppCard(
                     text = { Text(text = "Edit") },
                     onClick = {
                         onEditClick.invoke()
+                        menuExpanded = false
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text(text = "Transfer") },
+                    onClick = {
+                        onTransferClick.invoke()
                         menuExpanded = false
                     }
                 )

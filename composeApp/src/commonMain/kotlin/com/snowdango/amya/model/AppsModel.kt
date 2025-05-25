@@ -37,6 +37,8 @@ class AppsModel : KoinComponent {
                     name = app.name,
                     imageUrl = app.imageUrl,
                     path = app.path,
+                    tagId = app.tagId,
+                    subTagId = app.subTagId,
                 )
             }
         }
@@ -50,6 +52,8 @@ class AppsModel : KoinComponent {
                     name = app.name,
                     imageUrl = app.imageUrl,
                     path = app.path,
+                    tagId = app.tagId,
+                    subTagId = app.subTagId,
                 )
             }
         }
@@ -63,6 +67,8 @@ class AppsModel : KoinComponent {
                     name = app.name,
                     imageUrl = app.imageUrl,
                     path = app.path,
+                    tagId = app.tagId,
+                    subTagId = app.subTagId,
                 )
             }
         }
@@ -70,6 +76,10 @@ class AppsModel : KoinComponent {
 
     suspend fun updateApp(id: Long, name: String, path: String, imageUrl: String) {
         repository.updateApp(id, name, path, imageUrl)
+    }
+
+    suspend fun transferApp(id: Long, tagId: Long, subTagId: Long?) {
+        repository.transferApp(id, tagId, subTagId)
     }
 
     suspend fun delete(id: Long) {
@@ -81,5 +91,7 @@ class AppsModel : KoinComponent {
         val name: String,
         val imageUrl: String,
         val path: String,
+        val tagId: Long,
+        val subTagId: Long?,
     )
 }

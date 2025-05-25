@@ -4,6 +4,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.snowdango.amya.model.AppsModel
+import com.snowdango.amya.model.TagModel
 import com.snowdango.amya.platform.SubProcessBuilder
 import com.snowdango.amya.track.Log
 import compose.icons.TablerIcons
@@ -22,6 +23,7 @@ class TagViewModel(
 ) : ViewModel(), KoinComponent {
 
     val appsModel: AppsModel by inject()
+    val tagModel: TagModel by inject()
 
     private val _appsData: Flow<List<AppsModel.AppData>> = if (childTagId != null) {
         Log.d("parentTagId: $parentTagId, childTagId: $childTagId")
@@ -49,6 +51,12 @@ class TagViewModel(
         SharingStarted.WhileSubscribed(5_000),
         initialValue = emptyList()
     )
+    private val _tagList = tagModel.getAllGroup()
+    val tagList = _tagList.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(5_000),
+        initialValue = emptyList()
+    )
 
     fun exec(path: String) {
         SubProcessBuilder.execBuilder(
@@ -65,6 +73,12 @@ class TagViewModel(
     fun updateApp(id: Long, name: String, path: String, imageUrl: String) {
         viewModelScope.launch {
             appsModel.updateApp(id, name, path, imageUrl)
+        }
+    }
+
+    fun transferApp(id: Long, tagId: Long, subTagId: Long?) {
+        viewModelScope.launch {
+            appsModel.transferApp(id, tagId, subTagId)
         }
     }
 

@@ -70,7 +70,7 @@ fun EditAppDialog(
         },
         title = {
             Text(
-                text = "Edit Application",
+                text = "Edit $appName",
                 color = MaterialTheme.colorScheme.onBackground,
             )
         },

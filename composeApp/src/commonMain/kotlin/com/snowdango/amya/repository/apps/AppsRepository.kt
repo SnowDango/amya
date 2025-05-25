@@ -27,6 +27,10 @@ class AppsRepository(
         appsDataStore.updateApp(id, name, path, imageUrl)
     }
 
+    suspend fun transferApp(id: Long, tagId: Long, subTagId: Long?) {
+        appsDataStore.transferApp(id, tagId, subTagId)
+    }
+
     suspend fun delete(id: Long) {
         appsDataStore.delete(id)
     }

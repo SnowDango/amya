@@ -28,6 +28,11 @@ interface AppsDao {
     )
     suspend fun updateApp(id: Long, name: String, path: String, imageUrl: String)
 
+    @Query(
+        "update ${AppsEntity.TABLE_NAME} set ${AppsEntity.COLUMN_TAG_ID} = :tagId, ${AppsEntity.COLUMN_SUB_TAG_ID} = :subTagId where ${AppsEntity.COLUMN_ID} = :id"
+    )
+    suspend fun transferApp(id: Long, tagId: Long, subTagId: Long?)
+
     @Query("delete from ${AppsEntity.TABLE_NAME} where ${AppsEntity.COLUMN_ID} = :id")
     suspend fun delete(id: Long)
 }

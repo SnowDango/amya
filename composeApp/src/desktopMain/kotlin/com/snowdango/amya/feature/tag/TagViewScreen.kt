@@ -22,6 +22,7 @@ import com.snowdango.amya.component.app.AppCard
 import com.snowdango.amya.component.button.PrimaryTextButton
 import com.snowdango.amya.component.dialog.DeleteAppDialog
 import com.snowdango.amya.component.dialog.EditAppDialog
+import com.snowdango.amya.component.dialog.TransferAppDialog
 import com.snowdango.amya.model.AppsModel
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Plus
@@ -38,9 +39,11 @@ fun TagViewScreen(
 ) {
     val appsData = viewModel.sortedAppsData.collectAsStateWithLifecycle()
     val orderType = viewModel.orderType.collectAsStateWithLifecycle()
+    val tagList = viewModel.tagList.collectAsStateWithLifecycle()
     var isOrderMenuExpanded by remember { mutableStateOf(false) }
     var wantDeleteApp: AppsModel.AppData? by remember { mutableStateOf(null) }
     var wantEditApp: AppsModel.AppData? by remember { mutableStateOf(null) }
+    var wantTransferApp: AppsModel.AppData? by remember { mutableStateOf(null) }
 
     Box(
         modifier = Modifier
@@ -154,6 +157,9 @@ fun TagViewScreen(
                         onEditClick = {
                             wantEditApp = it
                         },
+                        onTransferClick = {
+                            wantTransferApp = it
+                        },
                         onDeleteClick = {
                             wantDeleteApp = it
                         }
@@ -183,6 +189,20 @@ fun TagViewScreen(
                 onDismissRequest = {
                     wantEditApp = null
                 },
+            )
+        }
+        if (wantTransferApp != null) {
+            TransferAppDialog(
+                appName = wantTransferApp!!.name,
+                tagId = wantTransferApp!!.tagId,
+                subTagId = wantTransferApp!!.subTagId,
+                tagList = tagList.value,
+                onTransferApp = { newTagId, newSubTagId ->
+                    viewModel.transferApp(wantTransferApp!!.id, newTagId, newSubTagId)
+                },
+                onDismissRequest = {
+                    wantTransferApp = null
+                }
             )
         }
     }

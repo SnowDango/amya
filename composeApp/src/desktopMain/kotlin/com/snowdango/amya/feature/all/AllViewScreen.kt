@@ -128,6 +128,7 @@ fun AllViewScreen(
                         viewModel.exec(it.path)
                     },
                     onEditClick = {},
+                    onTransferClick = {},
                     onDeleteClick = {
                         wantDeleteApp = it
                     },
