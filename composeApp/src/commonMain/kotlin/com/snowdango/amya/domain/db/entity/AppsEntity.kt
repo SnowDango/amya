@@ -6,11 +6,11 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
-
 @Entity(
     tableName = AppsEntity.TABLE_NAME,
     indices = [
-        Index(value = [AppsEntity.COLUMN_TAG_ID, AppsEntity.COLUMN_SUB_TAG_ID])
+        Index(value = [AppsEntity.COLUMN_TAG_ID]),
+        Index(value = [AppsEntity.COLUMN_SUB_TAG_ID]),
     ],
     foreignKeys = [
         ForeignKey(
@@ -21,7 +21,7 @@ import androidx.room.PrimaryKey
         ),
         ForeignKey(
             entity = SubTagEntity::class,
-            parentColumns = arrayOf(TagEntity.COLUMN_ID),
+            parentColumns = arrayOf(SubTagEntity.COLUMN_ID),
             childColumns = arrayOf(AppsEntity.COLUMN_SUB_TAG_ID),
             onDelete = ForeignKey.SET_NULL,
         )

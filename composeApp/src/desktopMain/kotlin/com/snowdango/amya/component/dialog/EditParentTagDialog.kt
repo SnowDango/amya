@@ -1,21 +1,12 @@
 package com.snowdango.amya.component.dialog
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.AlertDialog
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -24,8 +15,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.snowdango.amya.component.button.PrimaryTextButton
 import com.snowdango.amya.component.button.SecondaryTextButton
-import com.snowdango.amya.component.dialog.IconSelectDialog
-
 
 @Composable
 fun EditParentTagDialog(
@@ -41,7 +30,6 @@ fun EditParentTagDialog(
 
     AlertDialog(
         onDismissRequest = onDismissRequest,
-        backgroundColor = MaterialTheme.colorScheme.background,
         title = {
             Text(
                 text = "Edit $tagName",
@@ -54,7 +42,7 @@ fun EditParentTagDialog(
                     onSaveClick.invoke(tagId, tagName, icon)
                     onDismissRequest.invoke()
                 },
-            ){
+            ) {
                 Text(
                     text = "Save",
                     fontSize = 16.sp,
@@ -67,7 +55,7 @@ fun EditParentTagDialog(
                 onClick = {
                     onDismissRequest.invoke()
                 },
-            ){
+            ) {
                 Text(
                     text = "Cancel",
                     fontSize = 16.sp,
@@ -79,12 +67,12 @@ fun EditParentTagDialog(
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
-            ){
+            ) {
                 Column(
                     modifier = Modifier
                         .padding(bottom = 16.dp)
                         .fillMaxWidth(0.75f)
-                ){
+                ) {
                     Text(
                         "Tag Name",
                         fontSize = 16.sp,

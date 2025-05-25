@@ -1,6 +1,5 @@
 package com.snowdango.amya.feature.addtag
 
-
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -53,9 +52,9 @@ class AddTagViewModel : ViewModel(), KoinComponent {
         viewModelScope.launch {
             if (name.isBlank()) {
                 _result.emit(CreateTagState.ValidationError("Name is empty"))
-            }else if (imageVector == null){
+            } else if (imageVector == null) {
                 _result.emit(CreateTagState.ValidationError("Icon is empty"))
-            }else{
+            } else {
                 createTag(parentId, name, imageVector)
             }
         }
@@ -67,12 +66,10 @@ class AddTagViewModel : ViewModel(), KoinComponent {
         }
     }
 
-
     sealed class CreateTagState {
         object None : CreateTagState()
         data class Success(val parentId: Long, val childId: Long?) : CreateTagState()
         object Failure : CreateTagState()
         data class ValidationError(val error: String) : CreateTagState()
     }
-
 }

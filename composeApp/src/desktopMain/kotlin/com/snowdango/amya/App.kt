@@ -1,9 +1,5 @@
 package com.snowdango.amya
 
-
-import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -12,6 +8,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -20,11 +18,13 @@ import androidx.navigation.toRoute
 import com.snowdango.amya.feature.addapp.AddAppViewScreen
 import com.snowdango.amya.feature.addtag.AddTagViewScreen
 import com.snowdango.amya.feature.all.AllViewScreen
+import com.snowdango.amya.feature.setting.LicensesViewScreen
 import com.snowdango.amya.feature.setting.SettingViewScreen
 import com.snowdango.amya.feature.tag.TagViewScreen
 import com.snowdango.amya.route.Route
 import com.snowdango.amya.route.SideTabScreen
 import com.snowdango.amya.ui.AmyaTheme
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
@@ -58,7 +58,7 @@ fun App() {
                         startDestination = Route.AllView,
                         modifier = Modifier.fillMaxSize(),
                     ) {
-                        composable<Route.AllView>{
+                        composable<Route.AllView> {
                             AllViewScreen()
                         }
                         composable<Route.TagView> { backStackEntry ->
@@ -91,7 +91,11 @@ fun App() {
                             )
                         }
                         composable<Route.SettingView> {
-                            SettingViewScreen()
+                            SettingViewScreen(
+                                navigateLicense = {
+                                    navController.navigate(Route.LicenseView)
+                                }
+                            )
                         }
 
                         composable<Route.AddAppView> {
@@ -103,6 +107,9 @@ fun App() {
                                     navController.popBackStack()
                                 }
                             )
+                        }
+                        composable<Route.LicenseView> {
+                            LicensesViewScreen()
                         }
                     }
                 }

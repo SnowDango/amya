@@ -1,6 +1,5 @@
 package com.snowdango.amya.domain.db.dao
 
-import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -9,7 +8,6 @@ import androidx.room.Update
 import com.snowdango.amya.domain.db.entity.TagEntity
 import com.snowdango.amya.domain.db.entity.relation.TagGroupEntity
 import kotlinx.coroutines.flow.Flow
-
 
 @Dao
 interface TagDao {
@@ -26,6 +24,4 @@ interface TagDao {
 
     @Query("delete from ${TagEntity.TABLE_NAME} where id = :id")
     suspend fun delete(id: Long)
-
-
 }

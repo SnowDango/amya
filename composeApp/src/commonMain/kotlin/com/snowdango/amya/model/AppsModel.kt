@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class AppsModel: KoinComponent {
+class AppsModel : KoinComponent {
 
     private val repository by inject<AppsRepository>()
 
@@ -37,6 +37,8 @@ class AppsModel: KoinComponent {
                     name = app.name,
                     imageUrl = app.imageUrl,
                     path = app.path,
+                    tagId = app.tagId,
+                    subTagId = app.subTagId,
                 )
             }
         }
@@ -50,6 +52,8 @@ class AppsModel: KoinComponent {
                     name = app.name,
                     imageUrl = app.imageUrl,
                     path = app.path,
+                    tagId = app.tagId,
+                    subTagId = app.subTagId,
                 )
             }
         }
@@ -63,17 +67,31 @@ class AppsModel: KoinComponent {
                     name = app.name,
                     imageUrl = app.imageUrl,
                     path = app.path,
+                    tagId = app.tagId,
+                    subTagId = app.subTagId,
                 )
             }
         }
     }
 
+    suspend fun updateApp(id: Long, name: String, path: String, imageUrl: String) {
+        repository.updateApp(id, name, path, imageUrl)
+    }
+
+    suspend fun transferApp(id: Long, tagId: Long, subTagId: Long?) {
+        repository.transferApp(id, tagId, subTagId)
+    }
+
+    suspend fun delete(id: Long) {
+        repository.delete(id)
+    }
 
     data class AppData(
         val id: Long,
         val name: String,
         val imageUrl: String,
         val path: String,
+        val tagId: Long,
+        val subTagId: Long?,
     )
-
 }

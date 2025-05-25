@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class AddAppViewModel: ViewModel(), KoinComponent {
+class AddAppViewModel : ViewModel(), KoinComponent {
 
     private val appsModel: AppsModel by inject()
 
@@ -22,7 +22,6 @@ class AddAppViewModel: ViewModel(), KoinComponent {
         SharingStarted.WhileSubscribed(5_000),
         _result.value
     )
-
 
     private suspend fun createApp(
         parentId: Long,
@@ -56,11 +55,11 @@ class AddAppViewModel: ViewModel(), KoinComponent {
         viewModelScope.launch {
             if (name.isBlank()) {
                 _result.emit(CreateAppState.ValidationError("Name is empty"))
-            }else if (filePath.isBlank()) {
+            } else if (filePath.isBlank()) {
                 _result.emit(CreateAppState.ValidationError("File path is empty"))
-            }else if (imageUrl.isBlank()) {
+            } else if (imageUrl.isBlank()) {
                 _result.emit(CreateAppState.ValidationError("Image URL is empty"))
-            }else {
+            } else {
                 createApp(
                     parentId = parentId,
                     childId = childId,

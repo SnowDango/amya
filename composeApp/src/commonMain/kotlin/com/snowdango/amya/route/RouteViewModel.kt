@@ -1,12 +1,11 @@
 package com.snowdango.amya.route
 
-
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.snowdango.amya.model.TagModel
-import com.snowdango.amya.platform.Log
+import com.snowdango.amya.track.Log
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -17,7 +16,7 @@ import kotlin.coroutines.cancellation.CancellationException
 
 class RouteViewModel(
     private val navController: NavController,
-): ViewModel(), KoinComponent {
+) : ViewModel(), KoinComponent {
 
     private val tagModel: TagModel by inject()
 
@@ -45,9 +44,9 @@ class RouteViewModel(
         viewModelScope.launch {
             try {
                 tagModel.updateParentTag(tagId, name, icon)
-            }catch (ce: CancellationException){
+            } catch (ce: CancellationException) {
                 throw ce
-            }catch (th: Throwable) {
+            } catch (th: Throwable) {
                 Log.e(th.message.toString())
             }
         }
@@ -62,9 +61,9 @@ class RouteViewModel(
         viewModelScope.launch {
             try {
                 tagModel.updateChildTag(tagId, name, parentTagId, icon)
-            }catch (ce: CancellationException){
+            } catch (ce: CancellationException) {
                 throw ce
-            }catch (th: Throwable) {
+            } catch (th: Throwable) {
                 Log.e(th.message.toString())
             }
         }
@@ -88,9 +87,9 @@ class RouteViewModel(
                     }
                 }
                 tagModel.deleteParentTag(tagId)
-            }catch (ce: CancellationException){
+            } catch (ce: CancellationException) {
                 throw ce
-            }catch (th: Throwable) {
+            } catch (th: Throwable) {
                 Log.e(th.message.toString())
                 route?.let {
                     navController.navigate(route)
@@ -120,9 +119,9 @@ class RouteViewModel(
                     }
                 }
                 tagModel.deleteChildTag(tagId)
-            }catch (ce: CancellationException) {
+            } catch (ce: CancellationException) {
                 throw ce
-            }catch (th: Throwable) {
+            } catch (th: Throwable) {
                 Log.e(th.message.toString())
                 route?.let {
                     navController.navigate(route)
@@ -130,5 +129,4 @@ class RouteViewModel(
             }
         }
     }
-
 }

@@ -15,12 +15,12 @@ import com.snowdango.amya.component.dialog.DeleteChildTagDialog
 import com.snowdango.amya.component.dialog.DeleteParentTagDialog
 import com.snowdango.amya.component.dialog.EditChildTagDialog
 import com.snowdango.amya.component.dialog.EditParentTagDialog
-import com.snowdango.amya.platform.Log
 import com.snowdango.amya.component.navigation.AddTagNavigateItem
 import com.snowdango.amya.component.navigation.ChildNavigateItem
 import com.snowdango.amya.component.navigation.ParentNavigateItem
 import com.snowdango.amya.component.navigation.SideNavigation
 import com.snowdango.amya.model.TagModel
+import com.snowdango.amya.track.Log
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Home
 import org.koin.compose.viewmodel.koinViewModel
@@ -45,7 +45,7 @@ fun SideTabScreen(
     var wantEditChildTag: Pair<TagModel.ParentTag.ChildTag, Long>? by remember { mutableStateOf(null) }
 
     LaunchedEffect(currentRoute) {
-        Log.d(currentRoute.toString())
+        Log.i(currentRoute.toString())
     }
 
     SideNavigation(
