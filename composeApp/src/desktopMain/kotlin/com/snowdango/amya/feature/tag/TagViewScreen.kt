@@ -3,27 +3,13 @@ package com.snowdango.amya.feature.tag
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -35,6 +21,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snowdango.amya.component.app.AppCard
 import com.snowdango.amya.component.button.PrimaryTextButton
 import com.snowdango.amya.component.dialog.DeleteAppDialog
+import com.snowdango.amya.component.dialog.EditAppDialog
+import com.snowdango.amya.component.dialog.TransferAppDialog
 import com.snowdango.amya.model.AppsModel
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Plus
@@ -51,8 +39,11 @@ fun TagViewScreen(
 ) {
     val appsData = viewModel.sortedAppsData.collectAsStateWithLifecycle()
     val orderType = viewModel.orderType.collectAsStateWithLifecycle()
+    val tagList = viewModel.tagList.collectAsStateWithLifecycle()
     var isOrderMenuExpanded by remember { mutableStateOf(false) }
     var wantDeleteApp: AppsModel.AppData? by remember { mutableStateOf(null) }
+    var wantEditApp: AppsModel.AppData? by remember { mutableStateOf(null) }
+    var wantTransferApp: AppsModel.AppData? by remember { mutableStateOf(null) }
 
     Box(
         modifier = Modifier
@@ -163,6 +154,12 @@ fun TagViewScreen(
                         },
                         modifier = Modifier
                             .padding(all = 8.dp),
+                        onEditClick = {
+                            wantEditApp = it
+                        },
+                        onTransferClick = {
+                            wantTransferApp = it
+                        },
                         onDeleteClick = {
                             wantDeleteApp = it
                         }
@@ -178,6 +175,33 @@ fun TagViewScreen(
                 },
                 onDismissRequest = {
                     wantDeleteApp = null
+                }
+            )
+        }
+        if (wantEditApp != null) {
+            EditAppDialog(
+                appName = wantEditApp!!.name,
+                filePath = wantEditApp!!.path,
+                imageUrl = wantEditApp!!.imageUrl,
+                onSaveApp = { editAppName, editFilePath, editImageUrl ->
+                    viewModel.updateApp(wantEditApp!!.id, editAppName, editFilePath, editImageUrl)
+                },
+                onDismissRequest = {
+                    wantEditApp = null
+                },
+            )
+        }
+        if (wantTransferApp != null) {
+            TransferAppDialog(
+                appName = wantTransferApp!!.name,
+                tagId = wantTransferApp!!.tagId,
+                subTagId = wantTransferApp!!.subTagId,
+                tagList = tagList.value,
+                onTransferApp = { newTagId, newSubTagId ->
+                    viewModel.transferApp(wantTransferApp!!.id, newTagId, newSubTagId)
+                },
+                onDismissRequest = {
+                    wantTransferApp = null
                 }
             )
         }
