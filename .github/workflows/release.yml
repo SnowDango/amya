@@ -74,6 +74,9 @@ jobs:
           path: release/**.deb
   create-release:
     if: ${{ ! failure() }}
+    needs:
+      - linux-build
+      - windows-build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
