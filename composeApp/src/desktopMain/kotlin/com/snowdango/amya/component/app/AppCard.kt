@@ -24,10 +24,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import coil3.compose.AsyncImagePainter
 import coil3.compose.LocalPlatformContext
-import coil3.request.CachePolicy
-import coil3.request.ImageRequest
 import com.snowdango.amya.model.AppsModel
+import com.snowdango.amya.platform.ImageRequestProvider
+import com.snowdango.amya.track.Log
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class)
 @Composable
@@ -80,11 +81,15 @@ fun AppCard(
                 }
             ) {
                 AsyncImage(
-                    model = ImageRequest.Builder(LocalPlatformContext.current)
-                        .data(appData.imageUrl)
-                        .memoryCachePolicy(CachePolicy.ENABLED)
-                        .networkCachePolicy(CachePolicy.ENABLED)
-                        .build(),
+                    model = ImageRequestProvider.getImageRequest(
+                        context = LocalPlatformContext.current,
+                        model = appData.imageUrl,
+                    ),
+                    onState = {
+                        if (it is AsyncImagePainter.State.Error) {
+                            Log.e("Image loading error: ${it.result.throwable.message}")
+                        }
+                    },
                     contentDescription = appData.name,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
