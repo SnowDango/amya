@@ -8,6 +8,7 @@
 -keep class okio.** { *; }
 -keep class ui.navigation.* { *; }
 -keep class com.github.oshi.** { *; }
+-keep class java.net.http.** { *; }
 
 -keepclassmembers class kotlinx.coroutines.** {
     volatile <fields>;

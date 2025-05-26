@@ -15,9 +15,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.LocalPlatformContext
 import coil3.compose.SubcomposeAsyncImage
-import coil3.request.ImageRequest
 import com.snowdango.amya.component.button.PrimaryTextButton
 import com.snowdango.amya.component.button.SecondaryTextButton
+import com.snowdango.amya.platform.ImageRequestProvider
 import compose.icons.TablerIcons
 import compose.icons.tablericons.AlertCircle
 import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
@@ -165,9 +165,10 @@ fun EditAppDialog(
                         contentAlignment = Alignment.Center,
                     ) {
                         SubcomposeAsyncImage(
-                            model = ImageRequest.Builder(LocalPlatformContext.current)
-                                .data(editImageUrl)
-                                .build(),
+                            model = ImageRequestProvider.getImageRequest(
+                                context = LocalPlatformContext.current,
+                                model = editImageUrl,
+                            ),
                             contentDescription = null,
                             contentScale = ContentScale.Crop,
                             loading = {
