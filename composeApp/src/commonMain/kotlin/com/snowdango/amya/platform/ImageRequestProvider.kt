@@ -9,5 +9,4 @@ expect object ImageRequestProvider {
         context: PlatformContext,
         model: Any?,
     ): ImageRequest
-
 }
