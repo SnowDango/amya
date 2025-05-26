@@ -13,6 +13,8 @@ plugins {
 }
 
 kotlin {
+    version = libs.versions.version.get().toInt()
+
     jvm("desktop")
 
     sourceSets {
@@ -144,6 +146,7 @@ compose.desktop {
                 "java.net.http"
             )
             packageName = "Amya"
+            version = libs.versions.version.get().toInt()
             packageVersion = libs.versions.app.version.get()
             linux {
                 modules("jdk.security.auth")
