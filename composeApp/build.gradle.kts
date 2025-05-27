@@ -13,6 +13,8 @@ plugins {
 }
 
 kotlin {
+    version = libs.versions.version.get().toInt()
+
     jvm("desktop")
 
     sourceSets {
@@ -135,8 +137,16 @@ compose.desktop {
         nativeDistributions {
             outputBaseDir.set(project.layout.buildDirectory.dir("customOutputDir"))
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            modules("java.instrument", "java.management", "jdk.security.auth", "jdk.unsupported", "jdk.unsupported.desktop")
+            modules(
+                "java.instrument",
+                "java.management",
+                "jdk.security.auth",
+                "jdk.unsupported",
+                "jdk.unsupported.desktop",
+                "java.net.http"
+            )
             packageName = "Amya"
+            version = libs.versions.version.get().toInt()
             packageVersion = libs.versions.app.version.get()
             linux {
                 modules("jdk.security.auth")
