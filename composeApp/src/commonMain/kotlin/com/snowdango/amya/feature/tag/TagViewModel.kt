@@ -58,9 +58,10 @@ class TagViewModel(
         initialValue = emptyList()
     )
 
-    fun exec(path: String) {
+    fun exec(path: String, args: String?) {
         SubProcessBuilder.execBuilder(
-            path = path
+            path = path,
+            args = args,
         ).spawn()
     }
 

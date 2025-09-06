@@ -131,7 +131,7 @@ fun AllViewScreen(
                 AppCard(
                     appData = it,
                     onClick = {
-                        viewModel.exec(it.path)
+                        viewModel.exec(it.path, it.args)
                     },
                     onEditClick = {
                         wantEditApp = it

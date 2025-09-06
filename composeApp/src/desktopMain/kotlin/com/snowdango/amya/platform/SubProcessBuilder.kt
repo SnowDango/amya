@@ -7,9 +7,13 @@ import kotlin.io.path.Path
 
 actual object SubProcessBuilder {
 
-    actual fun execBuilder(path: String): Process.Builder {
+    actual fun execBuilder(path: String, args: String?): Process.Builder {
         val parent = Path(path).parent
-        return Process.Builder(path)
+        val builder = Process.Builder(path)
+        args?.let {
+            builder.args(it.split(" "))
+        }
+        return builder
             .changeDir(parent.toFile())
             .stderr(Stdio.Pipe)
             .stdout(Stdio.Pipe)

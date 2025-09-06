@@ -150,7 +150,7 @@ fun TagViewScreen(
                     AppCard(
                         appData = it,
                         onClick = {
-                            viewModel.exec(it.path)
+                            viewModel.exec(it.path, it.args)
                         },
                         modifier = Modifier
                             .padding(all = 8.dp),
