@@ -28,12 +28,14 @@ fun EditAppDialog(
     onDismissRequest: () -> Unit,
     appName: String,
     filePath: String,
+    args: String?,
     imageUrl: String,
-    onSaveApp: (appName: String, filePath: String, imageUrl: String) -> Unit,
+    onSaveApp: (appName: String, filePath: String, args: String?, imageUrl: String) -> Unit,
 ) {
     var editAppName by remember { mutableStateOf(appName) }
     var editFilePath by remember { mutableStateOf(filePath) }
     var editImageUrl by remember { mutableStateOf(imageUrl) }
+    var editArgs by remember { mutableStateOf(args) }
 
     val launcher = rememberFilePickerLauncher { file ->
         editFilePath = file?.path ?: ""
@@ -44,7 +46,7 @@ fun EditAppDialog(
         confirmButton = {
             PrimaryTextButton(
                 onClick = {
-                    onSaveApp.invoke(editAppName, editFilePath, editImageUrl)
+                    onSaveApp.invoke(editAppName, editFilePath, editArgs?.ifBlank { null },editImageUrl)
                     onDismissRequest.invoke()
                 },
             ) {
@@ -134,8 +136,30 @@ fun EditAppDialog(
                     }
                     TextField(
                         value = editFilePath,
-                        onValueChange = { },
-                        readOnly = true,
+                        onValueChange = {
+                            editFilePath = it
+                        },
+                        readOnly = false,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+                }
+
+                // args
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    Text(
+                        "Args (Optional)",
+                        fontSize = 16.sp,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        modifier = Modifier
+                            .padding(bottom = 8.dp)
+                    )
+                    TextField(
+                        value = editArgs ?: "",
+                        onValueChange = { editArgs = it },
                         modifier = Modifier
                             .fillMaxWidth()
                     )

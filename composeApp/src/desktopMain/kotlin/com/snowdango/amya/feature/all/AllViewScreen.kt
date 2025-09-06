@@ -131,7 +131,7 @@ fun AllViewScreen(
                 AppCard(
                     appData = it,
                     onClick = {
-                        viewModel.exec(it.path)
+                        viewModel.exec(it.path, it.args)
                     },
                     onEditClick = {
                         wantEditApp = it
@@ -163,8 +163,9 @@ fun AllViewScreen(
                 appName = wantEditApp!!.name,
                 filePath = wantEditApp!!.path,
                 imageUrl = wantEditApp!!.imageUrl,
-                onSaveApp = { editAppName, editFilePath, editImageUrl ->
-                    viewModel.updateApp(wantEditApp!!.id, editAppName, editFilePath, editImageUrl)
+                args = wantEditApp!!.args,
+                onSaveApp = { editAppName, editFilePath, editArgs, editImageUrl ->
+                    viewModel.updateApp(wantEditApp!!.id, editAppName, editFilePath, editArgs, editImageUrl)
                 },
                 onDismissRequest = {
                     wantEditApp = null
