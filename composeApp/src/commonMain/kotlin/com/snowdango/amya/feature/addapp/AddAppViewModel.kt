@@ -28,6 +28,7 @@ class AddAppViewModel : ViewModel(), KoinComponent {
         childId: Long?,
         name: String,
         filePath: String,
+        args: String?,
         imageUrl: String,
     ) {
         try {
@@ -37,6 +38,7 @@ class AddAppViewModel : ViewModel(), KoinComponent {
                 tagId = parentId,
                 subTagId = childId,
                 path = filePath,
+                args = args,
             )
         } catch (ce: CancellationException) {
             throw ce
@@ -50,6 +52,7 @@ class AddAppViewModel : ViewModel(), KoinComponent {
         childId: Long?,
         name: String,
         filePath: String,
+        args: String?,
         imageUrl: String,
     ) {
         viewModelScope.launch {
@@ -65,6 +68,7 @@ class AddAppViewModel : ViewModel(), KoinComponent {
                     childId = childId,
                     name = name,
                     filePath = filePath,
+                    args = args,
                     imageUrl = imageUrl,
                 )
                 _result.emit(CreateAppState.Success(parentId, childId))

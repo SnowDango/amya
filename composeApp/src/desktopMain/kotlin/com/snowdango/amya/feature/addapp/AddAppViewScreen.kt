@@ -42,6 +42,7 @@ fun AddAppViewScreen(
     var appName by remember { mutableStateOf("") }
     var imageUrl by remember { mutableStateOf("") }
     var filePath by remember { mutableStateOf("") }
+    var args by remember { mutableStateOf("") }
 
     var errorMessage by remember { mutableStateOf("") }
     var isShowCreateErrorDialog by remember { mutableStateOf(false) }
@@ -142,12 +143,37 @@ fun AddAppViewScreen(
                     }
                     TextField(
                         value = filePath,
-                        onValueChange = { },
-                        readOnly = true,
+                        onValueChange = {
+                            filePath = it
+                        },
+                        readOnly = false,
                         modifier = Modifier
                             .fillMaxWidth()
                     )
                 }
+
+                // args
+                Column(
+                    modifier = Modifier
+                        .padding(bottom = 50.dp)
+                        .defaultMinSize(minWidth = 300.dp)
+                        .fillMaxWidth(0.5f)
+                ) {
+                    Text(
+                        "Args (Optional)",
+                        fontSize = 16.sp,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        modifier = Modifier
+                            .padding(bottom = 8.dp)
+                    )
+                    TextField(
+                        value = args,
+                        onValueChange = { args = it },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+                }
+
 
                 // imageUrl
                 Column(
@@ -227,7 +253,7 @@ fun AddAppViewScreen(
 
             PrimaryTextButton(
                 onClick = {
-                    viewModel.checkAndCreateApp(parentId, childId, appName, filePath, imageUrl)
+                    viewModel.checkAndCreateApp(parentId, childId, appName, filePath, args.ifBlank { null }, imageUrl)
                 },
             ) {
                 Text(

@@ -24,9 +24,9 @@ interface AppsDao {
     fun getAppsBySubTagId(tagId: Long, subTagId: Long): Flow<List<AppsEntity>>
 
     @Query(
-        "update ${AppsEntity.TABLE_NAME} set ${AppsEntity.COLUMN_NAME} = :name, ${AppsEntity.COLUMN_PATH} = :path, ${AppsEntity.COLUMN_IMAGE_URL} = :imageUrl where ${AppsEntity.COLUMN_ID} = :id"
+        "update ${AppsEntity.TABLE_NAME} set ${AppsEntity.COLUMN_NAME} = :name, ${AppsEntity.COLUMN_PATH} = :path, ${AppsEntity.COLUMN_ARGS} = :args, ${AppsEntity.COLUMN_IMAGE_URL} = :imageUrl where ${AppsEntity.COLUMN_ID} = :id"
     )
-    suspend fun updateApp(id: Long, name: String, path: String, imageUrl: String)
+    suspend fun updateApp(id: Long, name: String, path: String, args: String?, imageUrl: String)
 
     @Query(
         "update ${AppsEntity.TABLE_NAME} set ${AppsEntity.COLUMN_TAG_ID} = :tagId, ${AppsEntity.COLUMN_SUB_TAG_ID} = :subTagId where ${AppsEntity.COLUMN_ID} = :id"

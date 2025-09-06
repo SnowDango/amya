@@ -17,6 +17,7 @@ class AppsModel : KoinComponent {
         tagId: Long,
         subTagId: Long?,
         path: String,
+        args: String?,
     ) {
         repository.insert(
             AppsEntity(
@@ -25,6 +26,7 @@ class AppsModel : KoinComponent {
                 tagId = tagId,
                 subTagId = subTagId,
                 path = path,
+                args = args,
             )
         )
     }
@@ -37,6 +39,7 @@ class AppsModel : KoinComponent {
                     name = app.name,
                     imageUrl = app.imageUrl,
                     path = app.path,
+                    args = app.args,
                     tagId = app.tagId,
                     subTagId = app.subTagId,
                 )
@@ -52,6 +55,7 @@ class AppsModel : KoinComponent {
                     name = app.name,
                     imageUrl = app.imageUrl,
                     path = app.path,
+                    args = app.args,
                     tagId = app.tagId,
                     subTagId = app.subTagId,
                 )
@@ -67,6 +71,7 @@ class AppsModel : KoinComponent {
                     name = app.name,
                     imageUrl = app.imageUrl,
                     path = app.path,
+                    args = app.args,
                     tagId = app.tagId,
                     subTagId = app.subTagId,
                 )
@@ -74,8 +79,8 @@ class AppsModel : KoinComponent {
         }
     }
 
-    suspend fun updateApp(id: Long, name: String, path: String, imageUrl: String) {
-        repository.updateApp(id, name, path, imageUrl)
+    suspend fun updateApp(id: Long, name: String, path: String, args: String?, imageUrl: String) {
+        repository.updateApp(id, name, path, args, imageUrl)
     }
 
     suspend fun transferApp(id: Long, tagId: Long, subTagId: Long?) {
@@ -91,6 +96,7 @@ class AppsModel : KoinComponent {
         val name: String,
         val imageUrl: String,
         val path: String,
+        val args: String?,
         val tagId: Long,
         val subTagId: Long?,
     )

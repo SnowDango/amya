@@ -60,9 +60,9 @@ class AllViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    fun updateApp(id: Long, name: String, path: String, imageUrl: String) {
+    fun updateApp(id: Long, name: String, path: String, args: String?, imageUrl: String) {
         viewModelScope.launch {
-            appsModel.updateApp(id, name, path, imageUrl)
+            appsModel.updateApp(id, name, path, args, imageUrl)
         }
     }
 

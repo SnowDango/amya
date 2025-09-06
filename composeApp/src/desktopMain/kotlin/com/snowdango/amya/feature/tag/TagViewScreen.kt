@@ -183,8 +183,9 @@ fun TagViewScreen(
                 appName = wantEditApp!!.name,
                 filePath = wantEditApp!!.path,
                 imageUrl = wantEditApp!!.imageUrl,
-                onSaveApp = { editAppName, editFilePath, editImageUrl ->
-                    viewModel.updateApp(wantEditApp!!.id, editAppName, editFilePath, editImageUrl)
+                args = wantEditApp!!.args,
+                onSaveApp = { editAppName, editFilePath, editArgs, editImageUrl ->
+                    viewModel.updateApp(wantEditApp!!.id, editAppName, editFilePath, editArgs, editImageUrl)
                 },
                 onDismissRequest = {
                     wantEditApp = null
