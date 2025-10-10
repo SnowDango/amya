@@ -27,7 +27,7 @@ kmp-process = "0.4.0"
 compose-settings = "2.13.0"
 androidx-datastore = "1.1.7"
 appDir = "2.0.0"
-aboutLibraries = "12.2.4"
+aboutLibraries = "13.0.0"
 autoLaunch = "0.7.0"
 detekt = "1.23.8"
 
