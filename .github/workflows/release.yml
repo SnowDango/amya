@@ -49,7 +49,7 @@ jobs:
       - name: Move Linux package to release directory
         run: mv composeApp/build/customOutputDir/main-release/msi/**.msi release/
       - name: Upload Windows package
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: windows-package
           path: release/**.msi
@@ -76,7 +76,7 @@ jobs:
       - name: Move Linux package to release directory
         run: mv composeApp/build/customOutputDir/main-release/deb/**.deb release/
       - name: Upload Linux package
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: linux-package
           path: release/**.deb
@@ -89,12 +89,12 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: Download Windows package
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: windows-package
           path: ./release
       - name: Download Linux package
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: linux-package
           path: ./release
