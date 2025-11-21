@@ -48,8 +48,9 @@ class AllViewModel : ViewModel(), KoinComponent {
         initialValue = emptyList()
     )
 
-    fun exec(path: String, args: String?) {
+    fun exec(isRoot: Boolean, path: String, args: String?) {
         SubProcessBuilder.execBuilder(
+            isRoot = isRoot,
             path = path,
             args = args,
         ).spawn()
@@ -61,9 +62,9 @@ class AllViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    fun updateApp(id: Long, name: String, path: String, args: String?, imageUrl: String) {
+    fun updateApp(id: Long, name: String, path: String, args: String?, imageUrl: String, root: Boolean) {
         viewModelScope.launch {
-            appsModel.updateApp(id, name, path, args, imageUrl)
+            appsModel.updateApp(id, name, path, args, imageUrl, root)
         }
     }
 

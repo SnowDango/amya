@@ -33,6 +33,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun AllViewScreen(
+    isWindows: Boolean,
     viewModel: AllViewModel = koinViewModel()
 ) {
     val appsData = viewModel.sortedAppsData.collectAsStateWithLifecycle()
@@ -131,7 +132,7 @@ fun AllViewScreen(
                 AppCard(
                     appData = it,
                     onClick = {
-                        viewModel.exec(it.path, it.args)
+                        viewModel.exec(it.root, it.path, it.args)
                     },
                     onEditClick = {
                         wantEditApp = it
@@ -160,12 +161,14 @@ fun AllViewScreen(
         }
         if (wantEditApp != null) {
             EditAppDialog(
+                isWindows = isWindows,
                 appName = wantEditApp!!.name,
                 filePath = wantEditApp!!.path,
                 imageUrl = wantEditApp!!.imageUrl,
                 args = wantEditApp!!.args,
-                onSaveApp = { editAppName, editFilePath, editArgs, editImageUrl ->
-                    viewModel.updateApp(wantEditApp!!.id, editAppName, editFilePath, editArgs, editImageUrl)
+                root = wantEditApp!!.root,
+                onSaveApp = { editAppName, editFilePath, editArgs, editImageUrl, editRoot ->
+                    viewModel.updateApp(wantEditApp!!.id, editAppName, editFilePath, editArgs, editImageUrl, editRoot)
                 },
                 onDismissRequest = {
                     wantEditApp = null

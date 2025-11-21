@@ -34,6 +34,7 @@ import org.koin.core.parameter.parametersOf
 fun TagViewScreen(
     tagId: Long,
     subTagId: Long?,
+    isWindows: Boolean,
     navigateAddApp: (tagId: Long, subTagId: Long?) -> Unit,
     viewModel: TagViewModel = koinViewModel { parametersOf(tagId, subTagId) },
 ) {
@@ -150,7 +151,7 @@ fun TagViewScreen(
                     AppCard(
                         appData = it,
                         onClick = {
-                            viewModel.exec(it.path, it.args)
+                            viewModel.exec(it.root, it.path, it.args)
                         },
                         modifier = Modifier
                             .padding(all = 8.dp),
@@ -180,12 +181,14 @@ fun TagViewScreen(
         }
         if (wantEditApp != null) {
             EditAppDialog(
+                isWindows = isWindows,
                 appName = wantEditApp!!.name,
                 filePath = wantEditApp!!.path,
                 imageUrl = wantEditApp!!.imageUrl,
                 args = wantEditApp!!.args,
-                onSaveApp = { editAppName, editFilePath, editArgs, editImageUrl ->
-                    viewModel.updateApp(wantEditApp!!.id, editAppName, editFilePath, editArgs, editImageUrl)
+                root = wantEditApp!!.root,
+                onSaveApp = { editAppName, editFilePath, editArgs, editImageUrl, editRoot ->
+                    viewModel.updateApp(wantEditApp!!.id, editAppName, editFilePath, editArgs, editImageUrl, editRoot)
                 },
                 onDismissRequest = {
                     wantEditApp = null

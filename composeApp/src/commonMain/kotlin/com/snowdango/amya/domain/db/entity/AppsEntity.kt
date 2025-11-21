@@ -35,6 +35,7 @@ data class AppsEntity(
     @ColumnInfo(name = COLUMN_SUB_TAG_ID) val subTagId: Long?,
     @ColumnInfo(name = COLUMN_PATH) val path: String,
     @ColumnInfo(name = COLUMN_ARGS) val args: String? = null,
+    @ColumnInfo(name = COLUMN_ROOT) val root: Boolean = false,
 ) {
     companion object {
         const val TABLE_NAME = "apps"
@@ -45,5 +46,6 @@ data class AppsEntity(
         const val COLUMN_SUB_TAG_ID = "subTagId"
         const val COLUMN_PATH = "path"
         const val COLUMN_ARGS = "args"
+        const val COLUMN_ROOT = "root"
     }
 }

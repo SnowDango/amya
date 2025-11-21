@@ -18,6 +18,7 @@ class AppsModel : KoinComponent {
         subTagId: Long?,
         path: String,
         args: String?,
+        root: Boolean,
     ) {
         repository.insert(
             AppsEntity(
@@ -27,6 +28,7 @@ class AppsModel : KoinComponent {
                 subTagId = subTagId,
                 path = path,
                 args = args,
+                root = root,
             )
         )
     }
@@ -42,6 +44,7 @@ class AppsModel : KoinComponent {
                     args = app.args,
                     tagId = app.tagId,
                     subTagId = app.subTagId,
+                    root = app.root,
                 )
             }
         }
@@ -58,6 +61,7 @@ class AppsModel : KoinComponent {
                     args = app.args,
                     tagId = app.tagId,
                     subTagId = app.subTagId,
+                    root = app.root,
                 )
             }
         }
@@ -74,13 +78,14 @@ class AppsModel : KoinComponent {
                     args = app.args,
                     tagId = app.tagId,
                     subTagId = app.subTagId,
+                    root = app.root
                 )
             }
         }
     }
 
-    suspend fun updateApp(id: Long, name: String, path: String, args: String?, imageUrl: String) {
-        repository.updateApp(id, name, path, args, imageUrl)
+    suspend fun updateApp(id: Long, name: String, path: String, args: String?, imageUrl: String, root: Boolean) {
+        repository.updateApp(id, name, path, args, imageUrl, root)
     }
 
     suspend fun transferApp(id: Long, tagId: Long, subTagId: Long?) {
@@ -99,5 +104,6 @@ class AppsModel : KoinComponent {
         val args: String?,
         val tagId: Long,
         val subTagId: Long?,
+        val root: Boolean,
     )
 }

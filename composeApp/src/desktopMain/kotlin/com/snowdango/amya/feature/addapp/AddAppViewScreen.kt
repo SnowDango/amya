@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
@@ -34,6 +35,7 @@ import org.koin.compose.viewmodel.koinViewModel
 fun AddAppViewScreen(
     parentId: Long,
     childId: Long?,
+    isWindows: Boolean,
     navigateBackTag: () -> Unit,
     viewModel: AddAppViewModel = koinViewModel(),
 ) {
@@ -43,6 +45,7 @@ fun AddAppViewScreen(
     var imageUrl by remember { mutableStateOf("") }
     var filePath by remember { mutableStateOf("") }
     var args by remember { mutableStateOf("") }
+    var root by remember { mutableStateOf(false) }
 
     var errorMessage by remember { mutableStateOf("") }
     var isShowCreateErrorDialog by remember { mutableStateOf(false) }
@@ -174,6 +177,30 @@ fun AddAppViewScreen(
                     )
                 }
 
+                if (isWindows) {
+                    Column(
+                        modifier = Modifier
+                            .defaultMinSize(minWidth = 300.dp)
+                            .fillMaxWidth(0.5f)
+                    ) {
+                        Text(
+                            "Root (Optional)",
+                            fontSize = 16.sp,
+                            color = MaterialTheme.colorScheme.onBackground,
+                            modifier = Modifier
+                                .padding(bottom = 8.dp)
+                        )
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.CenterEnd,
+                        ) {
+                            Switch(
+                                checked = root,
+                                onCheckedChange = { root = it },
+                            )
+                        }
+                    }
+                }
 
                 // imageUrl
                 Column(
@@ -253,7 +280,15 @@ fun AddAppViewScreen(
 
             PrimaryTextButton(
                 onClick = {
-                    viewModel.checkAndCreateApp(parentId, childId, appName, filePath, args.ifBlank { null }, imageUrl)
+                    viewModel.checkAndCreateApp(
+                        parentId,
+                        childId,
+                        appName,
+                        filePath,
+                        args.ifBlank { null },
+                        imageUrl,
+                        root
+                    )
                 },
             ) {
                 Text(
