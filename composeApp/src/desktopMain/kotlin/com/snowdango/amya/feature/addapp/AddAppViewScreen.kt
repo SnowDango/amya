@@ -202,7 +202,6 @@ fun AddAppViewScreen(
                     }
                 }
 
-
                 // imageUrl
                 Column(
                     modifier = Modifier
@@ -281,7 +280,15 @@ fun AddAppViewScreen(
 
             PrimaryTextButton(
                 onClick = {
-                    viewModel.checkAndCreateApp(parentId, childId, appName, filePath, args.ifBlank { null }, imageUrl, root)
+                    viewModel.checkAndCreateApp(
+                        parentId,
+                        childId,
+                        appName,
+                        filePath,
+                        args.ifBlank { null },
+                        imageUrl,
+                        root
+                    )
                 },
             ) {
                 Text(

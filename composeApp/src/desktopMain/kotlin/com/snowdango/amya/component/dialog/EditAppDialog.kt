@@ -49,7 +49,7 @@ fun EditAppDialog(
         confirmButton = {
             PrimaryTextButton(
                 onClick = {
-                    onSaveApp.invoke(editAppName, editFilePath, editArgs?.ifBlank { null },editImageUrl, editRoot)
+                    onSaveApp.invoke(editAppName, editFilePath, editArgs?.ifBlank { null }, editImageUrl, editRoot)
                     onDismissRequest.invoke()
                 },
             ) {
