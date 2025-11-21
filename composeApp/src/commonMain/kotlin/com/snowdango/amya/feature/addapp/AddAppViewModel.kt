@@ -30,6 +30,7 @@ class AddAppViewModel : ViewModel(), KoinComponent {
         filePath: String,
         args: String?,
         imageUrl: String,
+        root: Boolean,
     ) {
         try {
             appsModel.insert(
@@ -39,6 +40,7 @@ class AddAppViewModel : ViewModel(), KoinComponent {
                 subTagId = childId,
                 path = filePath,
                 args = args,
+                root = root,
             )
         } catch (ce: CancellationException) {
             throw ce
@@ -54,6 +56,7 @@ class AddAppViewModel : ViewModel(), KoinComponent {
         filePath: String,
         args: String?,
         imageUrl: String,
+        root: Boolean,
     ) {
         viewModelScope.launch {
             if (name.isBlank()) {
@@ -70,6 +73,7 @@ class AddAppViewModel : ViewModel(), KoinComponent {
                     filePath = filePath,
                     args = args,
                     imageUrl = imageUrl,
+                    root = root,
                 )
                 _result.emit(CreateAppState.Success(parentId, childId))
             }

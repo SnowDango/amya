@@ -7,11 +7,21 @@ import kotlin.io.path.Path
 
 actual object SubProcessBuilder {
 
-    actual fun execBuilder(path: String, args: String?): Process.Builder {
+    actual fun execBuilder(isRoot: Boolean, path: String, args: String?): Process.Builder {
+        val platform = getPlatform()
         val parent = Path(path).parent
-        val builder = Process.Builder(path)
-        args?.let {
-            builder.args(it.split(" "))
+        val command = if (isRoot && platform.platformType == PlatformType.WINDOWS) {
+            "cmd"
+        } else {
+            path
+        }
+        val builder = Process.Builder(command)
+        if (isRoot && platform.platformType == PlatformType.WINDOWS) {
+            builder.args("/c", "$path ${args ?: ""} -Verb RunAs")
+        } else {
+            args?.let {
+                builder.args(it.split(" "))
+            }
         }
         return builder
             .changeDir(parent.toFile())

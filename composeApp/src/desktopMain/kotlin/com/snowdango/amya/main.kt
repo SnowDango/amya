@@ -17,6 +17,8 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import com.diamondedge.logging.KmLogging
+import com.snowdango.amya.platform.PlatformType
+import com.snowdango.amya.platform.getPlatform
 import com.snowdango.amya.track.Log
 import io.github.vinceglb.filekit.FileKit
 import org.jetbrains.compose.resources.painterResource
@@ -125,7 +127,10 @@ fun ApplicationScope.window(
             icon = painterResource(Res.drawable.icon)
         ) {
             window.minimumSize = minimumDpSize.toSize()
-            App()
+            val platform = getPlatform()
+            App(
+                isWindows = platform.platformType == PlatformType.WINDOWS,
+            )
         }
     }
 }
