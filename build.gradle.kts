@@ -27,11 +27,11 @@ subprojects {
     detekt {
         autoCorrect = true
         parallel = true
-        config = files("${rootProject.projectDir}/config/detekt/detekt.yml")
+        config.setFrom(rootProject.file("config/detekt/detekt.yml"))
         buildUponDefaultConfig = true
         ignoreFailures = true
         basePath = file("$rootDir/../").absolutePath
-        source = files("src/commonMain/kotlin", "src/desktopMain/kotlin")
+        source.setFrom(rootProject.file("src/commonMain/kotlin"), rootProject.file("src/desktopMain/kotlin"))
     }
 
     dependencies {
