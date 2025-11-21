@@ -23,8 +23,8 @@ class AppsRepository(
         return appsDataStore.getAppsBySubTagId(tagId, subTagId)
     }
 
-    suspend fun updateApp(id: Long, name: String, path: String, args: String?, imageUrl: String) {
-        appsDataStore.updateApp(id, name, path, args, imageUrl)
+    suspend fun updateApp(id: Long, name: String, path: String, args: String?, imageUrl: String, root: Boolean) {
+        appsDataStore.updateApp(id, name, path, args, imageUrl, root)
     }
 
     suspend fun transferApp(id: Long, tagId: Long, subTagId: Long?) {

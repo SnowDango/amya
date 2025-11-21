@@ -26,16 +26,19 @@ import io.github.vinceglb.filekit.path
 @Composable
 fun EditAppDialog(
     onDismissRequest: () -> Unit,
+    isWindows: Boolean,
     appName: String,
     filePath: String,
     args: String?,
     imageUrl: String,
-    onSaveApp: (appName: String, filePath: String, args: String?, imageUrl: String) -> Unit,
+    root: Boolean,
+    onSaveApp: (appName: String, filePath: String, args: String?, imageUrl: String, editRoot: Boolean) -> Unit,
 ) {
     var editAppName by remember { mutableStateOf(appName) }
     var editFilePath by remember { mutableStateOf(filePath) }
     var editImageUrl by remember { mutableStateOf(imageUrl) }
     var editArgs by remember { mutableStateOf(args) }
+    var editRoot by remember { mutableStateOf(root) }
 
     val launcher = rememberFilePickerLauncher { file ->
         editFilePath = file?.path ?: ""
@@ -46,7 +49,7 @@ fun EditAppDialog(
         confirmButton = {
             PrimaryTextButton(
                 onClick = {
-                    onSaveApp.invoke(editAppName, editFilePath, editArgs?.ifBlank { null },editImageUrl)
+                    onSaveApp.invoke(editAppName, editFilePath, editArgs?.ifBlank { null },editImageUrl, editRoot)
                     onDismissRequest.invoke()
                 },
             ) {
@@ -163,6 +166,30 @@ fun EditAppDialog(
                         modifier = Modifier
                             .fillMaxWidth()
                     )
+                }
+
+                if (isWindows) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Text(
+                            "Root (Optional)",
+                            fontSize = 16.sp,
+                            color = MaterialTheme.colorScheme.onBackground,
+                            modifier = Modifier
+                                .padding(bottom = 8.dp)
+                        )
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.CenterEnd,
+                        ) {
+                            Switch(
+                                checked = editRoot,
+                                onCheckedChange = { editRoot = it },
+                            )
+                        }
+                    }
                 }
 
                 // imageUrl

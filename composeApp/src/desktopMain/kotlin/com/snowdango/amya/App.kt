@@ -28,7 +28,9 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
-fun App() {
+fun App(
+    isWindows: Boolean
+) {
     AmyaTheme {
         val navController = rememberNavController()
         Row(
@@ -59,13 +61,14 @@ fun App() {
                         modifier = Modifier.fillMaxSize(),
                     ) {
                         composable<Route.AllView> {
-                            AllViewScreen()
+                            AllViewScreen(isWindows = isWindows)
                         }
                         composable<Route.TagView> { backStackEntry ->
                             val route = backStackEntry.toRoute<Route.TagView>()
                             TagViewScreen(
                                 tagId = route.tagId,
                                 subTagId = route.subTagId,
+                                isWindows = isWindows,
                                 navigateAddApp = { parentId, subTagId ->
                                     navController.navigate(
                                         Route.AddAppView(
@@ -103,6 +106,7 @@ fun App() {
                             AddAppViewScreen(
                                 parentId = route.tagId,
                                 childId = route.subTagId,
+                                isWindows = isWindows,
                                 navigateBackTag = {
                                     navController.popBackStack()
                                 }
