@@ -43,7 +43,7 @@ jobs:
       - name: BuildKonfig Parameter
         run: Add-Content -Path gradle.properties -Value "buildkonfig.flavor=release"
       - name: Build with Gradle
-        run: ./gradlew composeApp:packageReleaseMsi
+        run: ./gradlew composeApp:packageReleaseMsi --stacktrace
       - name: Make release directory
         run: mkdir -p release
       - name: Move Linux package to release directory
@@ -70,7 +70,7 @@ jobs:
       - name: BuildKonfig Parameter
         run: echo "buildkonfig.flavor=release" >> gradle.properties
       - name: Build with Gradle
-        run: ./gradlew composeApp:packageReleaseDeb
+        run: ./gradlew composeApp:packageReleaseDeb --stacktrace
       - name: Make release directory
         run: mkdir -p release
       - name: Move Linux package to release directory

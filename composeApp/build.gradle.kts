@@ -111,9 +111,6 @@ buildkonfig {
 
 aboutLibraries {
     offlineMode = false
-    android {
-        registerAndroidTasks = false
-    }
     export {
         outputFile = file("src/commonMain/composeResources/files/aboutlibraries.json")
         prettyPrint = true
