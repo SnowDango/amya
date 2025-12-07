@@ -17,9 +17,7 @@ actual class Platform {
 
 actual fun getPlatform() = Platform()
 
-fun getAppDirs(): AppDirs {
-    return AppDirs(
-        appName = "Amya",
-        appAuthor = "SnowDango",
-    )
+fun getAppDirs() = AppDirs {
+    appName = "Amya"
+    appAuthor = "SnowDango"
 }
