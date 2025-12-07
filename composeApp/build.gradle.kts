@@ -152,6 +152,7 @@ compose.desktop {
             windows {
                 iconFile.set(project.file("icons/icon.ico"))
                 upgradeUuid = "47e3b63d-6427-4da4-9e63-015847b02352"
+                menu = true
             }
             macOS {
                 iconFile.set(project.file("icons/icon.icns"))
