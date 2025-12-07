@@ -17,11 +17,10 @@ actual object SubProcessBuilder {
         }
         val builder = Process.Builder(command)
         if (isRoot && platform.platformType == PlatformType.WINDOWS) {
-            builder.args("/c", "$path ${args ?: ""} -Verb RunAs")
-        } else {
-            args?.let {
-                builder.args(it.split(" "))
-            }
+            builder.args("/c", path)
+        }
+        args?.let {
+            builder.args(it.split(" "))
         }
         return builder
             .changeDir(parent.toFile())
