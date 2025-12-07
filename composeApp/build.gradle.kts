@@ -154,6 +154,7 @@ compose.desktop {
             }
             windows {
                 iconFile.set(project.file("icons/icon.ico"))
+                menu = true
             }
             macOS {
                 iconFile.set(project.file("icons/icon.icns"))
