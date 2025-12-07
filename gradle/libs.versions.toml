@@ -1,6 +1,6 @@
 [versions]
-version = "4"
-app-version = "1.0.4"
+version = "5"
+app-version = "1.0.5"
 
 androidx-navigation = "2.9.1"
 androidx-lifecycle = "2.9.6"

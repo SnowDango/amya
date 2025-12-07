@@ -98,7 +98,7 @@ fun TransferAppDialog(
                             readOnly = true,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .menuAnchor(MenuAnchorType.PrimaryEditable),
+                                .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryEditable),
                         )
                         DropdownMenu(
                             expanded = isExpandedParentTag,
@@ -140,7 +140,7 @@ fun TransferAppDialog(
                             readOnly = true,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .menuAnchor(MenuAnchorType.PrimaryEditable),
+                                .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryEditable),
                         )
                         DropdownMenu(
                             expanded = isExpandedSubTag,

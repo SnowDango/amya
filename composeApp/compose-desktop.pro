@@ -18,6 +18,7 @@
     private ** descriptor;
 }
 
+-keepclasseswithmembers class androidx.sqlite.driver.bundled.** { native <methods>; }
 -keep class * extends androidx.room.RoomDatabase
 
 -dontwarn androidx.compose.material.**
