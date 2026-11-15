@@ -18,6 +18,8 @@ import com.snowdango.amya.repository.apps.AppsDataStore
 import com.snowdango.amya.repository.apps.AppsRepository
 import com.snowdango.amya.repository.settings.SettingsDataStore
 import com.snowdango.amya.repository.settings.SettingsRepository
+import com.snowdango.amya.repository.steam.SteamExcludedDataStore
+import com.snowdango.amya.repository.steam.SteamExcludedRepository
 import com.snowdango.amya.repository.tag.TagDataStore
 import com.snowdango.amya.repository.tag.TagRepository
 import com.snowdango.amya.route.RouteViewModel
@@ -39,6 +41,8 @@ val module = module {
     factory<TagRepository> { TagRepository(get()) }
     factory<SettingsDataStore> { SettingsDataStore(get()) }
     factory<SettingsRepository> { SettingsRepository(get()) }
+    factory<SteamExcludedDataStore> { SteamExcludedDataStore(get()) }
+    factory<SteamExcludedRepository> { SteamExcludedRepository(get()) }
 
     // model
     factory<TagModel> { TagModel() }

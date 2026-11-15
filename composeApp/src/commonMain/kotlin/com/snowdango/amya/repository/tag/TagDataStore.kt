@@ -35,4 +35,8 @@ class TagDataStore(private val database: AppsDatabase) {
     suspend fun deleteChildTag(id: Long) {
         database.subTagDao().delete(id)
     }
+
+    suspend fun getById(id: Long): TagEntity? {
+        return database.tagDao().getById(id)
+    }
 }

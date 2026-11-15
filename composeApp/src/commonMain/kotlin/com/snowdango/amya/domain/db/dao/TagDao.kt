@@ -24,4 +24,7 @@ interface TagDao {
 
     @Query("delete from ${TagEntity.TABLE_NAME} where id = :id")
     suspend fun delete(id: Long)
+
+    @Query("select * from ${TagEntity.TABLE_NAME} where id = :id")
+    suspend fun getById(id: Long): TagEntity?
 }
