@@ -11,6 +11,7 @@ import androidx.room.PrimaryKey
     indices = [
         Index(value = [AppsEntity.COLUMN_TAG_ID]),
         Index(value = [AppsEntity.COLUMN_SUB_TAG_ID]),
+        Index(value = [AppsEntity.COLUMN_STEAM_APP_ID], unique = true),
     ],
     foreignKeys = [
         ForeignKey(
@@ -36,6 +37,8 @@ data class AppsEntity(
     @ColumnInfo(name = COLUMN_PATH) val path: String,
     @ColumnInfo(name = COLUMN_ARGS) val args: String? = null,
     @ColumnInfo(name = COLUMN_ROOT) val root: Boolean = false,
+    /** Steam同期で登録したアプリのappId。手動で登録したアプリはnull */
+    @ColumnInfo(name = COLUMN_STEAM_APP_ID) val steamAppId: Long? = null,
 ) {
     companion object {
         const val TABLE_NAME = "apps"
@@ -47,5 +50,6 @@ data class AppsEntity(
         const val COLUMN_PATH = "path"
         const val COLUMN_ARGS = "args"
         const val COLUMN_ROOT = "root"
+        const val COLUMN_STEAM_APP_ID = "steamAppId"
     }
 }

@@ -35,5 +35,7 @@ jobs:
           cache: gradle
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+      - name: Unit Test
+        run: ./gradlew composeApp:desktopTest
       - name: Build with Gradle
         run: ./gradlew composeApp:packageReleaseDistributionForCurrentOS

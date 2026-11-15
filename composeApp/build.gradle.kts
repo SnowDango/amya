@@ -66,6 +66,12 @@ kotlin {
             implementation(libs.appDirs)
             implementation(libs.autoLaunch)
         }
+        val desktopTest by getting {
+            dependencies {
+                implementation(libs.kotlin.test)
+                implementation(libs.kotlin.test.junit)
+            }
+        }
     }
 
     compilerOptions {

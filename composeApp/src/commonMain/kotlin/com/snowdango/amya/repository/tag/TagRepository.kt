@@ -36,4 +36,8 @@ class TagRepository(
     suspend fun deleteChildTag(id: Long) {
         tagDataStore.deleteChildTag(id)
     }
+
+    suspend fun getById(id: Long): TagEntity? {
+        return tagDataStore.getById(id)
+    }
 }
