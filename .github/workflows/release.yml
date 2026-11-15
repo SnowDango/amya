@@ -14,17 +14,14 @@ permissions:
 jobs:
   detekt-check:
     runs-on: ubuntu-latest
-    env:
-      # detekt 1.23.x は JDK 25 上で起動できないため、detekt のみ JDK 21 で実行する。
-      # (env 経由にして Renovate の java-jdk 更新対象から外している)
-      DETEKT_JAVA_VERSION: '21'
     steps:
       - uses: actions/checkout@v7
-      - name: set up JDK for detekt
+      - name: set up JDK 25
         uses: actions/setup-java@v6
         with:
-          java-version: ${{ env.DETEKT_JAVA_VERSION }}
-          distribution: 'temurin'
+          java-version: '25'
+          # Temurin 25 は jmods を同梱しておらず ProGuard が JDK クラスを参照できないため、jmods 同梱の Zulu を使う
+          distribution: 'zulu'
           cache: gradle
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
