@@ -24,4 +24,20 @@ class SettingsModel : KoinComponent {
     fun getIsShowTray(): Flow<Boolean> {
         return settingsRepository.getIsShowTray()
     }
+
+    suspend fun setIsSteamSyncEnabled(value: Boolean) {
+        settingsRepository.setIsSteamSyncEnabled(value)
+    }
+
+    fun getIsSteamSyncEnabled(): Flow<Boolean> {
+        return settingsRepository.getIsSteamSyncEnabled()
+    }
+
+    suspend fun setSteamTagId(value: Long?) {
+        settingsRepository.setSteamTagId(value)
+    }
+
+    fun getSteamTagId(): Flow<Long?> {
+        return settingsRepository.getSteamTagId()
+    }
 }

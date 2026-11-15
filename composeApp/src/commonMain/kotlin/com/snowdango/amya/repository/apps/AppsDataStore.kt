@@ -33,4 +33,20 @@ class AppsDataStore(private val database: AppsDatabase) {
     suspend fun delete(id: Long) {
         database.appsDao().delete(id)
     }
+
+    suspend fun getById(id: Long): AppsEntity? {
+        return database.appsDao().getById(id)
+    }
+
+    suspend fun getSteamApps(): List<AppsEntity> {
+        return database.appsDao().getSteamApps()
+    }
+
+    suspend fun updateImageUrl(id: Long, imageUrl: String) {
+        database.appsDao().updateImageUrl(id, imageUrl)
+    }
+
+    suspend fun deleteByIds(ids: List<Long>) {
+        database.appsDao().deleteByIds(ids)
+    }
 }

@@ -17,4 +17,16 @@ class SettingsDataStore(
     fun getIsClosedMinimize() = settingsPreferences.getIsClosedMinimize()
 
     fun getIsShowTray() = settingsPreferences.getIsShowTray()
+
+    suspend fun setIsSteamSyncEnabled(value: Boolean) {
+        settingsPreferences.setIsSteamSyncEnabled(value)
+    }
+
+    fun getIsSteamSyncEnabled() = settingsPreferences.getIsSteamSyncEnabled()
+
+    suspend fun setSteamTagId(value: Long?) {
+        settingsPreferences.setSteamTagId(value)
+    }
+
+    fun getSteamTagId() = settingsPreferences.getSteamTagId()
 }

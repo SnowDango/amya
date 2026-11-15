@@ -21,4 +21,20 @@ class SettingsRepository(
     fun getIsShowTray(): Flow<Boolean> {
         return settingsDataStore.getIsShowTray()
     }
+
+    suspend fun setIsSteamSyncEnabled(value: Boolean) {
+        settingsDataStore.setIsSteamSyncEnabled(value)
+    }
+
+    fun getIsSteamSyncEnabled(): Flow<Boolean> {
+        return settingsDataStore.getIsSteamSyncEnabled()
+    }
+
+    suspend fun setSteamTagId(value: Long?) {
+        settingsDataStore.setSteamTagId(value)
+    }
+
+    fun getSteamTagId(): Flow<Long?> {
+        return settingsDataStore.getSteamTagId()
+    }
 }
