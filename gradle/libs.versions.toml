@@ -29,7 +29,7 @@ androidx-datastore = "1.2.1"
 appDir = "2.0.0"
 aboutLibraries = "15.3.0"
 kotlinx-collections-immutable = "0.5.2"
-autoLaunch = "0.7.0"
+autoLaunch = "0.9.0"
 detekt = "1.23.8"
 
 [libraries]
