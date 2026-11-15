@@ -9,7 +9,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ComposeUiFlags
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.InternalComposeUiApi
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.registerSkikoComposeImplementation
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.ApplicationScope
@@ -52,7 +56,16 @@ fun ApplicationScope.exitApp() {
 
 private val minimumDpSize = DpSize(800.dp, 600.dp)
 
+@OptIn(ExperimentalComposeUiApi::class, InternalComposeUiApi::class)
 fun main() {
+    // Compose 1.13.0-beta01 で Window外 (application直下) の painterResource(xml) が起動直後に落ちる問題の回避策。
+    // Windowのiconはapplication直下で生成されるため、以下の2点が必要になる。
+    // - Skikoの描画実装は最初のWindow生成時にしか登録されないため、先に登録しておく (同一インスタンスの再登録は無視される)
+    registerSkikoComposeImplementation()
+    // - rememberVectorPainter が LocalGraphicsResourceCache (LocalOwner 由来) を参照して LocalOwner not present になるため、
+    //   ベクター描画キャッシュ共有を無効化して 1.12 までと同じ挙動にする
+    ComposeUiFlags.isVectorDrawCacheSharingEnabled = false
+
     // DB・設定ファイルを開く前に二重起動を確認する。既に起動している場合はそちらのウィンドウを表示して終了する
     val singleInstance = SingleInstance.acquire(getAppDirs().getUserDataDir().let(::File)) ?: return
     val activateRequests = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
