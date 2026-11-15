@@ -34,4 +34,20 @@ class AppsRepository(
     suspend fun delete(id: Long) {
         appsDataStore.delete(id)
     }
+
+    suspend fun getById(id: Long): AppsEntity? {
+        return appsDataStore.getById(id)
+    }
+
+    suspend fun getSteamApps(): List<AppsEntity> {
+        return appsDataStore.getSteamApps()
+    }
+
+    suspend fun updateImageUrl(id: Long, imageUrl: String) {
+        appsDataStore.updateImageUrl(id, imageUrl)
+    }
+
+    suspend fun deleteByIds(ids: List<Long>) {
+        appsDataStore.deleteByIds(ids)
+    }
 }

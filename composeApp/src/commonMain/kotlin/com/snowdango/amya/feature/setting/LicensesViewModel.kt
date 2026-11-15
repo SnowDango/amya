@@ -7,6 +7,7 @@ import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -28,7 +29,7 @@ class LicensesViewModel : ViewModel() {
             val libs = Libs.Builder().withJson(
                 Res.readBytes("files/aboutlibraries.json").decodeToString()
             ).build()
-            _libraries.emit(libs.libraries)
+            _libraries.emit(libs.libraries.toImmutableList())
         }
     }
 }

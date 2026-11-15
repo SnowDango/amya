@@ -38,6 +38,7 @@ fun EditChildTagDialog(
         },
         confirmButton = {
             PrimaryTextButton(
+                enabled = tagName.isNotBlank(),
                 onClick = {
                     onSaveClick.invoke(tagId, tagName, icon)
                     onDismissRequest.invoke()

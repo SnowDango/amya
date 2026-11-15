@@ -44,6 +44,7 @@ kotlin {
                 implementation(libs.kmp.process)
                 api(libs.datastore.preferences)
                 api(libs.aboutlibraries.core)
+                implementation(libs.kotlinx.collections.immutable)
                 api(libs.km.logging)
             }
         }
@@ -65,6 +66,12 @@ kotlin {
             implementation(libs.bundles.settings)
             implementation(libs.appDirs)
             implementation(libs.autoLaunch)
+        }
+        val desktopTest by getting {
+            dependencies {
+                implementation(libs.kotlin.test)
+                implementation(libs.kotlin.test.junit)
+            }
         }
     }
 

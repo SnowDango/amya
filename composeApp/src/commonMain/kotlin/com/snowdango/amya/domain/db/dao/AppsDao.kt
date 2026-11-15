@@ -35,4 +35,18 @@ interface AppsDao {
 
     @Query("delete from ${AppsEntity.TABLE_NAME} where ${AppsEntity.COLUMN_ID} = :id")
     suspend fun delete(id: Long)
+
+    @Query("select * from ${AppsEntity.TABLE_NAME} where ${AppsEntity.COLUMN_ID} = :id")
+    suspend fun getById(id: Long): AppsEntity?
+
+    @Query("select * from ${AppsEntity.TABLE_NAME} where ${AppsEntity.COLUMN_STEAM_APP_ID} is not null")
+    suspend fun getSteamApps(): List<AppsEntity>
+
+    @Query(
+        "update ${AppsEntity.TABLE_NAME} set ${AppsEntity.COLUMN_IMAGE_URL} = :imageUrl where ${AppsEntity.COLUMN_ID} = :id"
+    )
+    suspend fun updateImageUrl(id: Long, imageUrl: String)
+
+    @Query("delete from ${AppsEntity.TABLE_NAME} where ${AppsEntity.COLUMN_ID} in (:ids)")
+    suspend fun deleteByIds(ids: List<Long>)
 }

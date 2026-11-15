@@ -41,13 +41,15 @@ fun EditAppDialog(
     var editRoot by remember { mutableStateOf(root) }
 
     val launcher = rememberFilePickerLauncher { file ->
-        editFilePath = file?.path ?: ""
+        file?.let { editFilePath = it.path }
     }
 
     AlertDialog(
         onDismissRequest = onDismissRequest,
         confirmButton = {
             PrimaryTextButton(
+                // 追加画面と同じく必須項目が空の場合は保存できない
+                enabled = editAppName.isNotBlank() && editFilePath.isNotBlank() && editImageUrl.isNotBlank(),
                 onClick = {
                     onSaveApp.invoke(editAppName, editFilePath, editArgs?.ifBlank { null }, editImageUrl, editRoot)
                     onDismissRequest.invoke()
@@ -215,11 +217,11 @@ fun EditAppDialog(
                         modifier = Modifier.fillMaxWidth(),
                         contentAlignment = Alignment.Center,
                     ) {
+                        val context = LocalPlatformContext.current
                         SubcomposeAsyncImage(
-                            model = ImageRequestProvider.getImageRequest(
-                                context = LocalPlatformContext.current,
-                                model = editImageUrl,
-                            ),
+                            model = remember(context, editImageUrl) {
+                                ImageRequestProvider.getImageRequest(context = context, model = editImageUrl)
+                            },
                             contentDescription = null,
                             contentScale = ContentScale.Crop,
                             loading = {

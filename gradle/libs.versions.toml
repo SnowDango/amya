@@ -1,33 +1,34 @@
 [versions]
-version = "6"
-app-version = "1.0.6"
+version = "7"
+app-version = "1.1.0"
 
-androidx-navigation = "2.9.1"
-androidx-lifecycle = "2.9.6"
-compose-multiplatform = "1.9.3"
+androidx-navigation = "2.9.2"
+androidx-lifecycle = "2.11.0"
+compose-multiplatform = "1.12.2"
 junit = "4.13.2"
-kotlin = "2.2.21"
-ksp = "2.3.3"
+kotlin = "2.4.21"
+ksp = "2.3.14"
 kotlinx-coroutines = "1.10.2"
-kotlinx-serialization = "1.9.0"
-materialKolor = "4.0.5"
+kotlinx-serialization = "1.13.0"
+materialKolor = "4.1.1"
 composeIcons = "1.1.1"
-androidx-paging = "3.3.6"
+androidx-paging = "3.5.3"
 paging-compose = "3.3.0-alpha02-0.5.1"
-androidx-room = "2.8.4"
+androidx-room = "2.8.5"
 sqlite-bundled = "2.6.2"
-koin = "4.1.1"
-km-logging = "2.1.0"
+koin = "4.2.2"
+km-logging = "2.1.2"
 slf4j = "2.0.17"
-coil = "3.3.0"
-ktor = "3.3.3"
-filekit = "0.12.0"
+coil = "3.6.3"
+ktor = "3.6.1"
+filekit = "0.17.0"
 buildKonfig = "0.17.1"
-kmp-process = "0.4.0"
-compose-settings = "2.16.0"
-androidx-datastore = "1.2.0"
+kmp-process = "0.5.0"
+compose-settings = "2.26.0"
+androidx-datastore = "1.2.1"
 appDir = "2.0.0"
-aboutLibraries = "13.1.0"
+aboutLibraries = "15.3.0"
+kotlinx-collections-immutable = "0.5.2"
 autoLaunch = "0.7.0"
 detekt = "1.23.8"
 
@@ -100,6 +101,9 @@ appDirs = { module = "ca.gosyer:kotlin-multiplatform-appdirs", version.ref = "ap
 
 # aboutLibraries
 aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "aboutLibraries" }
+
+# kotlinx-collections-immutable
+kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
 
 # autoLaunch
 autoLaunch = { module = "io.github.vinceglb:auto-launch", version.ref = "autoLaunch" }

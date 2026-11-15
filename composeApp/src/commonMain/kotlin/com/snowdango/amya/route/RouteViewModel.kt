@@ -71,61 +71,46 @@ class RouteViewModel(
 
     fun deleteParentTag(tagId: Long) {
         viewModelScope.launch {
-            val route = currentRoute.value
             try {
-                if (currentRoute.value is Route.TagView) {
-                    if ((currentRoute.value as Route.TagView).tagId == tagId) {
-                        navController.navigate(Route.AllView)
-                    }
-                } else if (currentRoute.value is Route.AddTagView) {
-                    if ((currentRoute.value as Route.AddTagView).tagId == tagId) {
-                        navController.navigate(Route.AllView)
-                    }
-                } else if (currentRoute.value is Route.AddAppView) {
-                    if ((currentRoute.value as Route.AddAppView).tagId == tagId) {
-                        navController.navigate(Route.AllView)
-                    }
+                // 削除するタグを表示中の場合は先に別の画面へ移動する
+                val isShowingTag = when (val route = currentRoute.value) {
+                    is Route.TagView -> route.tagId == tagId
+                    is Route.AddTagView -> route.tagId == tagId
+                    is Route.AddAppView -> route.tagId == tagId
+                    else -> false
+                }
+                if (isShowingTag) {
+                    navController.navigateTopLevel(Route.AllView)
                 }
                 tagModel.deleteParentTag(tagId)
             } catch (ce: CancellationException) {
                 throw ce
             } catch (th: Throwable) {
                 Log.e(th.message.toString())
-                route?.let {
-                    navController.navigate(route)
-                }
             }
         }
     }
 
     fun deleteChildTag(tagId: Long) {
         viewModelScope.launch {
-            val route = currentRoute.value
             try {
-                if (currentRoute.value is Route.TagView) {
-                    if ((currentRoute.value as Route.TagView).subTagId == tagId) {
-                        navController.navigate(
-                            (currentRoute.value as Route.TagView).copy(subTagId = null)
-                        )
+                // 削除するタグを表示中の場合は先に親タグの画面へ移動する
+                when (val route = currentRoute.value) {
+                    is Route.TagView -> if (route.subTagId == tagId) {
+                        navController.navigateTopLevel(route.copy(subTagId = null))
                     }
-                } else if (currentRoute.value is Route.AddAppView) {
-                    if ((currentRoute.value as Route.AddAppView).subTagId == tagId) {
-                        navController.navigate(
-                            Route.TagView(
-                                tagId = (currentRoute.value as Route.AddAppView).tagId,
-                                subTagId = null
-                            )
-                        )
+
+                    is Route.AddAppView -> if (route.subTagId == tagId) {
+                        navController.navigateTopLevel(Route.TagView(tagId = route.tagId, subTagId = null))
                     }
+
+                    else -> Unit
                 }
                 tagModel.deleteChildTag(tagId)
             } catch (ce: CancellationException) {
                 throw ce
             } catch (th: Throwable) {
                 Log.e(th.message.toString())
-                route?.let {
-                    navController.navigate(route)
-                }
             }
         }
     }

@@ -23,13 +23,15 @@ import com.snowdango.amya.feature.setting.SettingViewScreen
 import com.snowdango.amya.feature.tag.TagViewScreen
 import com.snowdango.amya.route.Route
 import com.snowdango.amya.route.SideTabScreen
+import com.snowdango.amya.route.navigateTopLevel
 import com.snowdango.amya.ui.AmyaTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
 fun App(
-    isWindows: Boolean
+    isWindows: Boolean,
+    onQuit: () -> Unit = {},
 ) {
     AmyaTheme {
         val navController = rememberNavController()
@@ -84,7 +86,7 @@ fun App(
                             AddTagViewScreen(
                                 parentId = route.tagId,
                                 navigateTag = { parentId, subTagId ->
-                                    navController.navigate(
+                                    navController.navigateTopLevel(
                                         Route.TagView(
                                             tagId = parentId,
                                             subTagId = subTagId,
@@ -97,7 +99,8 @@ fun App(
                             SettingViewScreen(
                                 navigateLicense = {
                                     navController.navigate(Route.LicenseView)
-                                }
+                                },
+                                onQuit = onQuit,
                             )
                         }
 
