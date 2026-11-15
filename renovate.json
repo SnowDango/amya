@@ -11,6 +11,9 @@
   ],
   "timezone": "Asia/Tokyo",
   "prConcurrentLimit": 10,
+  "automerge": true,
+  "automergeType": "pr",
+  "platformAutomerge": false,
   "packageRules": [
     {
       "matchPackagePrefixes": [
