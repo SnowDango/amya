@@ -99,7 +99,7 @@ jobs:
           name: linux-package
           path: ./release
       - name: Create Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           name: ${{ github.event.inputs.tag }}
           body: ${{ github.event.inputs.tag }}
