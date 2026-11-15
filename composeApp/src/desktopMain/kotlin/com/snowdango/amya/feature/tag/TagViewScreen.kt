@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snowdango.amya.component.app.AppCard
 import com.snowdango.amya.component.button.PrimaryTextButton
+import com.snowdango.amya.component.dialog.CreateErrorDialog
 import com.snowdango.amya.component.dialog.DeleteAppDialog
 import com.snowdango.amya.component.dialog.EditAppDialog
 import com.snowdango.amya.component.dialog.TransferAppDialog
@@ -41,6 +42,7 @@ fun TagViewScreen(
     val appsData = viewModel.sortedAppsData.collectAsStateWithLifecycle()
     val orderType = viewModel.orderType.collectAsStateWithLifecycle()
     val tagList = viewModel.tagList.collectAsStateWithLifecycle()
+    val launchError = viewModel.launchError.collectAsStateWithLifecycle()
     var isOrderMenuExpanded by remember { mutableStateOf(false) }
     var wantDeleteApp: AppsModel.AppData? by remember { mutableStateOf(null) }
     var wantEditApp: AppsModel.AppData? by remember { mutableStateOf(null) }
@@ -147,7 +149,7 @@ fun TagViewScreen(
                 modifier = Modifier.fillMaxSize()
                     .weight(1f),
             ) {
-                items(appsData.value) {
+                items(appsData.value, key = { it.id }) {
                     AppCard(
                         appData = it,
                         onClick = {
@@ -167,6 +169,12 @@ fun TagViewScreen(
                     )
                 }
             }
+        }
+        launchError.value?.let { error ->
+            CreateErrorDialog(
+                error = error,
+                onDismissRequest = viewModel::dismissLaunchError,
+            )
         }
         if (wantDeleteApp != null) {
             DeleteAppDialog(

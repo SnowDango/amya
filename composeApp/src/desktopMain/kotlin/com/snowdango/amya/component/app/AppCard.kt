@@ -80,11 +80,11 @@ fun AppCard(
                     )
                 }
             ) {
+                val context = LocalPlatformContext.current
                 AsyncImage(
-                    model = ImageRequestProvider.getImageRequest(
-                        context = LocalPlatformContext.current,
-                        model = appData.imageUrl,
-                    ),
+                    model = remember(context, appData.imageUrl) {
+                        ImageRequestProvider.getImageRequest(context = context, model = appData.imageUrl)
+                    },
                     onState = {
                         if (it is AsyncImagePainter.State.Error) {
                             Log.e("Image loading error: ${it.result.throwable.message}")

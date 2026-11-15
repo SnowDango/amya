@@ -52,7 +52,7 @@ fun SideTabScreen(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.background),
         onClickSetting = {
-            navController.navigate(
+            navController.navigateTopLevel(
                 Route.SettingView
             )
         }
@@ -63,7 +63,7 @@ fun SideTabScreen(
             selected = currentRoute is Route.AllView,
             isMenuEnable = false,
             onClick = {
-                navController.navigate(
+                navController.navigateTopLevel(
                     Route.AllView
                 )
             },
@@ -93,7 +93,7 @@ fun SideTabScreen(
                     }
                 },
                 onClick = {
-                    navController.navigate(
+                    navController.navigateTopLevel(
                         Route.TagView(
                             tagId = group.id,
                             subTagId = null,
@@ -123,7 +123,7 @@ fun SideTabScreen(
                             }
                         },
                         onClick = {
-                            navController.navigate(
+                            navController.navigateTopLevel(
                                 Route.TagView(
                                     tagId = group.id,
                                     subTagId = child.id,
@@ -146,7 +146,7 @@ fun SideTabScreen(
                         false
                     },
                     onClick = {
-                        navController.navigate(
+                        navController.navigateTopLevel(
                             Route.AddTagView(
                                 tagId = group.id,
                             )
@@ -163,7 +163,7 @@ fun SideTabScreen(
                 false
             },
             onClick = {
-                navController.navigate(
+                navController.navigateTopLevel(
                     Route.AddTagView(
                         tagId = null,
                     )

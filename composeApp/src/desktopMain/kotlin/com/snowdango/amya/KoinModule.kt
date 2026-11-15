@@ -29,7 +29,7 @@ import com.snowdango.amya.steam.SteamLibrarySource
 import com.snowdango.amya.steam.SteamSyncService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -84,5 +84,6 @@ val module = module {
 
     // main
     single<MainViewModel> { MainViewModel() }
-    single<CoroutineScope> { CoroutineScope(Dispatchers.Default + Job()) }
+    // 1つの処理が失敗してもアプリ全体のスコープがキャンセルされないようにSupervisorJobを使う
+    single<CoroutineScope> { CoroutineScope(Dispatchers.Default + SupervisorJob()) }
 }

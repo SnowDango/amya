@@ -1,8 +1,20 @@
 package com.snowdango.amya.route
 
 import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
+
+/**
+ * サイドナビゲーションからの画面遷移。
+ * 開始画面(AllView)より上を置き換えるため、遷移を繰り返してもバックスタックが積み上がらない
+ */
+fun NavController.navigateTopLevel(route: Route) {
+    navigate(route) {
+        popUpTo<Route.AllView>()
+        launchSingleTop = true
+    }
+}
 
 sealed class Route {
     @Serializable

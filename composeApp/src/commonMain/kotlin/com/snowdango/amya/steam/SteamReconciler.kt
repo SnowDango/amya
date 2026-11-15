@@ -1,6 +1,8 @@
 package com.snowdango.amya.steam
 
 import java.io.File
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.minutes
 
 /**
  * Steam同期で登録済みのアプリ
@@ -17,13 +19,13 @@ data class ManagedSteamApp(
  * @property toAdd 新しく登録するゲーム
  * @property toDeleteIds 削除するアプリのid (appsテーブルのid)
  * @property imageUpdates 画像を差し替えるアプリ (id -> 新しい画像)
- * @property missingCounts 見つからなかった回数 (次回の同期に引き継ぐ)
+ * @property missingSince 見つからなくなった時刻 (steamAppId -> エポックミリ秒。次回の同期に引き継ぐ)
  */
 data class SteamSyncPlan(
     val toAdd: List<SteamGame>,
     val toDeleteIds: List<Long>,
     val imageUpdates: Map<Long, String>,
-    val missingCounts: Map<Long, Int>,
+    val missingSince: Map<Long, Long>,
 ) {
     val hasChanges: Boolean get() = toAdd.isNotEmpty() || toDeleteIds.isNotEmpty() || imageUpdates.isNotEmpty()
 }
@@ -33,14 +35,18 @@ data class SteamSyncPlan(
  */
 object SteamReconciler {
 
-    /** この回数続けて見つからなかったら削除する (一時的な状態での誤削除を防ぐ) */
-    const val MISSING_THRESHOLD = 2
+    /**
+     * 見つからない状態がこの時間続いたら削除する (一時的な状態での誤削除を防ぐ)。
+     * 回数で判定すると、起動直後など同期が続けて実行された時に一瞬で削除されてしまうため時間で判定する
+     */
+    val MISSING_GRACE_PERIOD: Duration = 1.minutes
 
     fun plan(
         managed: List<ManagedSteamApp>,
         scan: SteamScanResult,
         excludedAppIds: Set<Long>,
-        previousMissingCounts: Map<Long, Int>,
+        previousMissingSince: Map<Long, Long>,
+        now: Long,
         isImageBroken: (String) -> Boolean = ::isLocalImageMissing,
     ): SteamSyncPlan {
         val installed = scan.installedGames.associateBy { it.appId }
@@ -50,7 +56,7 @@ object SteamReconciler {
 
         val toDelete = mutableListOf<Long>()
         val imageUpdates = mutableMapOf<Long, String>()
-        val missingCounts = mutableMapOf<Long, Int>()
+        val missingSince = mutableMapOf<Long, Long>()
 
         managed.forEach { app ->
             val game = installed[app.steamAppId]
@@ -62,17 +68,22 @@ object SteamReconciler {
                 }
 
                 app.steamAppId in scan.protectedAppIds -> Unit // 更新中・ドライブが外れている等
+                !scan.isComplete -> {
+                    // 一部のライブラリが読めず、本当に消えたのか判断できない。状態を据え置く
+                    previousMissingSince[app.steamAppId]?.let { missingSince[app.steamAppId] = it }
+                }
+
                 else -> {
-                    val count = (previousMissingCounts[app.steamAppId] ?: 0) + 1
-                    if (count >= MISSING_THRESHOLD) {
+                    val since = previousMissingSince[app.steamAppId]
+                    if (since != null && now - since >= MISSING_GRACE_PERIOD.inWholeMilliseconds) {
                         toDelete.add(app.id)
                     } else {
-                        missingCounts[app.steamAppId] = count
+                        missingSince[app.steamAppId] = since ?: now
                     }
                 }
             }
         }
-        return SteamSyncPlan(toAdd, toDelete, imageUpdates, missingCounts)
+        return SteamSyncPlan(toAdd, toDelete, imageUpdates, missingSince)
     }
 
     /**

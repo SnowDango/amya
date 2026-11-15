@@ -23,13 +23,18 @@ class SteamReconcilerTest {
 
     private val noBrokenImage: (String) -> Boolean = { false }
 
+    private companion object {
+        const val NOW = 1_700_000_000_000L
+    }
+
     @Test
     fun addsNewGames() {
         val plan = SteamReconciler.plan(
             managed = listOf(managed(1, 100)),
             scan = scan(game(100), game(200), game(300)),
             excludedAppIds = emptySet(),
-            previousMissingCounts = emptyMap(),
+            previousMissingSince = emptyMap(),
+            now = NOW,
             isImageBroken = noBrokenImage,
         )
         assertEquals(listOf(200L, 300L), plan.toAdd.map { it.appId })
@@ -43,47 +48,70 @@ class SteamReconcilerTest {
             managed = emptyList(),
             scan = scan(game(100), game(200)),
             excludedAppIds = setOf(200),
-            previousMissingCounts = emptyMap(),
+            previousMissingSince = emptyMap(),
+            now = NOW,
             isImageBroken = noBrokenImage,
         )
         assertEquals(listOf(100L), plan.toAdd.map { it.appId })
     }
 
-    @Test
-    fun deletesOnlyAfterMissingTwice() {
-        val first = SteamReconciler.plan(
+    private fun planMissing(previousMissingSince: Map<Long, Long>, now: Long, scan: SteamScanResult = scan(game(100))) =
+        SteamReconciler.plan(
             managed = listOf(managed(1, 100), managed(2, 200)),
-            scan = scan(game(100)),
+            scan = scan,
             excludedAppIds = emptySet(),
-            previousMissingCounts = emptyMap(),
+            previousMissingSince = previousMissingSince,
+            now = now,
             isImageBroken = noBrokenImage,
         )
+
+    @Test
+    fun deletesOnlyAfterMissingForGracePeriod() {
+        val first = planMissing(previousMissingSince = emptyMap(), now = NOW)
         assertTrue(first.toDeleteIds.isEmpty())
-        assertEquals(mapOf(200L to 1), first.missingCounts)
+        assertEquals(mapOf(200L to NOW), first.missingSince)
         assertFalse(first.hasChanges)
 
-        val second = SteamReconciler.plan(
-            managed = listOf(managed(1, 100), managed(2, 200)),
-            scan = scan(game(100)),
-            excludedAppIds = emptySet(),
-            previousMissingCounts = first.missingCounts,
-            isImageBroken = noBrokenImage,
-        )
+        val afterGrace = NOW + SteamReconciler.MISSING_GRACE_PERIOD.inWholeMilliseconds
+        val second = planMissing(previousMissingSince = first.missingSince, now = afterGrace)
         assertEquals(listOf(2L), second.toDeleteIds)
-        assertTrue(second.missingCounts.isEmpty())
+        assertTrue(second.missingSince.isEmpty())
     }
 
     @Test
-    fun missingCountResetsWhenGameComesBack() {
+    fun backToBackSyncsDoNotDelete() {
+        // 起動直後など、同期が続けて実行されても猶予期間内は削除しない
+        val first = planMissing(previousMissingSince = emptyMap(), now = NOW)
+        val second = planMissing(previousMissingSince = first.missingSince, now = NOW + 10)
+        assertTrue(second.toDeleteIds.isEmpty())
+        // 見つからなくなった時刻は最初のまま引き継ぐ
+        assertEquals(mapOf(200L to NOW), second.missingSince)
+    }
+
+    @Test
+    fun incompleteScanDoesNotDelete() {
+        // 一部のライブラリが読めない場合は、猶予期間を過ぎていても削除しない
+        val plan = planMissing(
+            previousMissingSince = mapOf(200L to NOW),
+            now = NOW + SteamReconciler.MISSING_GRACE_PERIOD.inWholeMilliseconds * 10,
+            scan = scan(game(100)).copy(isComplete = false),
+        )
+        assertTrue(plan.toDeleteIds.isEmpty())
+        assertEquals(mapOf(200L to NOW), plan.missingSince)
+    }
+
+    @Test
+    fun missingStateResetsWhenGameComesBack() {
         val plan = SteamReconciler.plan(
             managed = listOf(managed(2, 200)),
             scan = scan(game(200)),
             excludedAppIds = emptySet(),
-            previousMissingCounts = mapOf(200L to 1),
+            previousMissingSince = mapOf(200L to NOW),
+            now = NOW + SteamReconciler.MISSING_GRACE_PERIOD.inWholeMilliseconds,
             isImageBroken = noBrokenImage,
         )
         assertTrue(plan.toDeleteIds.isEmpty())
-        assertTrue(plan.missingCounts.isEmpty())
+        assertTrue(plan.missingSince.isEmpty())
     }
 
     @Test
@@ -93,11 +121,12 @@ class SteamReconcilerTest {
             managed = listOf(managed(1, 100)),
             scan = scan(protected = setOf(100)),
             excludedAppIds = emptySet(),
-            previousMissingCounts = mapOf(100L to 5),
+            previousMissingSince = mapOf(100L to NOW),
+            now = NOW + SteamReconciler.MISSING_GRACE_PERIOD.inWholeMilliseconds * 10,
             isImageBroken = noBrokenImage,
         )
         assertTrue(plan.toDeleteIds.isEmpty())
-        assertTrue(plan.missingCounts.isEmpty())
+        assertTrue(plan.missingSince.isEmpty())
     }
 
     @Test
@@ -106,7 +135,8 @@ class SteamReconcilerTest {
             managed = listOf(managed(1, 100, imageUrl = "/steam/librarycache/100/oldhash/library_600x900.jpg")),
             scan = scan(game(100, imageUrl = "/steam/librarycache/100/newhash/library_600x900.jpg")),
             excludedAppIds = emptySet(),
-            previousMissingCounts = emptyMap(),
+            previousMissingSince = emptyMap(),
+            now = NOW,
             isImageBroken = { it.contains("oldhash") },
         )
         assertEquals(mapOf(1L to "/steam/librarycache/100/newhash/library_600x900.jpg"), plan.imageUpdates)
@@ -118,7 +148,8 @@ class SteamReconcilerTest {
             managed = listOf(managed(1, 100, imageUrl = "https://example.com/my-cover.png")),
             scan = scan(game(100)),
             excludedAppIds = emptySet(),
-            previousMissingCounts = emptyMap(),
+            previousMissingSince = emptyMap(),
+            now = NOW,
             isImageBroken = noBrokenImage,
         )
         assertTrue(plan.imageUpdates.isEmpty())
@@ -130,7 +161,8 @@ class SteamReconcilerTest {
             managed = listOf(managed(1, 100, imageUrl = SteamGame.cdnImageUrl(100))),
             scan = scan(game(100)),
             excludedAppIds = emptySet(),
-            previousMissingCounts = emptyMap(),
+            previousMissingSince = emptyMap(),
+            now = NOW,
             isImageBroken = noBrokenImage,
         )
         assertEquals(mapOf(1L to "/steam/librarycache/100/library_600x900.jpg"), plan.imageUpdates)

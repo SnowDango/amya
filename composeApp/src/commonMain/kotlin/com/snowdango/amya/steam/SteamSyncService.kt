@@ -44,6 +44,8 @@ class SteamSyncService(
     private val settingsRepository: SettingsRepository,
     private val scope: CoroutineScope,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    /** 現在時刻 (エポックミリ秒)。テストで差し替える */
+    private val clock: () -> Long = System::currentTimeMillis,
 ) {
 
     sealed class SyncResult {
@@ -58,7 +60,7 @@ class SteamSyncService(
 
     private val mutex = Mutex()
     private var lastFingerprint: String? = null
-    private var missingCounts: Map<Long, Int> = emptyMap()
+    private var missingSince: Map<Long, Long> = emptyMap()
     private var loopJob: Job? = null
 
     private val _isSteamAvailable = MutableStateFlow(false)
@@ -72,17 +74,27 @@ class SteamSyncService(
     fun start(interval: Duration = DEFAULT_INTERVAL) {
         if (loopJob?.isActive == true) return
         loopJob = scope.launch(ioDispatcher) {
-            refreshAvailability()
-            settingsRepository.getIsSteamSyncEnabled()
-                .distinctUntilChanged()
-                .collectLatest { enabled ->
-                    resetState()
-                    if (!enabled) return@collectLatest
-                    while (isActive) {
-                        syncSafely()
-                        delay(interval)
-                    }
+            // 設定の読み込み等で失敗しても定期チェックが止まらないよう、間隔を空けてやり直す
+            while (isActive) {
+                try {
+                    refreshAvailability()
+                    settingsRepository.getIsSteamSyncEnabled()
+                        .distinctUntilChanged()
+                        .collectLatest { enabled ->
+                            resetState()
+                            if (!enabled) return@collectLatest
+                            while (isActive) {
+                                syncSafely()
+                                delay(interval)
+                            }
+                        }
+                } catch (ce: CancellationException) {
+                    throw ce
+                } catch (th: Throwable) {
+                    Log.e("Steam sync loop failed: ${th.message}")
                 }
+                delay(interval)
+            }
         }
     }
 
@@ -120,7 +132,7 @@ class SteamSyncService(
             }
             val needsScan = force ||
                 fingerprint != lastFingerprint ||
-                missingCounts.isNotEmpty() ||
+                missingSince.isNotEmpty() ||
                 managed.any { SteamReconciler.isLocalImageMissing(it.imageUrl) }
             if (!needsScan) return@withLock SyncResult.Unchanged
 
@@ -131,12 +143,13 @@ class SteamSyncService(
                 managed = managed,
                 scan = scan,
                 excludedAppIds = excludedRepository.getAllAppIds(),
-                previousMissingCounts = missingCounts,
+                previousMissingSince = missingSince,
+                now = clock(),
             )
             apply(plan, tagId)
 
             lastFingerprint = fingerprint
-            missingCounts = plan.missingCounts
+            missingSince = plan.missingSince
             if (plan.hasChanges) {
                 SyncResult.Synced(plan.toAdd.size, plan.toDeleteIds.size, plan.imageUpdates.size)
             } else {
@@ -202,7 +215,7 @@ class SteamSyncService(
     private suspend fun resetState() {
         mutex.withLock {
             lastFingerprint = null
-            missingCounts = emptyMap()
+            missingSince = emptyMap()
         }
     }
 

@@ -21,16 +21,27 @@ class SteamLocatorTest {
     private fun steamAt(dir: File): File = SteamFixtures.createSteamRoot(dir, SteamFixtures.LibraryEntry(dir, emptyList()))
 
     @Test
-    fun parseRegQueryOutput() {
-        val output = """
+    fun parseRegExport() {
+        val content = """
+            Windows Registry Editor Version 5.00
 
-            HKEY_CURRENT_USER\Software\Valve\Steam
-                SteamPath    REG_SZ    c:/program files (x86)/steam
+            [HKEY_CURRENT_USER\Software\Valve\Steam]
+            "SteamPath"="d:/ゲーム/steam"
+            "SteamExe"="D:\\ゲーム\\Steam\\steam.exe"
+            "Quoted"="a\"b"
+            "RunningAppID"=dword:00000000
 
-        """.trimIndent()
-        assertEquals("c:/program files (x86)/steam", SteamLocator.parseRegQueryOutput(output, "SteamPath"))
-        assertNull(SteamLocator.parseRegQueryOutput(output, "SteamExe"))
-        assertNull(SteamLocator.parseRegQueryOutput("ERROR: The system was unable to find the specified registry key", "SteamPath"))
+            [HKEY_CURRENT_USER\Software\Valve\Steam\Apps]
+            "SteamPath"="sub key value"
+
+        """.trimIndent().replace("\n", "\r\n")
+        val values = SteamLocator.parseRegExport(content, "HKCU\\Software\\Valve\\Steam")
+        assertEquals("d:/ゲーム/steam", values["steampath"])
+        assertEquals("D:\\ゲーム\\Steam\\steam.exe", values["steamexe"])
+        assertEquals("a\"b", values["quoted"])
+        assertNull(values["runningappid"])
+        assertNull(values["installpath"])
+        assertEquals(emptyMap(), SteamLocator.parseRegExport("", "HKCU\\Software\\Valve\\Steam"))
     }
 
     @Test

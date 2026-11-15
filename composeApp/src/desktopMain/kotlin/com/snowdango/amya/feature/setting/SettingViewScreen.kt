@@ -26,6 +26,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun SettingViewScreen(
     navigateLicense: () -> Unit,
+    onQuit: () -> Unit,
     viewModel: SettingViewModel = koinViewModel()
 ) {
     Box(
@@ -94,6 +95,19 @@ fun SettingViewScreen(
                         title = { Text(text = "Show Licenses") },
                         onClick = {
                             navigateLicense.invoke()
+                        },
+                    )
+                }
+                // 「閉じる時に最小化」かつトレイ非表示の場合、ここ以外にアプリを終了する方法が無い
+                Box(
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                ) {
+                    SettingsMenuLink(
+                        title = { Text(text = "Quit Amya") },
+                        onClick = {
+                            onQuit.invoke()
                         },
                     )
                 }

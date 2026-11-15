@@ -5,13 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.snowdango.amya.model.AppsModel
 import com.snowdango.amya.model.TagModel
-import com.snowdango.amya.platform.SubProcessBuilder
+import com.snowdango.amya.platform.AppLauncher
 import com.snowdango.amya.track.Log
 import compose.icons.TablerIcons
 import compose.icons.tablericons.SortAscending
 import compose.icons.tablericons.SortAscending2
 import compose.icons.tablericons.SortDescending
 import compose.icons.tablericons.SortDescending2
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -58,12 +59,17 @@ class TagViewModel(
         initialValue = emptyList()
     )
 
+    private val _launchError: MutableStateFlow<String?> = MutableStateFlow(null)
+    val launchError: StateFlow<String?> = _launchError.asStateFlow()
+
     fun exec(isRoot: Boolean, path: String, args: String?) {
-        SubProcessBuilder.execBuilder(
-            isRoot = isRoot,
-            path = path,
-            args = args,
-        ).spawn()
+        viewModelScope.launch(Dispatchers.IO) {
+            AppLauncher.launch(isRoot = isRoot, path = path, args = args)?.let { _launchError.value = it }
+        }
+    }
+
+    fun dismissLaunchError() {
+        _launchError.value = null
     }
 
     fun setOrderType(type: OrderType) {

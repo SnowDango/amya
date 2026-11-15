@@ -51,7 +51,7 @@ fun AddAppViewScreen(
     var isShowCreateErrorDialog by remember { mutableStateOf(false) }
 
     val launcher = rememberFilePickerLauncher { file ->
-        filePath = file?.path ?: ""
+        file?.let { filePath = it.path }
     }
 
     LaunchedEffect(resultState.value) {
@@ -227,11 +227,11 @@ fun AddAppViewScreen(
                         modifier = Modifier.fillMaxWidth(),
                         contentAlignment = Alignment.Center,
                     ) {
+                        val context = LocalPlatformContext.current
                         SubcomposeAsyncImage(
-                            model = ImageRequestProvider.getImageRequest(
-                                context = LocalPlatformContext.current,
-                                model = imageUrl,
-                            ),
+                            model = remember(context, imageUrl) {
+                                ImageRequestProvider.getImageRequest(context = context, model = imageUrl)
+                            },
                             contentDescription = null,
                             contentScale = ContentScale.Crop,
                             loading = {

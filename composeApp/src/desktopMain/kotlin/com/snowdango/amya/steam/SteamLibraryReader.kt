@@ -15,6 +15,8 @@ class SteamLibraryReader(
         val path: File,
         /** libraryfolders.vdf に記載されているappId (ライブラリにアクセスできない場合の削除保護に使う) */
         val appIds: Set<Long>,
+        /** appIdsが記載されているか (2021年以前の形式では記載されない) */
+        val hasAppList: Boolean = true,
     ) {
         val steamApps: File get() = File(path, "steamapps")
         val isAvailable: Boolean get() = steamApps.isDirectory
@@ -38,7 +40,7 @@ class SteamLibraryReader(
             .mapNotNull { (_, value) ->
                 when (value) {
                     // 2021年以前の形式: "1" "D:\\SteamLibrary"
-                    is String -> Library(File(value), emptySet())
+                    is String -> Library(File(value), emptySet(), hasAppList = false)
                     is VdfObject -> {
                         val path = value.getString("path") ?: return@mapNotNull null
                         val appIds = value.getObject("apps")?.entries
@@ -55,7 +57,7 @@ class SteamLibraryReader(
 
         // 古い形式ではSteam本体のライブラリが記載されないため補完する
         if (libraries.none { it.path.sameFileAs(root) }) {
-            libraries.add(0, Library(root, emptySet()))
+            libraries.add(0, Library(root, emptySet(), hasAppList = false))
         }
         return libraries.distinctBy { it.path.normalizedKey() }
     }
@@ -83,16 +85,21 @@ class SteamLibraryReader(
         val libraries = libraries() ?: return null
         val installed = mutableMapOf<Long, SteamGame>()
         val protected = mutableSetOf<Long>()
+        var isComplete = true
 
         libraries.forEach { library ->
-            if (library.isAvailable) {
-                manifestFiles(library).forEach { file -> scanManifest(file, installed, protected) }
+            // 外付けドライブが外れている・一覧の取得に失敗した等
+            val manifests = if (library.isAvailable) listManifestFiles(library) else null
+            if (manifests != null) {
+                manifests.forEach { file -> scanManifest(file, installed, protected) }
             } else {
-                // 外付けドライブが外れている等。記載されているゲームは削除しない
+                // 記載されているゲームは削除しない
                 protected.addAll(library.appIds)
+                // 記載が無い (古い形式のlibraryfolders.vdf) 場合はどのゲームが含まれるか分からないため、削除自体を行わない
+                if (!library.hasAppList) isComplete = false
             }
         }
-        return SteamScanResult(installed.values.toList(), protected)
+        return SteamScanResult(installed.values.toList(), protected, isComplete)
     }
 
     private fun scanManifest(file: File, installed: MutableMap<Long, SteamGame>, protected: MutableSet<Long>) {
@@ -137,11 +144,13 @@ class SteamLibraryReader(
         return SteamGame.cdnImageUrl(appId)
     }
 
-    private fun manifestFiles(library: Library): List<File> {
+    private fun manifestFiles(library: Library): List<File> = listManifestFiles(library) ?: emptyList()
+
+    /** appmanifestの一覧。ディレクトリを読めなかった場合はnull */
+    private fun listManifestFiles(library: Library): List<File>? {
         return library.steamApps
             .listFiles { file -> file.isFile && MANIFEST_REGEX.matches(file.name) }
             ?.sortedBy { it.name }
-            ?: emptyList()
     }
 
     private fun readManifest(file: File): Manifest? {

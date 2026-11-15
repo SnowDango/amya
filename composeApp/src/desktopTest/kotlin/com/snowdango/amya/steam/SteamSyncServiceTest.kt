@@ -91,7 +91,14 @@ class SteamSyncServiceTest {
             excludedRepository = excludedRepository,
             settingsRepository = settingsRepository,
             scope = scope,
+            clock = { now },
         )
+    }
+
+    private var now = 1_700_000_000_000L
+
+    private fun passGracePeriod() {
+        now += SteamReconciler.MISSING_GRACE_PERIOD.inWholeMilliseconds
     }
 
     @After
@@ -148,7 +155,12 @@ class SteamSyncServiceTest {
         assertEquals(SteamSyncService.SyncResult.Unchanged, service.sync())
         assertEquals(listOf(100L, 200L), steamApps().map { it.steamAppId })
 
+        // 続けて同期しても猶予期間内は削除しない (起動直後の定期チェックとウィンドウ表示時の確認が重なる等)
+        assertEquals(SteamSyncService.SyncResult.Unchanged, service.sync())
+        assertEquals(listOf(100L, 200L), steamApps().map { it.steamAppId })
+
         // 指紋は変わっていないが、未確定の削除候補があるので再確認する
+        passGracePeriod()
         assertEquals(SteamSyncService.SyncResult.Synced(0, 1, 0), service.sync())
         assertEquals(listOf(100L), steamApps().map { it.steamAppId })
         // 自動削除は除外リストに入らない (再インストールしたら再登録される)
@@ -163,7 +175,10 @@ class SteamSyncServiceTest {
 
         source.games.clear()
         source.protected += 100L
-        repeat(3) { service.sync(force = true) }
+        repeat(3) {
+            passGracePeriod()
+            service.sync(force = true)
+        }
         assertEquals(listOf(100L), steamApps().map { it.steamAppId })
     }
 
@@ -174,7 +189,10 @@ class SteamSyncServiceTest {
         service.sync()
 
         source.available = false
-        repeat(3) { assertEquals(SteamSyncService.SyncResult.SteamNotFound, service.sync(force = true)) }
+        repeat(3) {
+            passGracePeriod()
+            assertEquals(SteamSyncService.SyncResult.SteamNotFound, service.sync(force = true))
+        }
         assertEquals(listOf(100L), steamApps().map { it.steamAppId })
     }
 
