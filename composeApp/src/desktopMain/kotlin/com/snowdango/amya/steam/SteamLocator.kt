@@ -91,7 +91,10 @@ object SteamLocator {
 
     /** `reg query` の出力から値を取り出す (`    SteamPath    REG_SZ    c:/program files (x86)/steam`) */
     internal fun parseRegQueryOutput(output: String, valueName: String): String? {
-        val regex = Regex("""^\s*${Regex.escape(valueName)}\s+REG_(?:EXPAND_)?SZ\s+(.+?)\s*$""", RegexOption.IGNORE_CASE)
+        val regex = Regex(
+            """^\s*${Regex.escape(valueName)}\s+REG_(?:EXPAND_)?SZ\s+(.+?)\s*$""",
+            RegexOption.IGNORE_CASE
+        )
         return output.lineSequence()
             .firstNotNullOfOrNull { regex.find(it)?.groupValues?.get(1) }
             ?.takeIf { it.isNotBlank() }

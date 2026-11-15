@@ -50,6 +50,8 @@ object VdfParser {
         data class Str(val value: String) : Token()
     }
 
+    private val UNQUOTED_TERMINATORS = setOf('{', '}', '"')
+
     private class Tokenizer(private val text: String) {
         private var pos = 0
 
@@ -131,7 +133,7 @@ object VdfParser {
             val start = pos
             while (pos < text.length) {
                 val c = text[pos]
-                if (c.isWhitespace() || c == '{' || c == '}' || c == '"') break
+                if (c.isWhitespace() || c in UNQUOTED_TERMINATORS) break
                 pos++
             }
             return text.substring(start, pos)

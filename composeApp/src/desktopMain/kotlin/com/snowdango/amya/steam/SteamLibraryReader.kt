@@ -85,33 +85,35 @@ class SteamLibraryReader(
         val protected = mutableSetOf<Long>()
 
         libraries.forEach { library ->
-            if (!library.isAvailable) {
+            if (library.isAvailable) {
+                manifestFiles(library).forEach { file -> scanManifest(file, installed, protected) }
+            } else {
                 // 外付けドライブが外れている等。記載されているゲームは削除しない
                 protected.addAll(library.appIds)
-                return@forEach
-            }
-            manifestFiles(library).forEach { file ->
-                val manifest = readManifest(file) ?: run {
-                    // 読めないmanifestもゲーム自体は存在するとみなす
-                    file.appIdFromManifestName()?.let { protected.add(it) }
-                    return@forEach
-                }
-                protected.add(manifest.appId)
-                if (manifest.isFullyInstalled && !SteamExclusion.isExcluded(manifest.appId, manifest.name)) {
-                    installed.putIfAbsent(
-                        manifest.appId,
-                        SteamGame(
-                            appId = manifest.appId,
-                            name = manifest.name,
-                            imageUrl = findImage(manifest.appId),
-                            launchPath = installation.launcher.path,
-                            launchArgs = installation.launcher.argsFor(manifest.appId),
-                        )
-                    )
-                }
             }
         }
         return SteamScanResult(installed.values.toList(), protected)
+    }
+
+    private fun scanManifest(file: File, installed: MutableMap<Long, SteamGame>, protected: MutableSet<Long>) {
+        val manifest = readManifest(file)
+        if (manifest == null) {
+            // 読めないmanifestもゲーム自体は存在するとみなす
+            file.appIdFromManifestName()?.let { protected.add(it) }
+            return
+        }
+        protected.add(manifest.appId)
+        if (!manifest.isFullyInstalled || SteamExclusion.isExcluded(manifest.appId, manifest.name)) return
+        installed.putIfAbsent(
+            manifest.appId,
+            SteamGame(
+                appId = manifest.appId,
+                name = manifest.name,
+                imageUrl = findImage(manifest.appId),
+                launchPath = installation.launcher.path,
+                launchArgs = installation.launcher.argsFor(manifest.appId),
+            )
+        )
     }
 
     /**
@@ -183,6 +185,7 @@ class SteamLibraryReader(
  * ゲームではないSteamのツール類 (再頒布パッケージ / Proton / Steam Linux Runtime)
  */
 object SteamExclusion {
+    @Suppress("MagicNumber") // SteamのappId
     private val EXCLUDED_APP_IDS = setOf(
         228980L, // Steamworks Common Redistributables
         1070560L, // Steam Linux Runtime 1.0 (scout)
