@@ -275,3 +275,56 @@ class SteamSyncServiceTest {
         assertEquals(newImage.absolutePath, steamApps().first().imageUrl)
     }
 }
+
+/**
+ * 実機のSteamを使った結合テスト (Steamが無い環境ではスキップ)。DBはインメモリ
+ */
+class SteamSyncServiceRealSteamTest {
+
+    @get:Rule
+    val temp = TemporaryFolder()
+
+    @Test
+    fun syncWithRealSteam() = runBlocking<Unit> {
+        val source = DesktopSteamLibrarySource()
+        org.junit.Assume.assumeTrue("Steam is not installed", source.isAvailable())
+
+        val database = Room.inMemoryDatabaseBuilder<AppsDatabase>()
+            .setDriver(BundledSQLiteDriver())
+            .setQueryCoroutineContext(Dispatchers.IO)
+            .build()
+        val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+        try {
+            val appsRepository = AppsRepository(AppsDataStore(database))
+            val settingsRepository = SettingsRepository(
+                SettingsDataStore(
+                    SettingsPreferences(
+                        PreferenceDataStoreFactory.create(scope = scope) { File(temp.root, "settings.preferences_pb") }
+                    )
+                )
+            )
+            val service = SteamSyncService(
+                source = source,
+                appsRepository = appsRepository,
+                tagRepository = TagRepository(TagDataStore(database)),
+                excludedRepository = SteamExcludedRepository(SteamExcludedDataStore(database)),
+                settingsRepository = settingsRepository,
+                scope = scope,
+            )
+            settingsRepository.setIsSteamSyncEnabled(true)
+
+            val first = service.sync()
+            println("first sync: $first")
+            assertIs<SteamSyncService.SyncResult.Synced>(first)
+            assertEquals(SteamSyncService.SyncResult.Unchanged, service.sync())
+
+            val apps = appsRepository.getSteamApps()
+            apps.forEach { println("${it.steamAppId}\t${it.name}\t${it.path} ${it.args}\t${it.imageUrl}") }
+            assertTrue(apps.isNotEmpty())
+            assertTrue(apps.all { File(it.path).isFile || it.path == "/usr/bin/xdg-open" })
+        } finally {
+            scope.cancel()
+            database.close()
+        }
+    }
+}

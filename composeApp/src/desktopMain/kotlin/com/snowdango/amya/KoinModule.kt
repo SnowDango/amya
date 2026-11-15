@@ -11,6 +11,7 @@ import com.snowdango.amya.feature.setting.SettingViewModel
 import com.snowdango.amya.feature.tag.TagViewModel
 import com.snowdango.amya.model.AppsModel
 import com.snowdango.amya.model.SettingsModel
+import com.snowdango.amya.model.SteamModel
 import com.snowdango.amya.model.TagModel
 import com.snowdango.amya.platform.getDatabaseBuilder
 import com.snowdango.amya.platform.getSettingsPreferences
@@ -51,6 +52,7 @@ val module = module {
     factory<TagModel> { TagModel() }
     factory<AppsModel> { AppsModel() }
     factory<SettingsModel> { SettingsModel() }
+    factory<SteamModel> { SteamModel() }
 
     // steam
     single<SteamLibrarySource> { DesktopSteamLibrarySource() }

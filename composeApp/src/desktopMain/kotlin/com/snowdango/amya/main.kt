@@ -3,6 +3,7 @@ package com.snowdango.amya
 import amya.composeapp.generated.resources.Res
 import amya.composeapp.generated.resources.icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,6 +20,7 @@ import androidx.compose.ui.window.rememberWindowState
 import com.diamondedge.logging.KmLogging
 import com.snowdango.amya.platform.PlatformType
 import com.snowdango.amya.platform.getPlatform
+import com.snowdango.amya.steam.SteamSyncService
 import com.snowdango.amya.track.Log
 import io.github.vinceglb.filekit.FileKit
 import org.jetbrains.compose.resources.painterResource
@@ -34,6 +36,8 @@ fun init() {
     FileKit.init(appId = "Amya")
     KmLogging.addLogger(Log.getEventLogger())
     Log.i("------ Init App [Platform: ${BuildKonfig.osName}] ------")
+    // Steam同期の定期チェック (設定がONの間だけ動作する)
+    GlobalContext.get().get<SteamSyncService>().start()
 }
 
 fun ApplicationScope.exitApp() {
@@ -107,6 +111,12 @@ fun ApplicationScope.window(
 ) {
     val minimumDpSize = DpSize(800.dp, 600.dp)
     val windowState = rememberWindowState(size = minimumDpSize * 2)
+    // ウィンドウを開いた時 (トレイから表示・最小化から復帰) にSteamの状態を確認する
+    LaunchedEffect(isWindowVisible, windowState.isMinimized) {
+        if (isWindowVisible && !windowState.isMinimized) {
+            GlobalContext.get().get<SteamSyncService>().requestSync()
+        }
+    }
     if (isWindowVisible) {
         Window(
             onCloseRequest = {
