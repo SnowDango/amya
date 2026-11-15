@@ -35,7 +35,8 @@ jobs:
         uses: actions/setup-java@v6
         with:
           java-version: '25'
-          distribution: 'temurin'
+          # Temurin 25 は jmods を同梱しておらず ProGuard が JDK クラスを参照できないため、jmods 同梱の Zulu を使う
+          distribution: 'zulu'
           cache: gradle
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
