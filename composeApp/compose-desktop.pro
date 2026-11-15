@@ -10,9 +10,8 @@
 -keep class com.github.oshi.** { *; }
 -keep class java.net.http.** { *; }
 
--keepclassmembers class kotlinx.coroutines.** {
-    volatile <fields>;
-}
+# ProGuardの最適化でJobSupport.cancel()がVerifyErrorになるためcoroutinesは保持する
+-keep class kotlinx.coroutines.** { *; }
 
 -keepclassmembers public class **$$serializer {
     private ** descriptor;

@@ -132,7 +132,7 @@ compose.desktop {
             release {
                 proguard {
                     isEnabled = true
-                    version = "7.6.0"
+                    version = "7.10.0"
                     configurationFiles.from(files("compose-desktop.pro"))
                 }
             }
