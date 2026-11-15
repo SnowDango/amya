@@ -34,11 +34,6 @@ subprojects {
         source = files("src/commonMain/kotlin", "src/desktopMain/kotlin")
     }
 
-    // detekt 1.23.x は --jvm-target 22 までしか受け付けないため、JDK 25 でビルドしても解析は 22 で固定する
-    tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
-        jvmTarget = "22"
-    }
-
     dependencies {
         detektPlugins(rootProject.libs.detekt.formatting)
     }

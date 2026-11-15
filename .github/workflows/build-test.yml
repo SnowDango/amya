@@ -6,12 +6,16 @@ on:
 jobs:
   detekt-check:
     runs-on: ubuntu-latest
+    env:
+      # detekt 1.23.x は JDK 25 上で起動できないため、detekt のみ JDK 21 で実行する。
+      # (env 経由にして Renovate の java-jdk 更新対象から外している)
+      DETEKT_JAVA_VERSION: '21'
     steps:
       - uses: actions/checkout@v6
-      - name: set up JDK 25
+      - name: set up JDK for detekt
         uses: actions/setup-java@v5
         with:
-          java-version: '25'
+          java-version: ${{ env.DETEKT_JAVA_VERSION }}
           distribution: 'temurin'
           cache: gradle
       - name: Grant execute permission for gradlew
