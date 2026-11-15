@@ -150,7 +150,7 @@ class SteamLibraryReaderTest {
             writeText("x")
         }
         assertEquals(header.absolutePath, reader(root).findImage(1))
-        assertEquals(SteamLibraryReader.cdnImageUrl(2), reader(root).findImage(2))
+        assertEquals(SteamGame.cdnImageUrl(2), reader(root).findImage(2))
     }
 
     @Test

@@ -55,7 +55,7 @@ class MigrationTest {
     }
 
     @Test
-    fun migrate4To5() = runBlocking {
+    fun migrate4To5() = runBlocking<Unit> {
         val file = File(temp.root, "amya_apps.db")
         createVersion4Database(file)
 

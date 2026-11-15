@@ -23,6 +23,9 @@ import com.snowdango.amya.repository.steam.SteamExcludedRepository
 import com.snowdango.amya.repository.tag.TagDataStore
 import com.snowdango.amya.repository.tag.TagRepository
 import com.snowdango.amya.route.RouteViewModel
+import com.snowdango.amya.steam.DesktopSteamLibrarySource
+import com.snowdango.amya.steam.SteamLibrarySource
+import com.snowdango.amya.steam.SteamSyncService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -48,6 +51,19 @@ val module = module {
     factory<TagModel> { TagModel() }
     factory<AppsModel> { AppsModel() }
     factory<SettingsModel> { SettingsModel() }
+
+    // steam
+    single<SteamLibrarySource> { DesktopSteamLibrarySource() }
+    single<SteamSyncService> {
+        SteamSyncService(
+            source = get(),
+            appsRepository = get(),
+            tagRepository = get(),
+            excludedRepository = get(),
+            settingsRepository = get(),
+            scope = get(),
+        )
+    }
 
     // route
     viewModel<RouteViewModel> { (navController: NavController) -> RouteViewModel(navController) }

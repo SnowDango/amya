@@ -132,7 +132,7 @@ class SteamLibraryReader(
             files.firstOrNull { it.name.equals(name, ignoreCase = true) }?.let { return it.absolutePath }
             File(cacheDir, "${appId}_$name").takeIf { it.isFile }?.let { return it.absolutePath }
         }
-        return cdnImageUrl(appId)
+        return SteamGame.cdnImageUrl(appId)
     }
 
     private fun manifestFiles(library: Library): List<File> {
@@ -163,9 +163,6 @@ class SteamLibraryReader(
         private const val STATE_FULLY_INSTALLED = 4L
         private val MANIFEST_REGEX = Regex("""appmanifest_(\d+)\.acf""", RegexOption.IGNORE_CASE)
         private val IMAGE_CANDIDATES = listOf("library_600x900.jpg", "library_header.jpg", "header.jpg")
-
-        fun cdnImageUrl(appId: Long) =
-            "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/$appId/library_600x900.jpg"
 
         private fun File.appIdFromManifestName(): Long? =
             MANIFEST_REGEX.matchEntire(name)?.groupValues?.get(1)?.toLongOrNull()
