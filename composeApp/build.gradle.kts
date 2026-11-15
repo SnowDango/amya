@@ -132,6 +132,8 @@ compose.desktop {
             release {
                 proguard {
                     isEnabled = true
+                    // ProGuardの最適化でmaterial3(ListItem)やcoroutinesのバイトコードが壊れてVerifyErrorになるため無効化する
+                    optimize = false
                     version = "7.10.0"
                     configurationFiles.from(files("compose-desktop.pro"))
                 }
