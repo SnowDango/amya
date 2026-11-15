@@ -3,7 +3,9 @@ package com.snowdango.amya.feature.addapp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.snowdango.amya.model.AppsModel
-import io.ktor.utils.io.CancellationException
+import com.snowdango.amya.track.Log
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -31,8 +33,8 @@ class AddAppViewModel : ViewModel(), KoinComponent {
         args: String?,
         imageUrl: String,
         root: Boolean,
-    ) {
-        try {
+    ): Boolean {
+        return try {
             appsModel.insert(
                 name = name,
                 imageUrl = imageUrl,
@@ -42,10 +44,12 @@ class AddAppViewModel : ViewModel(), KoinComponent {
                 args = args,
                 root = root,
             )
+            true
         } catch (ce: CancellationException) {
             throw ce
-        } catch (_: Throwable) {
-            _result.emit(CreateAppState.Failure)
+        } catch (th: Throwable) {
+            Log.e("Failed to create app: ${th.message}")
+            false
         }
     }
 
@@ -58,7 +62,9 @@ class AddAppViewModel : ViewModel(), KoinComponent {
         imageUrl: String,
         root: Boolean,
     ) {
-        viewModelScope.launch {
+        // 作成中・作成済みの場合は連打による二重登録を防ぐ
+        if (createJob?.isActive == true || _result.value is CreateAppState.Success) return
+        createJob = viewModelScope.launch {
             if (name.isBlank()) {
                 _result.emit(CreateAppState.ValidationError("Name is empty"))
             } else if (filePath.isBlank()) {
@@ -66,7 +72,7 @@ class AddAppViewModel : ViewModel(), KoinComponent {
             } else if (imageUrl.isBlank()) {
                 _result.emit(CreateAppState.ValidationError("Image URL is empty"))
             } else {
-                createApp(
+                val isSuccess = createApp(
                     parentId = parentId,
                     childId = childId,
                     name = name,
@@ -75,10 +81,12 @@ class AddAppViewModel : ViewModel(), KoinComponent {
                     imageUrl = imageUrl,
                     root = root,
                 )
-                _result.emit(CreateAppState.Success(parentId, childId))
+                _result.emit(if (isSuccess) CreateAppState.Success(parentId, childId) else CreateAppState.Failure)
             }
         }
     }
+
+    private var createJob: Job? = null
 
     fun resetResult() {
         viewModelScope.launch {

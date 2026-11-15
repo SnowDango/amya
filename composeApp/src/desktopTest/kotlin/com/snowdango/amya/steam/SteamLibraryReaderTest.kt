@@ -6,6 +6,7 @@ import org.junit.rules.TemporaryFolder
 import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -78,6 +79,29 @@ class SteamLibraryReaderTest {
         val result = assertNotNull(reader(root).scan())
         assertTrue(result.installedGames.isEmpty())
         assertEquals(setOf(500L, 600L), result.protectedAppIds)
+        // 含まれるゲームが分かっているので、他のライブラリのゲームは削除してよい
+        assertTrue(result.isComplete)
+    }
+
+    @Test
+    fun unavailableOldFormatLibraryMakesScanIncomplete() {
+        // 古い形式ではライブラリに含まれるゲームが分からないため、ドライブが外れている間は削除しない
+        val root = temp.newFolder("Steam")
+        val unmounted = File(temp.root, "mnt/games/SteamLibrary") // 存在しない
+        File(root, "steamapps").mkdirs()
+        File(root, "steamapps/libraryfolders.vdf").writeText(
+            """
+            "LibraryFolders"
+            {
+            	"1"		"${unmounted.absolutePath.replace("\\", "\\\\")}"
+            }
+            """.trimIndent()
+        )
+        SteamFixtures.writeManifest(root, 1, "RootGame")
+
+        val result = assertNotNull(reader(root).scan())
+        assertEquals(listOf(1L), result.installedGames.map { it.appId })
+        assertFalse(result.isComplete)
     }
 
     @Test

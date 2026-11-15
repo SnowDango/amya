@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.snowdango.amya.model.TagModel
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -49,7 +50,9 @@ class AddTagViewModel : ViewModel(), KoinComponent {
         name: String,
         imageVector: ImageVector?,
     ) {
-        viewModelScope.launch {
+        // 作成中・作成済みの場合は連打による二重登録を防ぐ
+        if (createJob?.isActive == true || _result.value is CreateTagState.Success) return
+        createJob = viewModelScope.launch {
             if (name.isBlank()) {
                 _result.emit(CreateTagState.ValidationError("Name is empty"))
             } else if (imageVector == null) {
@@ -59,6 +62,8 @@ class AddTagViewModel : ViewModel(), KoinComponent {
             }
         }
     }
+
+    private var createJob: Job? = null
 
     fun resetResult() {
         viewModelScope.launch {

@@ -41,8 +41,11 @@ interface SteamLibrarySource {
  * @property installedGames インストールが完了しているゲーム
  * @property protectedAppIds 削除してはいけないappId。
  * manifestが存在する(更新中・ダウンロード中を含む)もの、及びアクセスできないライブラリに登録されているもの
+ * @property isComplete 全てのライブラリを確認できたか。
+ * アクセスできないライブラリに含まれるゲームが分からない場合はfalseになり、ゲームを削除しない
  */
 data class SteamScanResult(
     val installedGames: List<SteamGame>,
     val protectedAppIds: Set<Long>,
+    val isComplete: Boolean = true,
 )

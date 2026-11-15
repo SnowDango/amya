@@ -5,6 +5,7 @@ import com.snowdango.amya.domain.db.entity.SubTagEntity
 import com.snowdango.amya.domain.db.entity.TagEntity
 import com.snowdango.amya.repository.apps.AppsRepository
 import com.snowdango.amya.repository.settings.SettingsRepository
+import com.snowdango.amya.repository.steam.SteamExcludedRepository
 import com.snowdango.amya.repository.tag.TagRepository
 import com.snowdango.amya.steam.SteamSyncService
 import compose.icons.AllIcons
@@ -21,6 +22,7 @@ class TagModel : KoinComponent {
     val repository: TagRepository by inject()
     private val appsRepository: AppsRepository by inject()
     private val settingsRepository: SettingsRepository by inject()
+    private val steamExcludedRepository: SteamExcludedRepository by inject()
     private val steamSyncService: SteamSyncService by inject()
 
     suspend fun insertParentTag(
@@ -113,6 +115,13 @@ class TagModel : KoinComponent {
 
     suspend fun deleteParentTag(id: Long) {
         val isSteamTag = settingsRepository.getSteamTagId().first() == id
+        if (!isSteamTag) {
+            // タグと一緒に削除されるSteamのゲームも、手動で削除した時と同様に次回以降の同期で再登録しない
+            // (Steamタグ自体の削除は同期OFFとして扱い、再度ONにした時は登録し直す)
+            appsRepository.getSteamApps()
+                .filter { it.tagId == id }
+                .forEach { app -> app.steamAppId?.let { steamExcludedRepository.insert(it) } }
+        }
         repository.deleteParentTag(id)
         if (isSteamTag) {
             steamSyncService.onSteamTagDeleted()
