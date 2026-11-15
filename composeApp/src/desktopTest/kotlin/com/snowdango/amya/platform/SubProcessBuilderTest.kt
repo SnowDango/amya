@@ -39,8 +39,9 @@ class SubProcessBuilderTest {
         val output = SubProcessBuilder.execBuilder(isRoot = true, path = exe.absolutePath, args = "cmd")
             .stdout(Stdio.Pipe)
             .stderr(Stdio.Pipe)
-            .output()
-        assertNull(output.processError, output.stderr)
+            // 既定の待ち時間 (250ms) ではCIのランナーで cmd の起動が間に合わない
+            .createOutput { timeoutMillis = 30_000 }
+        assertNull(output.processError, "processError: ${output.processError}, stderr: ${output.stderr}")
         assertTrue(output.stdout.contains("cmd.exe", ignoreCase = true), "stdout: ${output.stdout}, stderr: ${output.stderr}")
     }
 
