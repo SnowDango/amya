@@ -44,6 +44,7 @@ kotlin {
                 implementation(libs.kmp.process)
                 api(libs.datastore.preferences)
                 api(libs.aboutlibraries.core)
+                implementation(libs.kotlinx.collections.immutable)
                 api(libs.km.logging)
             }
         }
@@ -117,9 +118,6 @@ buildkonfig {
 
 aboutLibraries {
     offlineMode = false
-    android {
-        registerAndroidTasks = false
-    }
     export {
         outputFile = file("src/commonMain/composeResources/files/aboutlibraries.json")
         prettyPrint = true
