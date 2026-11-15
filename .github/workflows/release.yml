@@ -19,9 +19,9 @@ jobs:
       # (env 経由にして Renovate の java-jdk 更新対象から外している)
       DETEKT_JAVA_VERSION: '21'
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: set up JDK for detekt
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           java-version: ${{ env.DETEKT_JAVA_VERSION }}
           distribution: 'temurin'
@@ -35,9 +35,9 @@ jobs:
     needs: detekt-check
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: set up JDK 25
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           java-version: '25'
           distribution: 'temurin'
@@ -62,9 +62,9 @@ jobs:
     needs: detekt-check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: set up JDK 25
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           java-version: '25'
           distribution: 'temurin'
@@ -91,7 +91,7 @@ jobs:
       - windows-build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Download Windows package
         uses: actions/download-artifact@v8
         with:
@@ -103,7 +103,7 @@ jobs:
           name: linux-package
           path: ./release
       - name: Create Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           name: ${{ github.event.inputs.tag }}
           body: ${{ github.event.inputs.tag }}
